@@ -20,10 +20,10 @@ docker push byjg/docker-php56:latest
 # Using this docker as your default CLI
 
 ```
-alias php="docker run -it --rm --name byjg-php56-php byjg/docker-php56 php"
-alias phpunit="docker run -it --rm --name byjg-php56-phpunit byjg/docker-php56 phpunit"
-alias migrate="docker run -it --rm --name byjg-php56-migrate byjg/docker-php56 migrate"
-alias composer="docker run -it --rm --name byjg-php56-composer byjg/docker-php56 composer"
+alias php="docker run -it --rm --name byjg-php56-php byjg/php56 php"
+alias phpunit="docker run -it --rm --name byjg-php56-phpunit byjg/php56 phpunit"
+alias migrate="docker run -it --rm --name byjg-php56-migrate byjg/php56 migrate"
+alias composer="docker run -it --rm --name byjg-php56-composer byjg/php56 composer"
 ```
 
 

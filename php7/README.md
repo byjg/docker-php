@@ -20,10 +20,10 @@ docker push byjg/docker-php7:latest
 # Using this docker as your default CLI
 
 ```
-alias php="docker run -it --rm --name byjg-php7-php byjg/docker-php7 php"
-alias phpunit="docker run -it --rm --name byjg-php7-phpunit byjg/docker-php7 phpunit"
-alias migrate="docker run -it --rm --name byjg-php7-migrate byjg/docker-php7 migrate"
-alias composer="docker run -it --rm --name byjg-php7-composer byjg/docker-php7 composer"
+alias php="docker run -it --rm --name byjg-php7-php byjg/php7 php"
+alias phpunit="docker run -it --rm --name byjg-php7-phpunit byjg/php7 phpunit"
+alias migrate="docker run -it --rm --name byjg-php7-migrate byjg/php7 migrate"
+alias composer="docker run -it --rm --name byjg-php7-composer byjg/php7 composer"
 ```
 
 

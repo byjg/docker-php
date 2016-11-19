@@ -25,10 +25,10 @@ docker push byjg/docker-php56-mysql:latest
 This image extends the "byjg/docker-php56" and you can create alias for PHP and PHPUnit like below:
 
 ```
-alias php="docker run -it --rm --name byjg-php56-php byjg/docker-php56-mysql php"
-alias phpunit="docker run -it --rm --name byjg-php56-phpunit byjg/docker-php56-mysql phpunit"
-alias migrate="docker run -it --rm --name byjg-php56-migrate byjg/docker-php56-mysql migrate"
-alias composer="docker run -it --rm --name byjg-php56-composer byjg/docker-php56-mysql composer"
+alias php="docker run -it --rm --name byjg-php56-php byjg/php56-mysql php"
+alias phpunit="docker run -it --rm --name byjg-php56-phpunit byjg/php56-mysql phpunit"
+alias migrate="docker run -it --rm --name byjg-php56-migrate byjg/php56-mysql migrate"
+alias composer="docker run -it --rm --name byjg-php56-composer byjg/php56-mysql composer"
 ```
 
 If you want to attach this to bitbucket pipelines, create the file `bitbucket-pipelines.yml` and put:
