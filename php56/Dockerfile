@@ -1,18 +1,18 @@
-FROM ubuntu:14.04
+FROM alpine:3.4
 
 MAINTAINER Joao Gilberto Magalhaes
 
 # Update Repository
-RUN apt-get update
+RUN apk update
+RUN apk add \
+	--no-cache -v \
+	--repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+	php5-cli php5-curl php5-xml php5-json php5-gd php5-memcache php5-shmop \
+	php5-mysql php5-pdo php5-xsl php5-dom php5-iconv php5-mcrypt php5-openssl \
+	php5-phar php5-pdo_mysql
 
-# Add the Ondrej PPA Repository
-RUN apt-get install -y software-properties-common
-RUN apt-get install -y language-pack-en-base
-RUN export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && add-apt-repository -y ppa:ondrej/php
-RUN apt-get update
-
-# Install PHP56
-RUN apt-get install -y php5.6 php5.6-curl php5.6-xml php5.6-json
+# Install Dependences for Composer
+RUN apk add git unzip
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -20,9 +20,6 @@ RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a3
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
-
-# Install Dependences for Composer
-RUN apt-get -y install git unzip
 
 # Install PHPUnit
 RUN composer global require "phpunit/phpunit=4.7.*"
