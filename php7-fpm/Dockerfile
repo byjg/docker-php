@@ -1,4 +1,4 @@
-FROM php:7
+FROM php:7-fpm
 
 MAINTAINER Joao Gilberto Magalhaes
 
@@ -19,20 +19,6 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN apt-get install -y libmcrypt-dev && \
     docker-php-ext-install mcrypt
-
-
-# Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-    php composer-setup.php && \
-    php -r "unlink('composer-setup.php');" && \
-    mv composer.phar /usr/local/bin/composer 
-
-# Install PHPUnit
-RUN composer global require "phpunit/phpunit=4.7.*" && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
-
-# Install Migration ByJG
-RUN composer global require "byjg/migration=1.0.*" && ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
 
 # Install XDebug
 RUN pecl install xdebug && \

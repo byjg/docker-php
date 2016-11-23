@@ -37,6 +37,12 @@ RUN composer global require "byjg/migration=1.0.*" && ln -s /root/.composer/vend
 # Install XDebug
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
+
+# Install Redis
+RUN pecl install -o -f redis-2.2.8 \
+&&  rm -rf /tmp/pear \
+&&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+
 EXPOSE 9000
 
 # Clear all unnecessary files

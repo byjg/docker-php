@@ -1,4 +1,4 @@
-FROM php:7
+FROM php:5.6.28-fpm
 
 MAINTAINER Joao Gilberto Magalhaes
 
@@ -15,11 +15,10 @@ RUN apt-get install -y libfreetype6-dev libgd-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr && \
     docker-php-ext-install gd exif
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install mysql mysqli pdo pdo_mysql
 
 RUN apt-get install -y libmcrypt-dev && \
     docker-php-ext-install mcrypt
-
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -28,18 +27,12 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer 
 
-# Install PHPUnit
-RUN composer global require "phpunit/phpunit=4.7.*" && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
-
-# Install Migration ByJG
-RUN composer global require "byjg/migration=1.0.*" && ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
-
 # Install XDebug
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
 
 # Install Redis
-RUN pecl install -o -f redis \
+RUN pecl install -o -f redis-2.2.8 \
 &&  rm -rf /tmp/pear \
 &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
