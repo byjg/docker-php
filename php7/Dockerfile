@@ -29,7 +29,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     mv composer.phar /usr/local/bin/composer 
 
 # Install PHPUnit
-RUN composer global require "phpunit/phpunit=4.7.*" && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
+RUN composer global require "phpunit/phpunit=5.2.*" && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
 
 # Install Migration ByJG
 RUN composer global require "byjg/migration=1.0.*" && ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
