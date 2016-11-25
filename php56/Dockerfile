@@ -34,6 +34,9 @@ RUN composer global require "phpunit/phpunit=4.7.*" && ln -s /root/.composer/ven
 # Install Migration ByJG
 RUN composer global require "byjg/migration=1.0.*" && ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
 
+# Install Daemonize ByJG
+RUN composer global require "byjg/php-daemonize=1.2.*" && ln -s /root/.composer/vendor/bin/daemonize /usr/local/bin/
+
 # Install XDebug
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug
