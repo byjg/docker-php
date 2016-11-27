@@ -1,10 +1,6 @@
-# Docker PHP 5.6 Cli
+# Docker PHP 5.6 with FPM
 
-An Docker image with PHP 5.6 Cli. This package contains:
-
-- PHP 5.6 Cli (with extensions Json, Xml, Curl)
-- PHPUnit 4.7
-- ByJG Migrate
+A Ready to use PHP 5.6 client with FPM and XDebug. 
 
 # Build
 

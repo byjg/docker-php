@@ -1,10 +1,24 @@
 # Docker PHP 5.6 Cli
 
-An Docker image with PHP 5.6 Cli. This package contains:
+An Docker image with PHP 5.6 Cli. This package is intended to be use for 
+development environment an has been setup for PHPStorm as Remote Interpreter
+ora single command line. 
 
-- PHP 5.6 Cli (with extensions Json, Xml, Curl)
+This package contains:
+
+- PHP 5.6 Cli
+- Composer
 - PHPUnit 4.7
 - ByJG Migrate
+- ByJG PHP Daemonize
+- PHP Code Sniffer
+- PHP Mess Detector
+- PHP Modules: Core, ctype, curl, date, dom, ereg, exif, fileinfo, filter,
+ftp, gd, hash, iconv, intl, json, libxml, mbstring, mcrypt, mysql, mysqli
+mysqlnd, openssl, pcre, PDO, pdo_mysql, pdo_sqlite, Phar, posix, readline,
+redis, Reflection, session, SimpleXML, SPL, sqlite3, standard, tokenizer,
+xdebug, xml, xmlreader, xmlwriter, zlib, Xdebug
+
 
 # Build
 

@@ -1,10 +1,6 @@
-# Docker PHP 7.0 Cli
+# Docker PHP 7.0 with FPM
 
-An Docker image with PHP 7.0 Cli. This package contains:
-
-- PHP 7.0 Cli (with extensions Json, Xml, Curl)
-- PHPUnit 5.2
-- ByJG Migrate
+A Ready to use PHP 7.0 client with FPM and XDebug. 
 
 # Build
 
