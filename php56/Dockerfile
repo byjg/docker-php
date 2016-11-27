@@ -43,16 +43,23 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 && mv composer.phar /usr/local/bin/composer
 
 # Install PHPUnit
-RUN composer global require "phpunit/phpunit=4.7.*" \
+RUN COMPOSER_HOME="/opt/.composer" composer global require "phpunit/phpunit=4.7.*" \
 && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
 
 # Install Migration ByJG
-RUN composer global require "byjg/migration=1.0.*" \
-&& ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
+RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/migration=1.0.*" \
+&& ln -s /opt/.composer/vendor/bin/migrate /usr/local/bin/
 
 # Install Daemonize ByJG
-RUN composer global require "byjg/php-daemonize=1.2.*" \
-&& ln -s /root/.composer/vendor/bin/daemonize /usr/local/bin/
+RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/php-daemonize=1.2.*" \
+&& ln -s /opt/.composer/vendor/bin/daemonize /usr/local/bin/
+
+RUN COMPOSER_HOME="/opt/.composer" composer global require "squizlabs/php_codesniffer=*" \
+&& ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
+&& ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/
+
+RUN COMPOSER_HOME=/opt/.composer composer global require "phpmd/phpmd:@stable" \
+&& ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/
 
 # Clear all unnecessary files
 RUN apt-get autoremove -y \
