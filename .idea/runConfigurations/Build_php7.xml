@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Build php7" type="docker-deploy" factoryName="Docker Deployment" server-name="Docker Socket">
+    <deployment type="dockerfile" path="$PROJECT_DIR$/php7/Dockerfile">
+      <settings>
+        <option name="JSONFilePath" value="" />
+        <option name="command" value="" />
+        <option name="containerName" value="local-php7" />
+        <option name="entrypoint" value="" />
+        <option name="imageTag" value="" />
+        <option name="startBrowserSettings">
+          <browser />
+        </option>
+      </settings>
+    </deployment>
+    <method />
+  </configuration>
+</component>
