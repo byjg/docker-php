@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ca2e5566-8039-4908-bb84-3fe4d4665412" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php56-fpm/Dockerfile" afterPath="$PROJECT_DIR$/php56-fpm/Dockerfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php7-fpm/Dockerfile" afterPath="$PROJECT_DIR$/php7-fpm/Dockerfile" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php56/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="414">
-              <caret line="29" column="88" lean-forward="true" selection-start-line="28" selection-start-column="92" selection-end-line="29" selection-end-column="88" />
+              <caret line="29" column="83" lean-forward="false" selection-start-line="28" selection-start-column="92" selection-end-line="29" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -56,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/php7-fpm/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+            <state relative-caret-position="486">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -115,8 +117,8 @@
       <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php56-fpm/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state relative-caret-position="472">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -140,15 +142,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/php56-fpm/Dockerfile" />
         <option value="$PROJECT_DIR$/php56-mysql/Dockerfile" />
-        <option value="$PROJECT_DIR$/php7-fpm/Dockerfile" />
         <option value="$PROJECT_DIR$/php56-fpm/README.md" />
         <option value="$PROJECT_DIR$/php7-fpm/README.md" />
         <option value="$PROJECT_DIR$/php56/Dockerfile" />
         <option value="$PROJECT_DIR$/php7/Dockerfile" />
         <option value="$PROJECT_DIR$/php56/README.md" />
         <option value="$PROJECT_DIR$/php7/README.md" />
+        <option value="$PROJECT_DIR$/php56-fpm/Dockerfile" />
+        <option value="$PROJECT_DIR$/php7-fpm/Dockerfile" />
       </list>
     </option>
   </component>
@@ -388,7 +390,7 @@
       <workItem from="1480282927428" duration="440000" />
       <workItem from="1480283388611" duration="606000" />
       <workItem from="1480285856562" duration="381000" />
-      <workItem from="1480296750026" duration="711000" />
+      <workItem from="1480296750026" duration="1655000" />
     </task>
     <task id="LOCAL-00001" summary="Added the Daemonize to the docker image.">
       <created>1480040212361</created>
@@ -432,11 +434,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480297456251</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Changed XDebug Port to 9001">
+      <created>1480297484763</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1480297484763</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14957000" />
+    <option name="totallyTimeSpent" value="15901000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1600" height="904" extended-state="6" />
@@ -494,7 +503,8 @@
     <MESSAGE value="Added the &quot;remote&quot; enable on following the article: https://gist.github.com/chadrien/c90927ec2d160ffea9c4" />
     <MESSAGE value="Added the PHP MD" />
     <MESSAGE value="Update README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update README" />
+    <MESSAGE value="Changed XDebug Port to 9001" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed XDebug Port to 9001" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -850,14 +860,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phpmd" />
-    <entry file="file://$PROJECT_DIR$/php56-fpm/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php56-fpm/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -869,14 +871,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php7-fpm/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="31" column="31" lean-forward="false" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php7-fpm/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -885,14 +879,6 @@
             <folding />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/php7/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -921,7 +907,31 @@
     <entry file="file://$PROJECT_DIR$/php56/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
-          <caret line="29" column="88" lean-forward="true" selection-start-line="28" selection-start-column="92" selection-end-line="29" selection-end-column="88" />
+          <caret line="29" column="83" lean-forward="false" selection-start-line="28" selection-start-column="92" selection-end-line="29" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php56-fpm/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php7/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php7-fpm/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
