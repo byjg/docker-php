@@ -17,8 +17,7 @@ This package contains:
 ftp, gd, hash, iconv, intl, json, libxml, mbstring, mcrypt, mysql, mysqli
 mysqlnd, openssl, pcre, PDO, pdo_mysql, pdo_sqlite, Phar, posix, readline,
 redis, Reflection, session, SimpleXML, SPL, sqlite3, standard, tokenizer,
-xdebug, xml, xmlreader, xmlwriter, zlib, Xdebug
-
+xdebug, xml, xmlreader, xmlwriter, zlib, Xdebug (Port 9001)
 
 # Build
 
