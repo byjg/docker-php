@@ -35,6 +35,11 @@ RUN pecl install -o -f redis-2.2.8 \
 && rm -rf /tmp/pear \
 && docker-php-ext-enable redis
 
+# Install memcached
+RUN apt-get install -y libmemcached-dev \
+&& pecl install memcached \
+&& docker-php-ext-enable memcached
+
 
 
 # Install Composer
