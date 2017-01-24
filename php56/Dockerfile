@@ -1,32 +1,75 @@
-FROM alpine:3.4
+FROM php:5-alpine
 
 MAINTAINER Joao Gilberto Magalhaes
 
-# Update Repository
-RUN apk update
-RUN apk add \
-	--no-cache -v \
-	--repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-	php5-cli php5-curl php5-xml php5-json php5-gd php5-memcache php5-shmop \
-	php5-mysql php5-pdo php5-xsl php5-dom php5-iconv php5-mcrypt php5-openssl \
-	php5-phar php5-pdo_mysql
+RUN docker-php-ext-install \
+    exif \
+    mbstring \
+    mysqli \
+    pdo_mysql
 
-# Install Dependences for Composer
-RUN apk add git unzip
+RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+&& docker-php-ext-configure gd \
+    --with-gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/  \
+&& NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+&& docker-php-ext-install -j${NPROC} gd  \
+&& apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+
+RUN apk add --no-cache icu-dev \
+&& docker-php-ext-install intl
+
+RUN apk add --no-cache libmcrypt-dev \
+&& docker-php-ext-install mcrypt
+
+# Install Redis
+RUN apk add --no-cache autoconf gcc g++ make \
+&& pecl install -o -f redis \
+&& rm -rf /tmp/pear \
+&& docker-php-ext-enable redis \
+&& apk del --no-cache autoconf gcc g++ make
+
+# Install XDebug
+RUN apk add --no-cache autoconf gcc g++ make \
+&& pecl install xdebug \
+&& docker-php-ext-enable xdebug \
+&& echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+&& apk del --no-cache autoconf gcc g++ make
+
+# Install memcached
+RUN apk add --no-cache libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sasl-dev cyrus-sasl zlib  \
+&& pecl install memcached \
+&& docker-php-ext-enable memcached \
+&& apk del --no-cache libmemcached-dev libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sasl-dev
+
+RUN apk add --nocache git
 
 # Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === 'aa96f26c2b67226a324c27919f1eb05f21c248b987e6195cad9690d5c1ff713d53020a02ac8c217dbf90a7eacc9d141d') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
-RUN mv composer.phar /usr/local/bin/composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+&& php composer-setup.php \
+&& php -r "unlink('composer-setup.php');" \
+&& mv composer.phar /usr/local/bin/composer
 
 # Install PHPUnit
-RUN composer global require "phpunit/phpunit=4.7.*"
-RUN ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/
+RUN COMPOSER_HOME="/opt/.composer" composer global require "phpunit/phpunit=4.7.*" \
+&& ln -s /opt/.composer/vendor/bin/phpunit /usr/local/bin/
 
 # Install Migration ByJG
-RUN composer global require "byjg/migration=1.0.*"
-RUN ln -s /root/.composer/vendor/bin/migrate /usr/local/bin/
+RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/migration=1.0.*" \
+&& ln -s /opt/.composer/vendor/bin/migrate /usr/local/bin/
 
+# Install Daemonize ByJG
+RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/php-daemonize=1.2.*" \
+&& ln -s /opt/.composer/vendor/bin/daemonize /usr/local/bin/
 
+RUN COMPOSER_HOME="/opt/.composer" composer global require "squizlabs/php_codesniffer=*" \
+&& ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
+&& ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/
+
+RUN COMPOSER_HOME=/opt/.composer composer global require "phpmd/phpmd:@stable" \
+&& ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/
