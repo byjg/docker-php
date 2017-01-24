@@ -47,7 +47,7 @@ RUN apk add --no-cache libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sas
 && docker-php-ext-enable memcached \
 && apk del --no-cache libmemcached-dev libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sasl-dev
 
-RUN apk add --nocache git
+RUN apk add --no-cache git
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
