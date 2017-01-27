@@ -49,6 +49,10 @@ RUN apt-get install -y libmemcached-dev \
    rm /tmp/memcached.tar.gz \
 && docker-php-ext-enable memcached
 
+# Install Xsl
+RUN apt-get install libxslt1.1 libxslt1-dev \
+&& docker-php-ext-install xsl
+
 
 
 # Install Composer

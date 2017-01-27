@@ -1,4 +1,4 @@
-FROM php:5.6.28
+FROM php:5
 
 MAINTAINER Joao Gilberto Magalhaes
 
@@ -39,6 +39,10 @@ RUN pecl install -o -f redis-2.2.8 \
 RUN apt-get install -y libmemcached-dev \
 && pecl install memcached \
 && docker-php-ext-enable memcached
+
+# Install Xsl
+RUN apt-get install libxslt1.1 libxslt1-dev \
+&& docker-php-ext-install xsl
 
 
 
