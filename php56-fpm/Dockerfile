@@ -47,7 +47,13 @@ RUN apk add --no-cache libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sas
 && docker-php-ext-enable memcached \
 && apk del --no-cache autoconf gcc g++ make zlib-dev cyrus-sasl-dev
 
-RUN apk add --no-cache git
+# Install Xsl
+RUN apk add --no-cache libxslt libxslt-dev \
+&& docker-php-ext-install xsl \
+&& apk del --no-cache libxslt-dev
+
+# Install Other Deoendencies
+RUN apk add --no-cache git openssh-client
 
 
 # Install Composer
