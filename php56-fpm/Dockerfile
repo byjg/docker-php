@@ -35,7 +35,7 @@ RUN pecl install -o -f redis-2.2.8 \
 
 # Install memcached
 RUN apt-get install -y libmemcached-dev \
-&& pecl install memcached \
+&& pecl install memcached-2.2.0 \
 && docker-php-ext-enable memcached
 
 # Install Xsl
