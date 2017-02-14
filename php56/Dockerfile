@@ -65,14 +65,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN COMPOSER_HOME="/opt/.composer" composer global require "phpunit/phpunit=4.7.*" \
 && ln -s /opt/.composer/vendor/bin/phpunit /usr/local/bin/
 
-# Install Migration ByJG
-RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/migration=1.0.*" \
-&& ln -s /opt/.composer/vendor/bin/migrate /usr/local/bin/
-
-# Install Daemonize ByJG
-RUN COMPOSER_HOME="/opt/.composer" composer global require "byjg/php-daemonize=1.2.*" \
-&& ln -s /opt/.composer/vendor/bin/daemonize /usr/local/bin/
-
 RUN COMPOSER_HOME="/opt/.composer" composer global require "squizlabs/php_codesniffer=*" \
 && ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
 && ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/
