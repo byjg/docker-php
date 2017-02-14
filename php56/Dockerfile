@@ -43,7 +43,7 @@ RUN apk add --no-cache autoconf gcc g++ make \
 
 # Install memcached
 RUN apk add --no-cache libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sasl-dev cyrus-sasl zlib  \
-&& pecl install memcached \
+&& pecl install memcached-2.2.0 \
 && docker-php-ext-enable memcached \
 && apk del --no-cache autoconf gcc g++ make zlib-dev cyrus-sasl-dev
 
