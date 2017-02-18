@@ -66,6 +66,25 @@ RUN apk add --no-cache libxslt libxslt-dev \
 # Install Other Dependencies
 RUN apk add --no-cache git openssh-client
 
+# Install PDO Postgres
+RUN apk add --no-cache libpq postgresql-dev \
+&& docker-php-ext-install pdo_pgsql \
+&& apk del --no-cache postgresql-dev
+
+# Install PDO DbLib
+RUN apk add --no-cache freetds freetds-dev \
+&& docker-php-ext-install pdo_dblib \
+&& apk del --no-cache freetds-dev
+
+# Install MongoDB
+RUN apk add --no-cache autoconf gcc g++ make openssl-dev \
+&& pecl install mongodb \
+&& docker-php-ext-enable mongodb \
+&& apk del --no-cache autoconf gcc g++ make openssl-dev
+
+
+
+
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \

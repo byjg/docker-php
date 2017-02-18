@@ -6,7 +6,8 @@ RUN docker-php-ext-install \
     exif \
     mbstring \
     mysqli \
-    pdo_mysql
+    pdo_mysql \
+    pcntl
 
 RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
 && docker-php-ext-configure gd \
@@ -51,6 +52,27 @@ RUN apk add --no-cache libmemcached-dev autoconf gcc g++ make zlib-dev cyrus-sas
 RUN apk add --no-cache libxslt libxslt-dev \
 && docker-php-ext-install xsl \
 && apk del --no-cache libxslt-dev
+
+# Install PDO Postgres
+RUN apk add --no-cache libpq postgresql-dev \
+&& docker-php-ext-install pdo_pgsql \
+&& apk del --no-cache postgresql-dev
+
+# Install PDO DbLib
+RUN apk add --no-cache freetds freetds-dev \
+&& docker-php-ext-install pdo_dblib \
+&& apk del --no-cache freetds-dev
+
+# Install MongoDB
+RUN apk add --no-cache autoconf gcc g++ make openssl-dev \
+&& pecl install mongodb \
+&& docker-php-ext-enable mongodb \
+&& apk del --no-cache autoconf gcc g++ make openssl-dev
+
+
+
+
+
 
 # Install other dependencies
 RUN apk add --no-cache git openssh-client
