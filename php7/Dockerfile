@@ -52,8 +52,22 @@ RUN apt-get install -y libmemcached-dev \
 && docker-php-ext-enable memcached
 
 # Install Xsl
-RUN apt-get install libxslt1.1 libxslt1-dev \
+RUN apt-get install -y libxslt1.1 libxslt1-dev \
 && docker-php-ext-install xsl
+
+# Install PDO Postgres
+RUN apt-get install -y libpq5 libpq-dev \
+&& docker-php-ext-install pdo_pgsql
+
+# Install PDO DbLib
+RUN apt-get install -y libdbd-freetds libsybdb5 freetds-dev \
+&& ln -s /usr/lib/x86_64-linux-gnu/libsybdb.a /usr/lib/ \
+&& docker-php-ext-install pdo_dblib
+
+# Install MongoDB
+RUN pecl install mongodb \
+&& docker-php-ext-enable mongodb
+
 
 
 
