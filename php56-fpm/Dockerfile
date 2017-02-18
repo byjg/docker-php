@@ -15,7 +15,7 @@ RUN apt-get install -y libfreetype6-dev libgd-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr && \
     docker-php-ext-install gd exif
 
-RUN docker-php-ext-install mysql mysqli pdo pdo_mysql
+RUN docker-php-ext-install mysql mysqli pdo pdo_mysql pcntl
 
 RUN apt-get install -y libmcrypt-dev && \
     docker-php-ext-install mcrypt
