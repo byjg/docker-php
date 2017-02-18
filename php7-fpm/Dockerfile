@@ -6,7 +6,8 @@ RUN docker-php-ext-install \
     exif \
     mbstring \
     mysqli \
-    pdo_mysql
+    pdo_mysql \
+    pcntl
 
 RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
 && docker-php-ext-configure gd \
