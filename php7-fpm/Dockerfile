@@ -83,6 +83,10 @@ RUN apk add --no-cache autoconf gcc g++ make openssl-dev \
 && docker-php-ext-enable mongodb \
 && apk del --no-cache autoconf gcc g++ make openssl-dev
 
+# Install Zip
+RUN apk add --no-cache zlib zlib-dev \
+&& docker-php-ext-install zip \
+&& apk del --no-cache zlib-dev
 
 
 
