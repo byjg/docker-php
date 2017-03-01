@@ -85,6 +85,10 @@ RUN apk add --no-cache zlib zlib-dev \
 && docker-php-ext-install zip \
 && apk del --no-cache zlib-dev
 
+# Install Soap
+RUN apk add --no-cache libxml2 libxml2-dev \
+&& docker-php-ext-install soap \
+&& apk del --no-cache libxml2-dev
 
 
 
