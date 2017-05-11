@@ -81,11 +81,9 @@ RUN apk add --no-cache libxml2 libxml2-dev \
 
 
 
-
-
-
-# Install other dependencies
+# Install Other Dependencies
 RUN apk add --no-cache git openssh-client
+
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \

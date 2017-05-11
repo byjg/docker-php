@@ -64,9 +64,6 @@ RUN apk add --no-cache libxslt libxslt-dev \
 && docker-php-ext-install xsl \
 && apk del --no-cache libxslt-dev
 
-# Install Other Dependencies
-RUN apk add --no-cache git openssh-client
-
 # Install PDO Postgres
 RUN apk add --no-cache libpq postgresql-dev \
 && docker-php-ext-install pdo_pgsql \
@@ -95,7 +92,8 @@ RUN apk add --no-cache libxml2 libxml2-dev \
 
 
 
-
+# Install Other Dependencies
+RUN apk add --no-cache git openssh-client
 
 
 # Install Composer
@@ -104,4 +102,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 && php -r "unlink('composer-setup.php');" \
 && mv composer.phar /usr/local/bin/composer
 
-EXPOSE 9000
+
+
