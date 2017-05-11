@@ -27,7 +27,7 @@ RUN apk add --no-cache libmcrypt-dev \
 
 # Install Redis
 RUN apk add --no-cache autoconf gcc g++ make \
-&& pecl install -o -f redis \
+&& pecl install -o -f redis-2.2.8 \
 && rm -rf /tmp/pear \
 && docker-php-ext-enable redis \
 && apk del --no-cache autoconf gcc g++ make
@@ -76,7 +76,7 @@ RUN apk add --no-cache zlib zlib-dev \
 
 # Install Soap
 RUN apk add --no-cache libxml2 libxml2-dev \
-&& docker-php-ext-install soap \
+&& docker-php-ext-install dom soap \
 && apk del --no-cache libxml2-dev
 
 

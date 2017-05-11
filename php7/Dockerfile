@@ -87,7 +87,7 @@ RUN apk add --no-cache zlib zlib-dev \
 
 # Install Soap
 RUN apk add --no-cache libxml2 libxml2-dev \
-&& docker-php-ext-install soap \
+&& docker-php-ext-install dom soap \
 && apk del --no-cache libxml2-dev
 
 
