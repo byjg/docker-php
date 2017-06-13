@@ -87,13 +87,14 @@ RUN apk add --no-cache zlib zlib-dev \
 
 # Install Soap
 RUN apk add --no-cache libxml2 libxml2-dev \
-&& docker-php-ext-install soap \
+&& docker-php-ext-install dom soap \
 && apk del --no-cache libxml2-dev
 
 
 
 # Install Other Dependencies
 RUN apk add --no-cache git openssh-client
+
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
