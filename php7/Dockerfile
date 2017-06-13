@@ -75,10 +75,10 @@ RUN apk add --no-cache freetds freetds-dev \
 && apk del --no-cache freetds-dev
 
 # Install MongoDB
-RUN apk add --no-cache autoconf gcc g++ make openssl-dev \
+RUN apk add --no-cache autoconf gcc g++ make openssl-dev pcre-dev \
 && pecl install mongodb \
 && docker-php-ext-enable mongodb \
-&& apk del --no-cache autoconf gcc g++ make openssl-dev
+&& apk del --no-cache autoconf gcc g++ make openssl-dev pcre-dev
 
 # Install Zip
 RUN apk add --no-cache zlib zlib-dev \
