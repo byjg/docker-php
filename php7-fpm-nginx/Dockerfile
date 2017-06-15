@@ -149,7 +149,6 @@ COPY conf/nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 COPY conf/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 80 443
-
 STOPSIGNAL SIGQUIT
 
 CMD ["/usr/bin/supervisord",  "-n",  "-c", "/etc/supervisord.conf" ]
