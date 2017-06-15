@@ -65,7 +65,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer \
  && COMPOSER_HOME="/opt/.composer" \
     composer global require \
-        "phpunit/phpunit=6.1.*" \
+        "phpunit/phpunit=4.7.*" \
         "squizlabs/php_codesniffer=*" \
         "phpmd/phpmd:@stable" \
  && ln -s /opt/.composer/vendor/bin/phpunit /usr/local/bin/ \
