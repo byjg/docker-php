@@ -5,8 +5,11 @@ MAINTAINER Joao Gilberto Magalhaes
 ENV NGINX_VERSION 1.12.0
 ENV MORE_SET_HEADER_VERSION 0.32
 
-RUN apk add --no-cache supervisor \
-    && GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
+COPY script/start-fpm.sh /start-fpm.sh
+RUN apk add --no-cache supervisor bash \
+ && chmod a+x /start-fpm.sh
+
+RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     && CONFIG="\
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
