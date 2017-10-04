@@ -2,7 +2,7 @@ FROM php:5-fpm-alpine
 
 MAINTAINER Joao Gilberto Magalhaes
 
-RUN apk add --no-cache --virtual .build autoconf gcc g++ make \
+RUN apk add --no-cache --virtual .build autoconf gcc g++ make bash \
  && apk add --no-cache --virtual .gd freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
  && apk add --no-cache --virtual .icu icu-dev \
  && apk add --no-cache --virtual .mcrypt libmcrypt-dev \
@@ -51,7 +51,7 @@ RUN apk add --no-cache --virtual .build autoconf gcc g++ make \
  && pecl install memcached-2.2.0 \
  && docker-php-ext-enable memcached \
  && echo ==MongoDb==  \
- && pecl install mongodb \
+ && /bin/bash -lc "pecl install mongodb" \
  && docker-php-ext-enable mongodb \
  && echo ==Other Dependencies==  \
  && apk add --no-cache git openssh-client \
