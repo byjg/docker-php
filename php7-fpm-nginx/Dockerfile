@@ -147,6 +147,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 COPY conf/supervisord.conf /etc/supervisord.conf
+COPY script/exit-event-listener.py /exit-event-listener.py
 
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
