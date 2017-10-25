@@ -23,6 +23,7 @@ RUN apk add --no-cache --virtual .build autoconf gcc g++ make bash \
  && docker-php-ext-install -j${NPROC} \
         exif \
         mbstring \
+        mysql \
         mysqli \
         pdo_mysql \
         pcntl \
