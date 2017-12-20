@@ -1,8 +1,8 @@
-# Docker PHP 7.0 Cli
+# Docker PHP 5.6 Cli
 
-An Docker image with PHP 7.0 Cli. This package contains:
+An Docker image with PHP 5.6 Cli. This package contains:
 
-- PHP 7.0 Cli (with extensions Json, Xml, Curl)
+- PHP 5.6 Cli (with extensions Json, Xml, Curl)
 - PHPUnit 5.2
 - ByJG Migrate
 

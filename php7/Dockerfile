@@ -1,48 +1,54 @@
-FROM php:7
+FROM php:7.0-alpine
 
 MAINTAINER Joao Gilberto Magalhaes
 
-RUN apt-get -y update
-
-RUN docker-php-ext-install \
-    exif \
-    mbstring \
-    mysqli \
-    pdo_mysql \
-    pcntl
-
-RUN apt-get install -y libfreetype6-dev libpng-dev libgd-dev libjpeg62-turbo-dev  \
-&& docker-php-ext-configure gd \
+RUN apk add --no-cache --virtual .build autoconf gcc g++ make bash \
+ && apk add --no-cache --virtual .gd freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+ && apk add --no-cache --virtual .icu icu-dev \
+ && apk add --no-cache --virtual .mcrypt libmcrypt-dev \
+ && apk add --no-cache --virtual .memcached libmemcached zlib cyrus-sasl libmemcached-dev zlib-dev cyrus-sasl-dev \
+ && apk add --no-cache --virtual .xslt libxslt libxslt-dev \
+ && apk add --no-cache --virtual .postgres libpq postgresql-dev \
+ && apk add --no-cache --virtual .freetds freetds freetds-dev \
+ && apk add --no-cache --virtual .mongodb openssl-dev pcre-dev \
+ && apk add --no-cache --virtual .zlib zlib zlib-dev \
+ && apk add --no-cache --virtual .xml libxml2 libxml2-dev \
+ && apk add --no-cache --virtual .gettext gettext-dev \
+ && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+ && docker-php-ext-configure gd \
     --with-gd \
     --with-freetype-dir=/usr/include/ \
     --with-png-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/  \
-&& NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-&& docker-php-ext-install -j${NPROC} gd
-
-RUN apt-get install -y libicu-dev \
-&& docker-php-ext-install intl
-
-RUN apt-get install -y libmcrypt-dev \
-&& docker-php-ext-install mcrypt
-
-# Install Redis
-RUN pecl install -o -f redis \
-&& rm -rf /tmp/pear \
-&& docker-php-ext-enable redis \
-&& apt-get remove -y build-essential && apt-get autoremove && apt-get clean
-
-# Install XDebug
-RUN pecl install xdebug \
-&& docker-php-ext-enable xdebug \
-&& echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-&& echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-&& echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-&& echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-# Install memcached
-RUN apt-get install -y libmemcached-dev \
-&& curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
+ && docker-php-ext-install -j${NPROC} \
+        exif \
+        mbstring \
+        mysqli \
+        pdo_mysql \
+        pcntl \
+        intl \
+        mcrypt \
+        xsl \
+        pdo_pgsql \
+        pdo_dblib \
+        zip \
+        dom \
+        soap \
+        gd \
+        gettext \
+ && echo ==Redis== \
+ && pecl install -o -f redis \
+ && rm -rf /tmp/pear \
+ && docker-php-ext-enable redis \
+ && echo ==XDebug==  \
+ && pecl install xdebug \
+ && docker-php-ext-enable xdebug \
+ && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+ && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+ && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+ && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+ && echo ==Memcached==  \
+ && curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
    mkdir -p memcached && \
    tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
    ( \
@@ -53,53 +59,27 @@ RUN apt-get install -y libmemcached-dev \
        make install \
    ) && \
    rm -r memcached && \
-   rm /tmp/memcached.tar.gz \
-&& docker-php-ext-enable memcached
-
-# Install Xsl
-RUN apt-get install -y libxslt1.1 libxslt1-dev \
-&& docker-php-ext-install xsl
-
-# Install PDO Postgres
-RUN apt-get install -y libpq5 libpq-dev \
-&& docker-php-ext-install pdo_pgsql
-
-# Install PDO DbLib
-RUN apt-get install -y libdbd-freetds libsybdb5 freetds-dev \
-&& ln -s /usr/lib/x86_64-linux-gnu/libsybdb.a /usr/lib/ \
-&& docker-php-ext-install pdo_dblib
-
-# Install MongoDB
-RUN pecl install mongodb \
-&& docker-php-ext-enable mongodb
-
-# Install Zip
-RUN apt-get install -y zlib1g-dev \
-&& docker-php-ext-install zip
-
-# Install Soap
-RUN apt-get install -y libxml2-dev \
-&& docker-php-ext-install dom soap
-
-
-
-# Install Other Dependencies
-RUN apt-get install -y git openssh-client
+   rm /tmp/memcached.tar.gz && \
+   docker-php-ext-enable memcached \
+ && echo ==MongoDb==  \
+ && /bin/bash -lc "pecl install mongodb" \
+ && docker-php-ext-enable mongodb \
+ && echo ==Other Dependencies==  \
+ && apk add --no-cache git openssh-client \
+ && apk del .build
 
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-&& php composer-setup.php \
-&& php -r "unlink('composer-setup.php');" \
-&& mv composer.phar /usr/local/bin/composer
-
-# Install PHPUnit
-RUN COMPOSER_HOME="/opt/.composer" composer global require "phpunit/phpunit=6.1.*" \
-&& ln -s /opt/.composer/vendor/bin/phpunit /usr/local/bin/
-
-RUN COMPOSER_HOME="/opt/.composer" composer global require "squizlabs/php_codesniffer=*" \
-&& ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
-&& ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/
-
-RUN COMPOSER_HOME=/opt/.composer composer global require "phpmd/phpmd:@stable" \
-&& ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/
+ && php composer-setup.php \
+ && php -r "unlink('composer-setup.php');" \
+ && mv composer.phar /usr/local/bin/composer \
+ && COMPOSER_HOME="/opt/.composer" \
+    composer global require \
+        "phpunit/phpunit=6.1.*" \
+        "squizlabs/php_codesniffer=*" \
+        "phpmd/phpmd:@stable" \
+ && ln -s /opt/.composer/vendor/bin/phpunit /usr/local/bin/ \
+ && ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
+ && ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/ \
+ && ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/

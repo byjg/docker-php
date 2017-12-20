@@ -1,8 +1,10 @@
-FROM byjg/php56:latest
+FROM byjg/php56:alpine
 
 MAINTAINER Joao Gilberto Magalhaes
 
-RUN echo 'mysql-server-5.5 mysql-server/root_password password password' | debconf-set-selections
-RUN echo 'mysql-server-5.5 mysql-server/root_password_again password password' |debconf-set-selections
-RUN apt-get install -y mysql-server-5.5 
+RUN apk add --no-cache mysql mysql-client
 
+RUN /usr/bin/mysql_install_db --user=mysql
+
+#RUN /etc/init.d/mariadb start && rc-update add mariadb default
+#RUN /usr/bin/mysqladmin -u root password 'password'
