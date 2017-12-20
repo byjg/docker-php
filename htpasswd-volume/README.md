@@ -5,7 +5,7 @@ docker containers that requires a htpasswd file.
 
 ## Basic Usage
 
-You have to define at least 3 variables. Once the container is up and running will
+You have to define at least 3 variables (HTCOUNT, USER1 and PWD1). Once the container is up and running will
 have a file `/etc/htpasswd.d/htpasswd` with the passwords.
 
 **Create the volume**
