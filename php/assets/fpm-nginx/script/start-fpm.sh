@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+FPMCONFIG="/etc/php7/php-fpm.d/www.conf"
+if [ ! -f "$FPMCONFIG" ]
+then
+    FPMCONFIG="/usr/local/etc/php-fpm.d/www.conf"
+fi
+
 # Function to update the fpm configuration to make the service environment variables available
 function setEnvironmentVariable() {
 
@@ -9,12 +15,12 @@ function setEnvironmentVariable() {
     fi
 
     # Check whether variable already exists
-    if grep -q $1 /usr/local/etc/php-fpm.d/www.conf; then
+    if grep -q $1 "$FPMCONFIG"; then
         # Reset variable
-        sed -i "s~^env\[$1\].*~env[$1] = $2~g" /usr/local/etc/php-fpm.d/www.conf
+        sed -i "s~^env\[$1\].*~env[$1] = $2~g" "$FPMCONFIG"
     else
         # Add variable
-        echo "env[$1] = $2" >> /usr/local/etc/php-fpm.d/www.conf
+        echo "env[$1] = $2" >> "$FPMCONFIG"
     fi
 }
 
@@ -29,4 +35,4 @@ done
 echo "DONE"
 
 # Now start php-fpm
-/usr/local/sbin/php-fpm --nodaemonize --fpm-config /usr/local/etc/php-fpm.d/www.conf
+`which php-fpm` --nodaemonize --fpm-config "$FPMCONFIG"

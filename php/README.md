@@ -9,12 +9,18 @@ This images is ready to use in:
 
 ### Supported Tags
 
-- 7-cli
-- 7-fpm
-- 7-fpm-nginx
-- 56-cli
-- 56-fpm
-- 56-fpm-nginx
+- 7.2-cli
+- 7.2-fpm
+- 7.2-fpm-nginx
+- 7.1-cli
+- 7.1-fpm
+- 7.1-fpm-nginx
+- 7.0-cli
+- 7.0-fpm
+- 7.0-fpm-nginx
+- 5.6-cli
+- 5.6-fpm
+- 5.6-fpm-nginx
 
 ### Content of this Images
 

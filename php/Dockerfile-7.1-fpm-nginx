@@ -1,6 +1,8 @@
-FROM byjg/php:56-fpm
+FROM byjg/php:7.1-fpm
 
 MAINTAINER Joao Gilberto Magalhaes
+
+WORKDIR /var/www/html
 
 ENV NGINX_VERSION 1.12.0
 ENV MORE_SET_HEADER_VERSION 0.32
@@ -134,8 +136,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
             | sort -u \
     )" \
     && apk add --no-cache --virtual .nginx-rundeps $runDeps \
-    && apk del .build-deps \
-    && apk del .gettext \
+    && apk del --no-cache .build-deps \
+    && apk del --no-cache .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
     \
     # forward request and error logs to docker log collector

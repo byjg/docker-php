@@ -1,4 +1,4 @@
-FROM byjg/php:7-fpm
+FROM byjg/php:7.0-fpm
 
 MAINTAINER Joao Gilberto Magalhaes
 
