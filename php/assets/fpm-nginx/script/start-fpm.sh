@@ -3,7 +3,7 @@
 FPMCONFIG="/etc/php7/php-fpm.d/www.conf"
 if [ ! -f "$FPMCONFIG" ]
 then
-    FPMCONFIG="/usr/local/etc/php-fpm.d/www.conf"
+    FPMCONFIG="/etc/php5/php-fpm.conf"
 fi
 
 # Function to update the fpm configuration to make the service environment variables available
