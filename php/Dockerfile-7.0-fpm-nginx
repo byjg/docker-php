@@ -2,6 +2,8 @@ FROM byjg/php:7.0-fpm
 
 MAINTAINER Joao Gilberto Magalhaes
 
+WORKDIR /var/www/html
+
 ENV NGINX_VERSION 1.12.0
 ENV MORE_SET_HEADER_VERSION 0.32
 
