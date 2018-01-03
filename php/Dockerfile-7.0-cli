@@ -1,75 +1,58 @@
-FROM php:7.0-alpine
+FROM alpine:3.5
 
 MAINTAINER Joao Gilberto Magalhaes
 
-RUN apk add --no-cache --virtual .build autoconf gcc g++ make bash \
- && apk add --no-cache --virtual .gd freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
- && apk add --no-cache --virtual .icu icu-dev \
- && apk add --no-cache --virtual .mcrypt libmcrypt-dev \
- && apk add --no-cache --virtual .memcached libmemcached zlib cyrus-sasl libmemcached-dev zlib-dev cyrus-sasl-dev \
- && apk add --no-cache --virtual .xslt libxslt libxslt-dev \
- && apk add --no-cache --virtual .postgres libpq postgresql-dev \
- && apk add --no-cache --virtual .freetds freetds freetds-dev \
- && apk add --no-cache --virtual .mongodb openssl-dev pcre-dev \
- && apk add --no-cache --virtual .zlib zlib zlib-dev \
- && apk add --no-cache --virtual .xml libxml2 libxml2-dev \
- && apk add --no-cache --virtual .gettext gettext-dev \
- && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
- && docker-php-ext-configure gd \
-    --with-gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/  \
- && docker-php-ext-install -j${NPROC} \
-        exif \
-        mbstring \
-        mysqli \
-        pdo_mysql \
-        pcntl \
-        intl \
-        mcrypt \
-        xsl \
-        pdo_pgsql \
-        pdo_dblib \
-        zip \
-        dom \
-        soap \
-        gd \
-        gettext \
- && echo ==Redis== \
- && pecl install -o -f redis \
- && rm -rf /tmp/pear \
- && docker-php-ext-enable redis \
- && echo ==XDebug==  \
- && pecl install xdebug \
- && docker-php-ext-enable xdebug \
- && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
- && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
- && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
- && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
- && echo ==Memcached==  \
- && curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
-   mkdir -p memcached && \
-   tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
-   ( \
-       cd memcached && \
-       phpize && \
-       ./configure && \
-       make -j$(nproc) && \
-       make install \
-   ) && \
-   rm -r memcached && \
-   rm /tmp/memcached.tar.gz && \
-   docker-php-ext-enable memcached \
- && echo ==MongoDb==  \
- && /bin/bash -lc "pecl install mongodb" \
- && docker-php-ext-enable mongodb \
- && echo ==Other Dependencies==  \
- && apk add --no-cache git openssh-client \
- && apk del .build
+WORKDIR /srv/web
 
+# Install Packages
+RUN apk add --no-cache \
+    php7 \
+    php7-common \
+    php7-ctype \
+    php7-curl \
+    php7-dom \
+    php7-exif \
+    php7-ftp \
+    php7-gd \
+    php7-gettext \
+    php7-iconv \
+    php7-intl \
+    php7-json \
+    php7-mbstring \
+    php7-mcrypt \
+    php7-mysqli \
+    php7-mysqlnd \
+    php7-openssl \
+    php7-pcntl \
+    php7-pdo_dblib \
+    php7-pdo_mysql \
+    php7-pdo_pgsql \
+    php7-pdo \
+    php7-pdo_sqlite \
+    php7-pear \
+    php7-phar \
+    php7-posix \
+    php7-session \
+    php7-shmop \
+    php7-soap \
+    php7-sqlite3 \
+    php7-xdebug \
+    php7-xml \
+    php7-xmlreader \
+    php7-xsl \
+    php7-zip \
+    php7-zlib \
+ && ln -s /usr/bin/php7 /usr/bin/php
 
-# Install Composer
+RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
+ && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \
+ && sed -ie "s/ -n / /" /usr/bin/pecl \
+ && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/30-mongodb.ini \
+ && pecl install redis && echo "extension=redis.so" > /etc/php7/conf.d/30-redis.ini \
+ && pecl install memcached && echo "extension=memcached.so" > /etc/php7/conf.d/30-memcached.ini \
+ && apk del --no-cache .build
+
+# Install Composer & PhpUnit, PHPCS, PHPMD, PHPCBF
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
