@@ -50,6 +50,7 @@ RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/30-mongodb.ini \
  && pecl install redis && echo "extension=redis.so" > /etc/php7/conf.d/30-redis.ini \
  && pecl install memcached && echo "extension=memcached.so" > /etc/php7/conf.d/30-memcached.ini \
+ && echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini \
  && apk del --no-cache .build
 
 # Install Composer & PhpUnit, PHPCS, PHPMD, PHPCBF
