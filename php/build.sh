@@ -24,6 +24,14 @@ then
 fi
 
 
+#docker rmi byjg/php:$1-base
+docker build -t byjg/php:$1-base -f Dockerfile-$1-base .
+if [[ $? -ne 0 ]]; then
+    echo "Error"
+    exit 1
+fi
+if [ ! -z "$3" ]; then docker push byjg/php:$1-base; fi
+
 #docker rmi byjg/php:$1-cli
 docker build -t byjg/php:$1-cli -f Dockerfile-$1-cli .
 if [[ $? -ne 0 ]]; then

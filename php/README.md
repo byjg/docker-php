@@ -11,20 +11,24 @@ This images is ready to use in:
 
 ### Supported Tags
 
+- 7.2-base
 - 7.2-cli
 - 7.2-fpm
 - 7.2-fpm-nginx
+- 7.1-base
 - 7.1-cli
 - 7.1-fpm
 - 7.1-fpm-nginx
+- 7.0-base
 - 7.0-cli
 - 7.0-fpm
 - 7.0-fpm-nginx
+- 5.6-base
 - 5.6-cli
 - 5.6-fpm
 - 5.6-fpm-nginx
 
-### Content of this Images
+### The base Image 
 
 All images are based on Alpine Linux and have less layers can be possible.
 
@@ -93,10 +97,10 @@ You can set your own FPM configurations by attaching a volume to:
 
 Below a table with images uncompressed
 
-| PHP Version   | cli   | fpm    | fpm-nginx |
-|:-------------:|:-----:|:------:|:---------:|
-| 5.6           | 129MB | 105MB  | 150MB     |
-| 7.0           | 137MB | 99.6MB | 146MB     |
-| 7.1           | 134MB | 96.7MB | 143MB     |
-| 7.2           | 139MB | 104MB  | 150MB     |
+| PHP Version   | base   | cli   | fpm    | fpm-nginx |
+|:-------------:|:------:|:-----:|:------:|:---------:|
+| 5.6           |   94MB | 131MB | 109MB  | 156MB     |
+| 7.0           | 92.6MB | 136MB | 101MB  | 147MB     |
+| 7.1           | 82.4MB | 126MB | 87MB   | 134MB     |
+| 7.2           |   94MB | 140MB | 104MB  | 151MB     |
 

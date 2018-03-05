@@ -1,0 +1,57 @@
+FROM alpine:3.7
+
+MAINTAINER Joao Gilberto Magalhaes
+
+WORKDIR /srv/web
+
+# Install Packages
+RUN apk add --no-cache \
+    php5 \
+    php5-common \
+    php5-ctype \
+    php5-curl \
+    php5-dom \
+    php5-exif \
+    php5-ftp \
+    php5-gd \
+    php5-gettext \
+    php5-iconv \
+    php5-intl \
+    php5-json \
+    php5-mcrypt \
+    php5-mysqli \
+    php5-openssl \
+    php5-pcntl \
+    php5-pdo_dblib \
+    php5-pdo_mysql \
+    php5-pdo_pgsql \
+    php5-pdo \
+    php5-pdo_sqlite \
+    php5-pear \
+    php5-phar \
+    php5-posix \
+    php5-shmop \
+    php5-soap \
+    php5-sqlite3 \
+    php5-xml \
+    php5-xmlreader \
+    php5-xsl \
+    php5-zip \
+    php5-zlib \
+    && ln -s /usr/bin/php5 /usr/bin/php
+
+RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
+ && apk add --no-cache --virtual .build php5-pear php5-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \
+ && sed -ie "s/ -n / /" /usr/bin/pecl \
+ && pecl install mongodb && echo "extension=mongodb.so" > /etc/php5/conf.d/30-mongodb.ini \
+ && pecl install -o -f redis-2.2.8 && echo "extension=redis.so" > /etc/php5/conf.d/30-redis.ini \
+ && pecl install memcached-2.2.0 && echo "extension=memcached.so" > /etc/php5/conf.d/30-memcached.ini \
+ && pecl install xdebug-2.5.5 && echo "zend_extension=/usr/lib/php5/modules/xdebug.so" > /etc/php5/conf.d/30-xdebug.ini \
+ && apk del --no-cache .build
+
+# Install Composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+ && php composer-setup.php \
+ && php -r "unlink('composer-setup.php');" \
+ && mv composer.phar /usr/local/bin/composer
+

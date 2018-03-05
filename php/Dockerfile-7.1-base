@@ -1,0 +1,61 @@
+FROM alpine:3.7
+
+MAINTAINER Joao Gilberto Magalhaes
+
+WORKDIR /srv/web
+
+# Install Packages
+RUN apk add --no-cache \
+    php7 \
+    php7-common \
+    php7-ctype \
+    php7-curl \
+    php7-dom \
+    php7-exif \
+    php7-ftp \
+    php7-gd \
+    php7-gettext \
+    php7-iconv \
+    php7-intl \
+    php7-json \
+    php7-memcached \
+    php7-mbstring \
+    php7-mcrypt \
+    php7-mysqli \
+    php7-mysqlnd \
+    php7-openssl \
+    php7-pcntl \
+    php7-pdo_dblib \
+    php7-pdo_mysql \
+    php7-pdo_pgsql \
+    php7-pdo \
+    php7-pdo_sqlite \
+    php7-pear \
+    php7-phar \
+    php7-posix \
+    php7-redis \
+    php7-session \
+    php7-shmop \
+    php7-soap \
+    php7-tokenizer \
+    php7-sqlite3 \
+    php7-xdebug \
+    php7-xml \
+    php7-xmlreader \
+    php7-xmlwriter \
+    php7-xsl \
+    php7-xdebug \
+    php7-zip \
+    php7-zlib
+
+RUN apk add --no-cache libssl1.0 libcrypto1.0 \
+ && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev cyrus-sasl-dev  \
+ && sed -ie "s/ -n / /" /usr/bin/pecl \
+ && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/30-mongodb.ini \
+ && apk del --no-cache .build
+
+# Install Composer & PhpUnit, PHPCS, PHPMD, PHPCBF
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+ && php composer-setup.php \
+ && php -r "unlink('composer-setup.php');" \
+ && mv composer.phar /usr/local/bin/composer
