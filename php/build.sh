@@ -2,7 +2,9 @@
 
 if [ -z "$1" ]
 then
-    echo "Inform the PHP version to Build. eg. '7.2'"
+    echo ""
+    echo "build.sh <VERSION e.g 7.2> [DOCKERLOGIN] [DOCKERPASSWORD] [REGISTRY]"
+    echo ""
     exit 1
 fi
 
