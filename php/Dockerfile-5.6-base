@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-MAINTAINER Joao Gilberto Magalhaes
+LABEL maintainer="Joao Gilberto Magalhaes"
 
 WORKDIR /srv/web
 
@@ -43,10 +43,10 @@ RUN apk add --no-cache \
 RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && apk add --no-cache --virtual .build php5-pear php5-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \
  && sed -ie "s/ -n / /" /usr/bin/pecl \
- && pecl install mongodb && echo "extension=mongodb.so" > /etc/php5/conf.d/30-mongodb.ini \
- && pecl install -o -f redis-2.2.8 && echo "extension=redis.so" > /etc/php5/conf.d/30-redis.ini \
- && pecl install memcached-2.2.0 && echo "extension=memcached.so" > /etc/php5/conf.d/30-memcached.ini \
- && pecl install xdebug-2.5.5 && echo "zend_extension=/usr/lib/php5/modules/xdebug.so" > /etc/php5/conf.d/30-xdebug.ini \
+ && pecl install mongodb && echo "extension=mongodb.so" > /etc/php5/conf.d/mongodb.ini \
+ && pecl install -o -f redis-2.2.8 && echo "extension=redis.so" > /etc/php5/conf.d/redis.ini \
+ && pecl install memcached-2.2.0 && echo "extension=memcached.so" > /etc/php5/conf.d/memcached.ini \
+ && pecl install xdebug-2.5.5 && echo "zend_extension=/usr/lib/php5/modules/xdebug.so" > /etc/php5/conf.d/xdebug.ini \
  && apk del --no-cache .build
 
 # Install Composer
@@ -54,4 +54,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
+
+COPY assets/entrypoint.sh /
+ENTRYPOINT [ "/entrypoint.sh" ]
 

@@ -46,6 +46,12 @@ xmlreader, xmlwriter, xsl, zip, zlib, Xdebug
 
 **plus** [Composer](https://getcomposer.org/) in the most recent version
 
+Example:
+
+```bash
+docker run -it --rm byjg/php:7.1-base php --version
+```
+
 ## PHP CLI Images
 
 The CLI images have also:
@@ -103,4 +109,31 @@ Below a table with images uncompressed
 | 7.0           | 92.6MB | 136MB | 101MB  | 147MB     |
 | 7.1           | 82.4MB | 126MB | 87MB   | 134MB     |
 | 7.2           |   94MB | 140MB | 104MB  | 151MB     |
+
+# Environment Variables
+
+When you start the byjg/php image, you can adjust the configuration 
+of the PHP instance by passing one or more environment variables on 
+the docker run command line. 
+
+Any ENVIRONMENT variable can be accessible by your running PHP Instance. 
+ 
+
+## DISABLEMODULE_[name]>=true
+
+You can disable a module when you start the instance:
+
+```bash
+docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true byjg/php:7.2-cli
+```
+
+## VERBOSE=true
+
+When you pass `VERBOSE=true` you can get at output all available modules 
+and which modules are disabled.
+
+```bash
+docker run -e VERBOSE=true byjg/php:7.2-cli
+```
+
 

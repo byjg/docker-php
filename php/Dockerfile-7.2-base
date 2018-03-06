@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-MAINTAINER Joao Gilberto Magalhaes
+LABEL maintainer="Joao Gilberto Magalhaes"
 
 WORKDIR /srv/web
 
@@ -51,8 +51,11 @@ RUN apk add --no-cache \
     php7-zlib@php \
  && ln -s /usr/bin/php7 /usr/bin/php
 
-# Install Composer & PhpUnit, PHPCS, PHPMD, PHPCBF
+# Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
+
+COPY assets/entrypoint.sh /
+ENTRYPOINT [ "/entrypoint.sh" ]

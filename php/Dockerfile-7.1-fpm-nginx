@@ -1,6 +1,6 @@
 FROM byjg/php:7.1-fpm
 
-MAINTAINER Joao Gilberto Magalhaes
+LABEL maintainer="Joao Gilberto Magalhaes"
 
 WORKDIR /var/www/html
 

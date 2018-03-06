@@ -1,6 +1,6 @@
 FROM byjg/php:7.1-base
 
-MAINTAINER Joao Gilberto Magalhaes
+LABEL maintainer="Joao Gilberto Magalhaes"
 
 WORKDIR /srv/web
 
