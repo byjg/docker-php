@@ -159,4 +159,5 @@ COPY assets/fpm-nginx/script/exit-event-listener.py /exit-event-listener.py
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
 
+ENV DOCKER_IMAGE byjg/php:5.6-fpm-nginx
 CMD ["/usr/bin/supervisord",  "-n",  "-c", "/etc/supervisord.conf" ]

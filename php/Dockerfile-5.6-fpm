@@ -8,4 +8,5 @@ WORKDIR /srv/web
 RUN apk add --no-cache php5-fpm \
     && ln -s /usr/bin/php-fpm5 /usr/bin/php-fpm
 
+ENV DOCKER_IMAGE byjg/php:5.6-fpm
 CMD ["php-fpm", "--nodaemonize"]

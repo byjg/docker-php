@@ -9,6 +9,18 @@ VERBOSE_MODE=false
 if [ "$VERBOSE" == "true" ]
 then
     VERBOSE_MODE=true
+    echo
+    echo " ____             _  _____ "
+    echo "|  _ \           | |/ ____|"
+    echo "| |_) |_   _     | | |  __ "
+    echo "|  _ <| | | |_   | | | |_ |"
+    echo "| |_) | |_| | |__| | |__| |"
+    echo "|____/ \__, |\____/ \_____|"
+    echo "        __/ |              "
+    echo "       |___/               "
+    echo
+    echo "Image: $DOCKER_IMAGE"
+    echo
 fi
 
 # Disable modules
@@ -21,12 +33,12 @@ do
     else
         ${VERBOSE_MODE} && echo "Module not found $VAR"
     fi
+    echo
 done
 
 # List available modules
 if [ "$VERBOSE" == "true" ]
 then
-    echo
     echo "Available Modules:"
     for VAR in `ls $PHPMODULES/ | sort`
     do

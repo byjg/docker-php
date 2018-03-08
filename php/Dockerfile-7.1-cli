@@ -14,3 +14,5 @@ RUN COMPOSER_HOME="/opt/.composer" \
  && ln -s /opt/.composer/vendor/bin/phpcs /usr/local/bin/ \
  && ln -s /opt/.composer/vendor/bin/phpcbf /usr/local/bin/ \
  && ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/
+
+ENV DOCKER_IMAGE byjg/php:7.1-cli
