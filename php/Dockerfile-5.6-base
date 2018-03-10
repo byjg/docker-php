@@ -38,7 +38,8 @@ RUN apk add --no-cache \
     php5-xsl \
     php5-zip \
     php5-zlib \
-    && ln -s /usr/bin/php5 /usr/bin/php
+    && ln -s /usr/bin/php5 /usr/bin/php \
+    && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && apk add --no-cache --virtual .build php5-pear php5-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \

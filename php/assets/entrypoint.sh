@@ -20,11 +20,12 @@ then
     echo "       |___/               "
     echo
     echo "Image: $DOCKER_IMAGE"
+    echo "Build Date: `cat /etc/build-date`"
     echo
 fi
 
 # Disable modules
-for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2 | awk '{print tolower($0)}'`
+for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
 do
     if [ -f "$PHPMODULES/$VAR.ini" ]
     then
@@ -33,8 +34,8 @@ do
     else
         ${VERBOSE_MODE} && echo "Module not found $VAR"
     fi
-    echo
 done
+${VERBOSE_MODE} && echo
 
 # List available modules
 if [ "$VERBOSE" == "true" ]

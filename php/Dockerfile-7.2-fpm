@@ -6,7 +6,8 @@ WORKDIR /srv/web
 
 # Install Packages
 RUN apk add --no-cache php7-fpm@php \
- && ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
+ && ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm \
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
 ENV DOCKER_IMAGE byjg/php:7.2-fpm
 CMD ["php-fpm", "--nodaemonize"]

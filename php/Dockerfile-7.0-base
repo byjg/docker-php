@@ -42,7 +42,8 @@ RUN apk add --no-cache \
     php7-xsl \
     php7-zip \
     php7-zlib \
- && ln -s /usr/bin/php7 /usr/bin/php
+ && ln -s /usr/bin/php7 /usr/bin/php \
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \

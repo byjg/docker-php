@@ -49,7 +49,8 @@ RUN apk add --no-cache \
     php7-xsl@php \
     php7-zip@php \
     php7-zlib@php \
- && ln -s /usr/bin/php7 /usr/bin/php
+ && ln -s /usr/bin/php7 /usr/bin/php \
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
