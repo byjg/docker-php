@@ -39,6 +39,7 @@ RUN apk add --no-cache \
     php5-zip \
     php5-zlib \
  && ln -s /usr/bin/php5 /usr/bin/php \
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
  && mkdir -p /etc/php/conf.d
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
@@ -56,6 +57,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
+ENV DOCKER_IMAGE byjg/php:5.6-base
 EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]

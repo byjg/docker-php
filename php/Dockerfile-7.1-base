@@ -47,6 +47,7 @@ RUN apk add --no-cache \
     php7-xdebug \
     php7-zip \
     php7-zlib \
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
  && mkdir -p /etc/php/conf.d
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 \
@@ -62,6 +63,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
+ENV DOCKER_IMAGE byjg/php:7.1-base
 EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]

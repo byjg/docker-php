@@ -10,10 +10,23 @@ VERBOSE_MODE=false
 if [ "$VERBOSE" == "true" ]
 then
     VERBOSE_MODE=true
+    echo
+    echo " ____             _  _____ "
+    echo "|  _ \           | |/ ____|"
+    echo "| |_) |_   _     | | |  __ "
+    echo "|  _ <| | | |_   | | | |_ |"
+    echo "| |_) | |_| | |__| | |__| |"
+    echo "|____/ \__, |\____/ \_____|"
+    echo "        __/ |              "
+    echo "       |___/               "
+    echo
+    echo "Image: $DOCKER_IMAGE"
+    echo "Build Date: `cat /etc/build-date`"
+    echo
 fi
 
 # Disable modules
-for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2 | awk '{print tolower($0)}'`
+for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
 do
     if [ -f "$PHPMODULES/$VAR.ini" ]
     then
@@ -23,11 +36,11 @@ do
         ${VERBOSE_MODE} && echo "Module not found $VAR"
     fi
 done
+${VERBOSE_MODE} && echo
 
 # List available modules
 if [ "$VERBOSE" == "true" ]
 then
-    echo
     echo "Available Modules:"
     for VAR in `ls $PHPMODULES/ | sort`
     do
