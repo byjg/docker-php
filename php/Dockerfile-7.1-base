@@ -46,13 +46,14 @@ RUN apk add --no-cache \
     php7-xsl \
     php7-xdebug \
     php7-zip \
-    php7-zlib
+    php7-zlib \
+ && mkdir -p /etc/php/conf.d
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 \
  && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev cyrus-sasl-dev  \
  && sed -ie "s/ -n / /" /usr/bin/pecl \
  && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/mongodb.ini \
- && echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini \
+ && printf "zend_extension=xdebug.so\nxdebug.remote_port=9001\n" > /etc/php7/conf.d/xdebug.ini \
  && apk del --no-cache .build
 
 # Install Composer
@@ -61,6 +62,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
+EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 

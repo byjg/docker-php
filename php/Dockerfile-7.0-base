@@ -42,7 +42,8 @@ RUN apk add --no-cache \
     php7-xsl \
     php7-zip \
     php7-zlib \
- && ln -s /usr/bin/php7 /usr/bin/php
+ && ln -s /usr/bin/php7 /usr/bin/php \
+ && mkdir -p /etc/php/conf.d
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev libmemcached-dev cyrus-sasl-dev  \
@@ -50,7 +51,7 @@ RUN apk add --no-cache libssl1.0 libcrypto1.0 libmemcached \
  && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/mongodb.ini \
  && pecl install redis && echo "extension=redis.so" > /etc/php7/conf.d/redis.ini \
  && pecl install memcached && echo "extension=memcached.so" > /etc/php7/conf.d/memcached.ini \
- && echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini \
+ && printf "zend_extension=xdebug.so\nxdebug.remote_port=9001\n" > /etc/php7/conf.d/xdebug.ini \
  && apk del --no-cache .build
 
 # Install Composer
@@ -59,6 +60,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
+EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 

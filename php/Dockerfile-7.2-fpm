@@ -8,4 +8,6 @@ WORKDIR /srv/web
 RUN apk add --no-cache php7-fpm@php \
  && ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
+COPY assets/fpm-nginx/conf/www.conf /etc/php7/php-fpm.d/www.conf
+EXPOSE 9000
 CMD ["php-fpm", "--nodaemonize"]
