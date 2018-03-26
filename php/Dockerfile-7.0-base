@@ -5,7 +5,8 @@ LABEL maintainer="Joao Gilberto Magalhaes"
 WORKDIR /srv/web
 
 # Install Packages
-RUN apk add --no-cache \
+RUN apk --no-cache upgrade \
+ && apk add --no-cache \
     php7 \
     php7-common \
     php7-ctype \

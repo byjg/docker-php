@@ -5,9 +5,10 @@ LABEL maintainer="Joao Gilberto Magalhaes"
 WORKDIR /srv/web
 
 # Add Code Casts Repository
-RUN apk add --no-cache curl ca-certificates \
-   && curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub \
-   && echo "@php https://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories
+RUN apk --no-cache upgrade \
+ && apk add --no-cache curl ca-certificates \
+ && curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub \
+ && echo "@php https://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories
 
 # Install Packages
 RUN apk add --no-cache \
