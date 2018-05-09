@@ -111,6 +111,29 @@ You can set your own FPM configurations by attaching a volume to:
 - /etc/nginx/nginx.conf
 - /etc/nginx/conf.d/default.conf
 
+## PHP "*-fpm-apache" Images
+
+The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also 
+a full featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
+
+This image exposes the ports:
+ - 80
+ - 443
+
+The home directory is in /srv/web.
+
+Basically to start type:
+
+```bash
+docker run -v $PWD:/srv/web -p 80:80 byjg/php:7.2-fpm-apache
+```
+
+By default the nginx serves all files in /srv/web.
+ 
+You can set your own APACHE configurations by attaching a volume to:
+- /etc/apache2/httpd.conf
+- /etc/apache2/conf.d/
+
 ## Image Sizes
 
 Below a table with images uncompressed

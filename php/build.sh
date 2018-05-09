@@ -55,3 +55,10 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 if [ ! -z "$3" ]; then docker push byjg/php:$1-fpm-nginx; fi
+
+docker build -t byjg/php:$1-fpm-apache -f Dockerfile-$1-fpm-apache .
+if [[ $? -ne 0 ]]; then
+    echo "Error"
+    exit 1
+fi
+if [ ! -z "$3" ]; then docker push byjg/php:$1-fpm-apache; fi
