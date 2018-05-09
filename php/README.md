@@ -14,18 +14,22 @@ This images is ready to use in:
 - 7.2-base
 - 7.2-cli
 - 7.2-fpm
+- 7.2-fpm-apache
 - 7.2-fpm-nginx
 - 7.1-base
 - 7.1-cli
 - 7.1-fpm
+- 7.1-fpm-apache
 - 7.1-fpm-nginx
 - 7.0-base
 - 7.0-cli
 - 7.0-fpm
+- 7.0-fpm-apache
 - 7.0-fpm-nginx
 - 5.6-base
 - 5.6-cli
 - 5.6-fpm
+- 5.6-fpm-apache
 - 5.6-fpm-nginx
 
 ### The base Image 
@@ -103,12 +107,12 @@ You can set your own FPM configurations by attaching a volume to:
 
 Below a table with images uncompressed
 
-| PHP Version   | base   | cli   | fpm    | fpm-nginx |
-|:-------------:|:------:|:-----:|:------:|:---------:|
-| 5.6           |   94MB | 131MB | 109MB  | 156MB     |
-| 7.0           | 92.6MB | 136MB | 101MB  | 147MB     |
-| 7.1           | 82.4MB | 126MB | 87MB   | 134MB     |
-| 7.2           |   94MB | 140MB | 104MB  | 151MB     |
+| PHP Version   | base   | cli   | fpm    | fpm-nginx | fpm-apache |
+|:-------------:|:------:|:-----:|:------:|:---------:|:----------:|
+| 5.6           |   94MB | 131MB | 109MB  | 156MB     | 155MB      |
+| 7.0           | 92.6MB | 136MB | 101MB  | 147MB     | 146MB      |
+| 7.1           | 82.4MB | 126MB | 87MB   | 134MB     | 133MB      |
+| 7.2           |   94MB | 140MB | 104MB  | 151MB     | 150MB      |
 
 # Environment Variables
 

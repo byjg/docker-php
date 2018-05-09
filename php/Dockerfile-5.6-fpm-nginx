@@ -2,12 +2,12 @@ FROM byjg/php:5.6-fpm
 
 LABEL maintainer="Joao Gilberto Magalhaes"
 
-WORKDIR /var/www/html
+WORKDIR /srv/web
 
 ENV NGINX_VERSION 1.12.2
 ENV MORE_SET_HEADER_VERSION 0.33
 
-COPY assets/fpm-nginx/script/start-fpm.sh /start-fpm.sh
+COPY assets/script/start-fpm.sh /start-fpm.sh
 RUN apk add --no-cache supervisor bash \
  && chmod a+x /start-fpm.sh
 
@@ -155,7 +155,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 COPY assets/fpm-nginx/conf/nginx.conf /etc/nginx/nginx.conf
 COPY assets/fpm-nginx/conf/nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 COPY assets/fpm-nginx/conf/supervisord.conf /etc/supervisord.conf
-COPY assets/fpm-nginx/script/exit-event-listener.py /exit-event-listener.py
+COPY assets/script/exit-event-listener.py /exit-event-listener.py
 
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
