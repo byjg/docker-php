@@ -4,10 +4,10 @@ A complete and small PHP Docker image based on Alpine Linux.
 
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
-This images is ready to use in:
+The PHP images are ready to use in:
  - Development Environment
  - Production Environment
- - CI/CD environments (like Bitbucket Pipelines, Travis-Ci, and others)
+ - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
 
 ### Supported Tags
 
@@ -32,13 +32,12 @@ This images is ready to use in:
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
 
-### The base Image 
+### The "*-base" Image 
 
-All images are based on Alpine Linux and have less layers can be possible.
+All "*-base" images are based on Alpine Linux and only the necessary layers. Because of that the images 
+are tiny and very optimized.
 
-Because this the images are tiny and very optimized.
-
-In all images you can found more than 45 extensions pre-installed:
+You can found more than 45 extensions pre-installed in all images:
 
 ```text
 ctype, curl, date, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, 
@@ -56,16 +55,23 @@ Example:
 docker run -it --rm byjg/php:7.1-base php --version
 ```
 
-## PHP CLI Images
+This image expose the port:
+ - 9001 for the XDebug
 
-The CLI images have also:
+#### Adding Custom Config
+
+You can create a volume or copy all *.ini files to `/etc/php/conf.d`
+
+## PHP "*-cli" Images
+
+The CLI images extends from "*-base" Image and have also:
 
 - PHPUnit
 - PHP Code Sniffer
 - PHP Mess Detector
 - PHP Code Beautifier and Fixer
 
-You can use the script to use the PHP:
+You can create an alias to use easily the commands: 
 
 ```bash
 alias php='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS[0]} byjg/php:7.2-cli php "$@"'
@@ -75,19 +81,21 @@ alias phpmd='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS
 ```
 
 
-## PHP FPM Images
+## The "*-fpm" Images
 
-The FPM images have installed the modules PHP-FPM.
+The FPM images extends the "*-base" Image and have installed the modules PHP-FPM.
 
-This exposes two ports:
+This image exposes the port:
 - 9000 for the FPM
-- 9001 for the XDebug
 
-## PHP FPM-NGINX Images
+## PHP "*-fpm-nginx" Images
 
-The FPM-NGINX have a full featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
+The FPM-NGINX images extends "\*-fpm" and "\*-base" images and have also 
+a full featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
 
-This exposes the ports 80, 443 and 9001 (XDebug)
+This image exposes the ports:
+ - 80
+ - 443
 
 The home directory is in /srv/web.
 
@@ -97,7 +105,7 @@ Basically to start type:
 docker run -v $PWD:/srv/web -p 80:80 byjg/php:7.2-fpm-nginx
 ```
 
-By default all files in /srv/web is served.
+By default the nginx serves all files in /srv/web.
  
 You can set your own FPM configurations by attaching a volume to:
 - /etc/nginx/nginx.conf

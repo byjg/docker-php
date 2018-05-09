@@ -10,4 +10,6 @@ RUN apk add --no-cache php7-fpm \
     && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
 ENV DOCKER_IMAGE byjg/php:7.0-fpm
+COPY assets/fpm-nginx/conf/www.conf /etc/php7/php-fpm.d/www.conf
+EXPOSE 9000
 CMD ["php-fpm", "--nodaemonize"]

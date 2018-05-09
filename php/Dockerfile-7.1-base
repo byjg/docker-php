@@ -5,7 +5,8 @@ LABEL maintainer="Joao Gilberto Magalhaes"
 WORKDIR /srv/web
 
 # Install Packages
-RUN apk add --no-cache \
+RUN apk --no-cache upgrade \
+ && apk add --no-cache \
     php7 \
     php7-common \
     php7-ctype \
@@ -47,13 +48,14 @@ RUN apk add --no-cache \
     php7-xdebug \
     php7-zip \
     php7-zlib \
- && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
+ && mkdir -p /etc/php/conf.d
 
 RUN apk add --no-cache libssl1.0 libcrypto1.0 \
  && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev cyrus-sasl-dev  \
  && sed -ie "s/ -n / /" /usr/bin/pecl \
  && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/mongodb.ini \
- && echo "zend_extension=xdebug.so" > /etc/php7/conf.d/xdebug.ini \
+ && printf "zend_extension=xdebug.so\nxdebug.remote_port=9001\n" > /etc/php7/conf.d/xdebug.ini \
  && apk del --no-cache .build
 
 # Install Composer
@@ -63,6 +65,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
 ENV DOCKER_IMAGE byjg/php:7.1-base
+EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 

@@ -3,6 +3,7 @@
 # Getting PHP INI Paths
 PHPINI=`php -i | grep "Loaded Configuration File" | awk -F" => " '{print $2}'`
 PHPMODULES=`php -i | grep "Scan this dir" |  awk -F" => " '{print $2}'`
+PHPCUSTOM=/etc/php/conf.d
 
 # Setting if is verbose mode or not
 VERBOSE_MODE=false
@@ -53,6 +54,9 @@ if [ -z "$1" ];
 then
     exit;
 fi
+
+# Copy Custom Config
+cp $PHPCUSTOM/*.ini $PHPMODULES/ 2>/dev/null || :
 
 # Run the parameters
 exec ${@}

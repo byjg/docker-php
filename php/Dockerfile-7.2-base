@@ -5,9 +5,10 @@ LABEL maintainer="Joao Gilberto Magalhaes"
 WORKDIR /srv/web
 
 # Add Code Casts Repository
-RUN apk add --no-cache curl ca-certificates \
-   && curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub \
-   && echo "@php https://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories
+RUN apk --no-cache upgrade \
+ && apk add --no-cache curl ca-certificates \
+ && curl https://php.codecasts.rocks/php-alpine.rsa.pub -o /etc/apk/keys/php-alpine.rsa.pub \
+ && echo "@php https://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories
 
 # Install Packages
 RUN apk add --no-cache \
@@ -50,7 +51,9 @@ RUN apk add --no-cache \
     php7-zip@php \
     php7-zlib@php \
  && ln -s /usr/bin/php7 /usr/bin/php \
- && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
+ && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
+ && mkdir -p /etc/php/conf.d \
+ && printf "zend_extension=xdebug.so\nxdebug.remote_port=9001\n" > /etc/php7/conf.d/00_xdebug.ini
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -59,5 +62,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
 ENV DOCKER_IMAGE byjg/php:7.2-base
+EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
