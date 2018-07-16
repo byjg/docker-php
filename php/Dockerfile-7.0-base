@@ -6,7 +6,7 @@ WORKDIR /srv/web
 
 # Install Packages
 RUN apk --no-cache upgrade \
- && apk add --no-cache \
+ && apk add --no-cache git \
     php7 \
     php7-common \
     php7-ctype \
