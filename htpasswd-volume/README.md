@@ -31,6 +31,32 @@ docker run \
 Once you are running with --volumes-from you can refer inside your
 docker container the file `/etc/htpasswd.d/htpasswd`
 
+## Using Docker compose
+
+```yaml
+version: "3.4"
+services:
+  web:
+    image: nginx
+    volumes:
+      - passwd:/auth
+  htpasswd:
+    environment:
+      HTCOUNT: 2
+      USR1: john
+      PWD1: mypassword
+      USR2: jane
+      PWD2: otherpassword
+    image: byjg/htpasswd-volume
+    volumes:
+      - passwd:/etc/htpasswd.d
+
+volumes:
+  passwd:
+    driver: local
+```
+
+
 ## Build
 
 ```
