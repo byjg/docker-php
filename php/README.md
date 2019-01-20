@@ -97,15 +97,15 @@ This image exposes the ports:
  - 80
  - 443
 
-The home directory is in /srv/web.
+The home directory is in /var/www/html.
 
 Basically to start type:
 
 ```bash
-docker run -v $PWD:/srv/web -p 80:80 byjg/php:7.2-fpm-nginx
+docker run -v $PWD:/var/www/html -p 80:80 byjg/php:7.2-fpm-nginx
 ```
 
-By default the nginx serves all files in /srv/web.
+By default the nginx serves all files in /var/www/html.
  
 You can set your own FPM configurations by attaching a volume to:
 - /etc/nginx/nginx.conf
