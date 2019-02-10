@@ -111,6 +111,23 @@ You can set your own FPM configurations by attaching a volume to:
 - /etc/nginx/nginx.conf
 - /etc/nginx/conf.d/default.conf
 
+
+*Setting PHP Controller*
+
+You can define a PHP Controller which is a single PHP file that will process all request. This could be useful for 
+REST Applications like Silex, Lumen, Symfony, etc. 
+
+```bash
+docker run -e PHP_CONTROLLER="/index.php" byjg/php:7.2-fpm-nginx
+```
+
+*Setting SSL Certificate*
+
+
+```bash
+docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:7.2-fpm-nginx
+```
+
 ## PHP "*-fpm-apache" Images
 
 The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also 

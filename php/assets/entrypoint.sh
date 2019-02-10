@@ -25,10 +25,30 @@ then
     echo
 fi
 
+# Adjust NGINX
+if [[ -f /etc/nginx/conf.d/default.conf ]]
+then
+    if [[ ! -z "$PHP_CONTROLLER" ]]
+    then
+        ${VERBOSE_MODE} && echo "Setting controller as '$PHP_CONTROLLER'"
+        sed -i "s|^\(\s*\)#\(try_files.*\)@controller@;$|\1\2$PHP_CONTROLLER;|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc/nginx/conf.d/default.conf
+    fi
+
+    if [[ ! -z "$NGINX_SSL_CERT" ]]
+    then
+        ${VERBOSE_MODE} && echo "Setting CERT as '$NGINX_SSL_CERT'"
+        ${VERBOSE_MODE} && echo "Setting CERT_KEY as '$NGINX_SSL_CERT_KEY'"
+        sed -i "s|^\(\s*\)#\(listen 443.*\)$|\1\2|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)#\(ssl_certificate .*\)@cert@;$|\1\2$NGINX_SSL_CERT;|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)#\(ssl_certificate_key .*\)@certkey@;$|\1\2$NGINX_SSL_CERT_KEY;|g" /etc/nginx/conf.d/default.conf
+    fi
+fi
+
 # Disable modules
 for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
 do
-    if [ -f "$PHPMODULES/$VAR.ini" ]
+    if [[ -f "$PHPMODULES/$VAR.ini" ]]
     then
         ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
         rm "$PHPMODULES/$VAR.ini"
@@ -39,7 +59,7 @@ done
 ${VERBOSE_MODE} && echo
 
 # List available modules
-if [ "$VERBOSE" == "true" ]
+if [[ "$VERBOSE" == "true" ]]
 then
     echo "Available Modules:"
     for VAR in `ls $PHPMODULES/ | sort`
@@ -50,7 +70,7 @@ then
 fi
 
 # No arguments, simply exit
-if [ -z "$1" ];
+if [[ -z "$1" ]];
 then
     exit;
 fi
