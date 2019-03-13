@@ -35,12 +35,12 @@ RUN apk --no-cache upgrade \
     php7-phar \
     php7-posix \
     php7-redis \
+    php7-simplexml \
     php7-session \
     php7-shmop \
     php7-soap \
     php7-tokenizer \
     php7-sqlite3 \
-    php7-xdebug \
     php7-xml \
     php7-xmlreader \
     php7-xmlwriter \
