@@ -51,7 +51,7 @@ RUN apk --no-cache upgrade \
  && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
  && mkdir -p /etc/php/conf.d
 
-RUN apk add --no-cache libssl1.0 libcrypto1.0 \
+RUN apk add --no-cache libssl1.1 libcrypto1.1 \
  && apk add --no-cache --virtual .build php7-pear php7-dev autoconf libtool gcc make build-base openssl-dev zlib-dev cyrus-sasl-dev  \
  && sed -ie "s/ -n / /" /usr/bin/pecl \
  && pecl install mongodb && echo "extension=mongodb.so" > /etc/php7/conf.d/mongodb.ini \
