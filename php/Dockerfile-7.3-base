@@ -64,7 +64,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
 
-ENV DOCKER_IMAGE byjg/php:7.2-base
+ENV DOCKER_IMAGE byjg/php:7.3-base
 EXPOSE 9001
 COPY assets/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -19,5 +19,5 @@ RUN apk add --no-cache apache2-proxy supervisor bash \
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
 
-ENV DOCKER_IMAGE byjg/php:7.2-fpm-apache
+ENV DOCKER_IMAGE byjg/php:7.3-fpm-apache
 CMD ["/usr/bin/supervisord",  "-n",  "-c", "/etc/supervisord.conf" ]
