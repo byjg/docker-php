@@ -8,6 +8,7 @@ WORKDIR /srv/web
 RUN apk --no-cache upgrade \
  && apk add --no-cache git \
     php5 \
+    php5-bcmath \
     php5-common \
     php5-ctype \
     php5-curl \

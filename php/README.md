@@ -9,8 +9,13 @@ The PHP images are ready to use in:
  - Production Environment
  - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
 
-### Supported Tags
+# Supported Tags
 
+- 7.3-base
+- 7.3-cli
+- 7.3-fpm
+- 7.3-fpm-apache
+- 7.3-fpm-nginx
 - 7.2-base
 - 7.2-cli
 - 7.2-fpm
@@ -32,7 +37,7 @@ The PHP images are ready to use in:
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
 
-### The "*-base" Image 
+# The "*-base" Image 
 
 All "*-base" images are based on Alpine Linux and only the necessary layers. Because of that the images 
 are tiny and very optimized.
@@ -40,7 +45,7 @@ are tiny and very optimized.
 You can found more than 45 extensions pre-installed in all images:
 
 ```text
-ctype, curl, date, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, 
+bcmath, ctype, curl, date, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, 
 json, libxml, mbstring, mcrypt, memcached, mongodb, mysqli, mysqlnd, openssl,pcntl, 
 pcre, PDO, pdo_dblib, pdo_mysql, pdo_pgsql, pdo_sqlite, Phar, posix, readline, redis,
 Reflection, session, SimpleXML, soap, SPL, sqlite3, standard, tokenizer, xdebug, xml, 
@@ -58,11 +63,11 @@ docker run -it --rm byjg/php:7.1-base php --version
 This image expose the port:
  - 9001 for the XDebug
 
-#### Adding Custom Config
+## Adding Custom Config
 
 You can create a volume or copy all *.ini files to `/etc/php/conf.d`
 
-## PHP "*-cli" Images
+# PHP "*-cli" Images
 
 The CLI images extends from "*-base" Image and have also:
 
@@ -81,14 +86,14 @@ alias phpmd='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS
 ```
 
 
-## The "*-fpm" Images
+# The "*-fpm" Images
 
 The FPM images extends the "*-base" Image and have installed the modules PHP-FPM.
 
 This image exposes the port:
 - 9000 for the FPM
 
-## PHP "*-fpm-nginx" Images
+# PHP "*-fpm-nginx" Images
 
 The FPM-NGINX images extends "\*-fpm" and "\*-base" images and have also 
 a full featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
@@ -128,7 +133,7 @@ docker run -e PHP_CONTROLLER="/index.php" byjg/php:7.2-fpm-nginx
 docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:7.2-fpm-nginx
 ```
 
-## PHP "*-fpm-apache" Images
+# PHP "*-fpm-apache" Images
 
 The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also 
 a full featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
@@ -151,7 +156,7 @@ You can set your own APACHE configurations by attaching a volume to:
 - /etc/apache2/httpd.conf
 - /etc/apache2/conf.d/
 
-## Image Sizes
+# Image Sizes
 
 Below a table with images uncompressed
 
@@ -161,6 +166,7 @@ Below a table with images uncompressed
 | 7.0           | 92.6MB | 136MB | 101MB  | 147MB     | 146MB      |
 | 7.1           | 82.4MB | 126MB | 87MB   | 134MB     | 133MB      |
 | 7.2           |   94MB | 140MB | 104MB  | 151MB     | 150MB      |
+| 7.3           |   99MB | 151MB | 104MB  | 152MB     | 152MB      |
 
 # Environment Variables
 
@@ -171,7 +177,7 @@ the docker run command line.
 Any ENVIRONMENT variable can be accessible by your running PHP Instance. 
  
 
-## DISABLEMODULE_[name]>=true
+## DISABLEMODULE_[name]=true
 
 You can disable a module when you start the instance:
 
