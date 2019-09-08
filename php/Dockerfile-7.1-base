@@ -39,6 +39,7 @@ RUN apk --no-cache upgrade \
     php7-session \
     php7-shmop \
     php7-soap \
+    php7-sockets \
     php7-tokenizer \
     php7-simplexml \
     php7-sqlite3 \
