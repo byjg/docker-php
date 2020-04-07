@@ -4,7 +4,7 @@ LABEL maintainer="Joao Gilberto Magalhaes"
 
 WORKDIR /srv/web
 
-ENV NGINX_VERSION 1.16.0
+ENV NGINX_VERSION 1.17.9
 ENV MORE_SET_HEADER_VERSION 0.33
 
 COPY assets/script/start-fpm.sh /start-fpm.sh
