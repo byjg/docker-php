@@ -42,6 +42,7 @@ RUN apk --no-cache upgrade \
     php5-xsl \
     php5-zip \
     php5-zlib \
+    bash \
  && ln -s /usr/bin/php5 /usr/bin/php \
  && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
  && mkdir -p /etc/php/conf.d

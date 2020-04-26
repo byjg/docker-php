@@ -51,6 +51,7 @@ RUN apk --no-cache upgrade \
     php7-xdebug \
     php7-zip \
     php7-zlib \
+    bash \
  && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date \
  && mkdir -p /etc/php/conf.d
 

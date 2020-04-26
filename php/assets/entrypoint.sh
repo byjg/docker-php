@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Getting PHP INI Paths
 PHPINI=`php -i | grep "Loaded Configuration File" | awk -F" => " '{print $2}'`
@@ -28,14 +28,14 @@ fi
 # Adjust NGINX
 if [[ -f /etc/nginx/conf.d/default.conf ]]
 then
-    if [[ ! -z "$PHP_CONTROLLER" ]]
+    if [[ -n "$PHP_CONTROLLER" ]]
     then
         ${VERBOSE_MODE} && echo "Setting controller as '$PHP_CONTROLLER'"
         sed -i "s|^\(\s*\)#\(try_files.*\)@controller@;$|\1\2$PHP_CONTROLLER;|g" /etc/nginx/conf.d/default.conf
         sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc/nginx/conf.d/default.conf
     fi
 
-    if [[ ! -z "$NGINX_SSL_CERT" ]]
+    if [[ -n "$NGINX_SSL_CERT" ]]
     then
         ${VERBOSE_MODE} && echo "Setting CERT as '$NGINX_SSL_CERT'"
         ${VERBOSE_MODE} && echo "Setting CERT_KEY as '$NGINX_SSL_CERT_KEY'"
