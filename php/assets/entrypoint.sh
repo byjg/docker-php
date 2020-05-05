@@ -25,13 +25,21 @@ then
     echo
 fi
 
+if [ -z "$NGINX_ROOT" ]
+then
+  NGINX_ROOT=/var/www/html
+fi
+
 # Adjust NGINX
 if [[ -f /etc/nginx/conf.d/default.conf ]]
 then
+    ${VERBOSE_MODE} && echo "Setting root to '$NGINX_ROOT'"
+    sed -i "s|^\(\s*root\s*\)@root@;$|\1$NGINX_ROOT;|g" /etc/nginx/conf.d/default.conf
+
     if [[ -n "$PHP_CONTROLLER" ]]
     then
         ${VERBOSE_MODE} && echo "Setting controller as '$PHP_CONTROLLER'"
-        sed -i "s|^\(\s*\)#\(try_files.*\)@controller@;$|\1\2$PHP_CONTROLLER;|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)#\(try_files.*\)@controller@\(.*\);$|\1\2$PHP_CONTROLLER\3;|g" /etc/nginx/conf.d/default.conf
         sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc/nginx/conf.d/default.conf
     fi
 

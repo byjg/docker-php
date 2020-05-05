@@ -170,12 +170,30 @@ Below a table with images uncompressed
 
 # Environment Variables
 
-When you start the byjg/php image, you can adjust the configuration 
-of the PHP instance by passing one or more environment variables on 
-the docker run command line. 
+You dont need to replace the nginx configuration. The `byjg/php` image, you can adjust the NGINX configuration 
+and enable/disable modules. If fits for most of the users.    
 
 Any ENVIRONMENT variable can be accessible by your running PHP Instance. 
  
+## PHP_CONTROLLER=path
+
+If set, will enable the PHP controller
+
+```bash
+docker run -e PHP_CONTROLLER=/app.php byjg/php:7.2-cli
+```
+## NGINX_ROOT
+
+Changes the server root. Defaults to `/var/www/html`.
+
+## NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
+
+If set, will enable to serve HTTPS pages. 
+
+```bash
+docker run -e NGINX_SSL_CERT=/etc/my.cert -e NGINX_SSL_CERT_KEY=/etc/my.key byjg/php:7.2-cli
+```
+
 
 ## DISABLEMODULE_[name]=true
 
@@ -187,8 +205,7 @@ docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true byjg/php:7.2-cli
 
 ## VERBOSE=true
 
-When you pass `VERBOSE=true` you can get at output all available modules 
-and which modules are disabled.
+When you pass `VERBOSE=true` you can get a more verbose output about the entrypoint changes
 
 ```bash
 docker run -e VERBOSE=true byjg/php:7.2-cli
