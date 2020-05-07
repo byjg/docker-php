@@ -16,5 +16,5 @@ before_install:
   - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
-  - cd php
   - ./build.sh $TRAVIS_PHP_VERSION $DOCKER_USER $DOCKER_PASSWORD $DOCKER_REGISTRY
+
