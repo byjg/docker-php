@@ -8,9 +8,34 @@ The PHP images are ready to use in:
  - Development Environment
  - Production Environment
  - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
+ - IDE Integration
+ 
+# PHP Versions
+
+- 7.4.8
+- 7.3.20
+- 7.2.31
+- 7.1.33
+- 7.0.33
+- 5.6.40
+
+# PHP Images
+
+Five different images for each PHP Version
+
+* base - Minimal Image, base for the other
+* cli - PHP with Command Line installed (composer, phpunit, etc)
+* fpm - PHP with FPM installed
+* fpm-apache - PHP and Apache using FPM
+* fpm-nginx - PHP and Nginx using FPM
 
 # Supported Tags
 
+- 7.4-base
+- 7.4-cli
+- 7.4-fpm
+- 7.4-fpm-apache
+- 7.4-fpm-nginx
 - 7.3-base
 - 7.3-cli
 - 7.3-fpm
@@ -37,7 +62,7 @@ The PHP images are ready to use in:
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
 
-# The "*-base" Image 
+# PHP "*-base" Image 
 
 All "*-base" images are based on Alpine Linux and only the necessary layers. Because of that the images 
 are tiny and very optimized.
@@ -102,7 +127,7 @@ This image exposes the ports:
  - 80
  - 443
 
-The home directory is in /var/www/html.
+The home directory is defined by the NGINX_ROOT environment variable. If not set defaults to  `/var/www/html`.
 
 Basically to start type:
 
