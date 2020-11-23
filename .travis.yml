@@ -1,12 +1,13 @@
 language: php
 
-php:
-  - "5.6"
-  - "7.0"
-  - "7.1"
-  - "7.2"
-  - "7.3"
-  - "7.4"
+env:
+  - PHP_VERSION=5.6
+  - PHP_VERSION=7.0
+  - PHP_VERSION=7.1
+  - PHP_VERSION=7.2
+  - PHP_VERSION=7.3
+  - PHP_VERSION=7.4
+  - PHP_VERSION=8.0
 
 sudo: required
 
@@ -17,5 +18,5 @@ before_install:
   - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
-  - ./build.sh $TRAVIS_PHP_VERSION $DOCKER_USER $DOCKER_PASSWORD $DOCKER_REGISTRY
+  - ./build.sh $PHP_VERSION $DOCKER_USER $DOCKER_PASSWORD $DOCKER_REGISTRY
 

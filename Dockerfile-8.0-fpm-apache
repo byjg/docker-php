@@ -1,4 +1,4 @@
-FROM byjg/php:7.4-fpm
+FROM byjg/php:8.0-fpm
 
 LABEL maintainer="Joao Gilberto Magalhaes"
 
@@ -20,5 +20,5 @@ RUN apk add --no-cache apache2-proxy supervisor bash \
 EXPOSE 80 443
 STOPSIGNAL SIGQUIT
 
-ENV DOCKER_IMAGE byjg/php:7.4-fpm-apache
+ENV DOCKER_IMAGE byjg/php:8.0-fpm-apache
 CMD ["/usr/bin/supervisord",  "-n",  "-c", "/etc/supervisord.conf" ]

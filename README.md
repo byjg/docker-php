@@ -12,6 +12,7 @@ The PHP images are ready to use in:
  
 # PHP Versions
 
+- 8.0.0 (some extensions are not available yet)
 - 7.4.8
 - 7.3.20
 - 7.2.31
@@ -31,6 +32,11 @@ Five different images for each PHP Version
 
 # Supported Tags
 
+- 8.0-base
+- 8.0-cli
+- 8.0-fpm
+- 8.0-fpm-apache
+- 8.0-fpm-nginx
 - 7.4-base
 - 7.4-cli
 - 7.4-fpm

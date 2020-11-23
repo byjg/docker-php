@@ -1,4 +1,4 @@
-FROM byjg/php:7.4-base
+FROM byjg/php:8.0-base
 
 LABEL maintainer="Joao Gilberto Magalhaes"
 
@@ -16,4 +16,4 @@ RUN COMPOSER_HOME="/opt/.composer" \
  && ln -s /opt/.composer/vendor/bin/phpmd /usr/local/bin/ \
  && date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
 
-ENV DOCKER_IMAGE byjg/php:7.4-cli
+ENV DOCKER_IMAGE byjg/php:8.0-cli
