@@ -1,8 +1,8 @@
-name: docker-images
+name: docker-php
 
 project:
   version: 1.0.0
-  download_url: https://github.com/byjg/docker-images/releases
+  download_url: https://github.com/byjg/docker-php/releases
 
 license:
   software: MIT
@@ -11,19 +11,19 @@ license:
   docs: MIT
   docs_url: https://opensource.org/licenses/MIT
   
-git_edit_address: https://github.com/byjg/docker-images/blob/master/
+git_edit_address: https://github.com/byjg/docker-php/blob/master/
 
 links:
   header:
   - title: GitHub
-    url: https://github.com/byjg/docker-images
+    url: https://github.com/byjg/docker-php
   - title: ByJG
     url: https://opensource.byjg.com/
   footer:
   - title: GitHub
-    url: https://github.com/byjg/docker-images
+    url: https://github.com/byjg/docker-php
   - title: Issues
-    url: https://github.com/byjg/docker-images/issues
+    url: https://github.com/byjg/docker-php/issues
 
 ui:
   header:
@@ -34,7 +34,7 @@ ui:
 social:
   github:
     user: byjg
-    repo: docker-images
+    repo: docker-php
   twitter:
     enabled: false
     via: 
