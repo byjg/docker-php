@@ -1,0 +1,116 @@
+image: alpine:3.12
+
+version:
+  major: 7
+  minor: 3
+
+extensions:
+  - bcmath
+  - common
+  - ctype
+  - curl
+  - dba
+  - dom
+  - exif
+  - ftp
+  - gd
+  - gettext
+  - iconv
+  - intl
+  - json
+  - mbstring
+  - mcrypt
+  - memcached
+  - mysqli
+  - mysqlnd
+  - openssl
+  - pcntl
+  - pdo
+  - pdo_dblib
+  - pdo_mysql
+  - pdo_pgsql
+  - pdo_sqlite
+  - pear
+  - phar
+  - posix
+  - redis
+  - session
+  - shmop
+  - simplexml
+  - soap
+  - sockets
+  - sqlite3
+  - tokenizer
+  - xdebug
+  - xml
+  - xmlreader
+  - xmlwriter
+  - xsl
+  - zip
+  - zlib
+
+pecl:
+  - name: mongodb
+  - name: xdebug
+    install: False
+    zend: True
+    config:
+      - xdebug.remote_port=9001
+
+composer:
+  packages:
+    - phpunit/phpunit:*
+    - squizlabs/php_codesniffer:*
+    - phpmd/phpmd:@stable
+  links:
+    - phpunit
+    - phpcs
+    - phpbcbf
+    - phpmd
+
+nginx:
+  version: 1.17.9
+  more_set_header_version: 0.33
+  extensions:
+    - compat
+    - file-aio
+    - http_addition_module
+    - http_auth_request_module
+    - http_dav_module
+    - http_flv_module
+    - http_geoip_module=dynamic
+    - http_gunzip_module
+    - http_gzip_static_module
+    - http_image_filter_module=dynamic
+    - http_mp4_module
+    - http_random_index_module
+    - http_realip_module
+    - http_secure_link_module
+    - http_slice_module
+    - http_ssl_module
+    - http_stub_status_module
+    - http_sub_module
+    - http_v2_module
+    - http_xslt_module=dynamic
+    - mail
+    - mail_ssl_module
+    - stream
+    - stream_geoip_module=dynamic
+    - stream_realip_module
+    - stream_ssl_module
+    - stream_ssl_preread_module
+    - threads
+
+peclBuildPackages:
+  - autoconf
+  - build-base
+  - cyrus-sasl-dev
+  - gcc
+  - libtool
+  - make
+  - openssl-dev
+  - zlib-dev
+
+additionalPackages:
+  - libssl1.1
+  - libcrypto1.1

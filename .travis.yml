@@ -1,21 +1,23 @@
-language: php
+language: python
 
-php:
-  - "7.2"
+python:
+  - 3.6
+
+arch: amd64
+os: linux
+dist: focal
 
 env:
-  - PHP_VERSION=5.6
-  - PHP_VERSION=7.0
-  - PHP_VERSION=7.1
+#  - PHP_VERSION=5.6
+#  - PHP_VERSION=7.0
+#  - PHP_VERSION=7.1
   - PHP_VERSION=7.2
-  - PHP_VERSION=7.3
-  - PHP_VERSION=7.4
-  - PHP_VERSION=8.0
-
-services:
-  - docker
+#  - PHP_VERSION=7.3
+#  - PHP_VERSION=7.4
+#  - PHP_VERSION=8.0
 
 before_install:
+  - ./install-buildah-ubuntu.sh
   - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:

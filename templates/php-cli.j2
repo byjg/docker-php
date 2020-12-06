@@ -1,0 +1,5 @@
+yes "" | composer global require {% for pkg in composer.packages %}{{ pkg }} {% endfor %}
+{% for link in composer.links -%}
+ln -s /opt/.composer/vendor/bin/{{ link }} /usr/local/bin/
+{% endfor %}
+date "+%Y-%m-%d %H:%M:%S" > /etc/build-date
