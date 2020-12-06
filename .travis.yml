@@ -18,7 +18,7 @@ env:
 
 before_install:
   - ./install-buildah-ubuntu.sh
-  - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
+  - buildah login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
   - ./build.sh $PHP_VERSION $DOCKER_USER $DOCKER_PASSWORD $DOCKER_REGISTRY
