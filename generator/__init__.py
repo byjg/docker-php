@@ -15,6 +15,7 @@ class Generator:
         self.php_version = php_version
         self.debug = debug
         self.content = yaml.load(stream=open(content), Loader=yaml.SafeLoader)
+        print("--------------------------------------------")
         print("PHP Version: " + php_version)
         print("Debug: " + ("true" if debug else "false"))
         print("--------------------------------------------")
@@ -46,9 +47,9 @@ class Generator:
             [subprocess.run(["buildah", "run", container, "/bin/sh", "-c", command], check=True) for command in self.parse_config(config_template)]
         else:
             subprocess.run(["buildah", "run", container, "/bin/sh", "-c", " \\\n && ".join(self.parse_config(config_template))], check=True)
-        subprocess.run(["buildah", "commit", container, "localhost/{image}".format(image=image)])
-        subprocess.run(["buildah", "tag", "localhost/byjg/php:{image}".format(image=image), "docker.io/byjg/php:{image}".format(image=image)])
-        subprocess.run(["buildah", "push", "docker.io/byjg/php:{image}".format(image=image)])
+        subprocess.run(["buildah", "commit", container, "localhost/{image}".format(image=image)], check=True)
+        subprocess.run(["buildah", "tag", "localhost/{image}".format(image=image), "docker.io/{image}".format(image=image)], check=True)
+        subprocess.run(["buildah", "push", "docker.io/{image}".format(image=image)], check=True)
 
     def build_base(self):
         self._banner("base")
