@@ -73,10 +73,6 @@ class Generator:
         self._banner("fpm")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container], check=True)
-        if self.content["version"]["major"] == "5":
-            subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/php-fpm.conf", "/etc/php{major}/php-fpm.conf".format(major=self.content["version"]["major"])], check=True)
-        else:
-            subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/www.conf", "/etc/php{major}/php-fpm.d/www.conf".format(major=self.content["version"]["major"])], check=True)
         self._build(container, "fpm")
 
     def build_fpm_apache(self):
