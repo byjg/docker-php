@@ -30,16 +30,28 @@ class Generator:
 
         return output
 
+    def _banner(self, config):
+        print("")
+        print("")
+        print("===================================================================")
+        print("Building PHP {major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config))
+        print("===================================================================")
+        print("")
+
     def _build(self, container, config):
         config_template = "php-" + config + ".j2"
-        subprocess.run(["buildah", "config", "--env", "DOCKER_IMAGE=byjg/php:{major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config), container], check=True)
+        image = "byjg/php:{major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config)
+        subprocess.run(["buildah", "config", "--env", "DOCKER_IMAGE={image}".format(image=image), container], check=True)
         if self.debug:
             [subprocess.run(["buildah", "run", container, "/bin/sh", "-c", command], check=True) for command in self.parse_config(config_template)]
         else:
             subprocess.run(["buildah", "run", container, "/bin/sh", "-c", " \\\n && ".join(self.parse_config(config_template))], check=True)
-        subprocess.run(["buildah", "commit", container, "localhost/byjg/php:{major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config)])
+        subprocess.run(["buildah", "commit", container, "localhost/{image}".format(image=image)])
+        subprocess.run(["buildah", "tag", "localhost/byjg/php:{image}".format(image=image), "docker.io/byjg/php:{image}".format(image=image)])
+        subprocess.run(["buildah", "push", "docker.io/byjg/php:{image}".format(image=image)])
 
     def build_base(self):
+        self._banner("base")
         container = subprocess.check_output("buildah from {image}".format(image=self.content["image"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container], check=True)
         subprocess.run(["buildah", "config", "--workingdir", "/srv/web", container], check=True)
@@ -47,16 +59,19 @@ class Generator:
         self._build(container, "base")
 
     def build_cli(self):
+        self._banner("cli")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         self._build(container, "cli")
 
     def build_fpm(self):
+        self._banner("fpm")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container], check=True)
         subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/php-fpm.conf", "/etc/php{major}/php-fpm.conf".format(major=self.content["version"]["major"])], check=True)
         self._build(container, "fpm")
 
     def build_fpm_apache(self):
+        self._banner("fpm-apache")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-fpm".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--cmd", '/usr/bin/supervisord -n -c /etc/supervisord.conf', container], check=True)
         subprocess.run(["buildah", "copy", container, "assets/fpm-apache/conf/httpd.conf", "/etc/apache2/httpd.conf"], check=True)
@@ -67,6 +82,7 @@ class Generator:
         self._build(container, "fpm-apache")
 
     def build_fpm_nginx(self):
+        self._banner("fpm-nginx")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-fpm".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--cmd", '/usr/bin/supervisord -n -c /etc/supervisord.conf', container], check=True)
         subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"], check=True)
