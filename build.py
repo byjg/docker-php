@@ -25,8 +25,8 @@ my_parser.add_argument('--debug',
 args = my_parser.parse_args()
 
 gen = Generator(args.PHP_Version, args.Debug)
-# gen.build_base()
-# gen.build_cli()
+gen.build_base()
+gen.build_cli()
 gen.build_fpm()
-# gen.build_fpm_apache()
-# gen.build_fpm_nginx()
+gen.build_fpm_apache()
+gen.build_fpm_nginx()
