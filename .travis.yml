@@ -20,5 +20,5 @@ before_install:
   - buildah login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
-  - python ./build.py $PHP_VERSION
+  - python ./build.py $PHP_VERSION --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx
 
