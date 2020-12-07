@@ -2,6 +2,7 @@ import os, sys
 import yaml
 import subprocess
 from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
 
 
 class Generator:
@@ -14,6 +15,7 @@ class Generator:
 
         self.php_version = php_version
         self.debug = debug
+        self.build_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.content = yaml.load(stream=open(content), Loader=yaml.SafeLoader)
         print("--------------------------------------------")
         print("PHP Version: " + php_version)
@@ -49,6 +51,7 @@ class Generator:
             [subprocess.run(["buildah", "run", container, "/bin/sh", "-c", command], check=True) for command in self.parse_config(config_template)]
         else:
             subprocess.run(["buildah", "run", container, "/bin/sh", "-c", " \\\n && ".join(self.parse_config(config_template))], check=True)
+        subprocess.run(["buildah", "config", "--env", "BUILD_DATE={date}".format(date=self.build_date), container], check=True)
         subprocess.run(["buildah", "commit", container, "localhost/{image}".format(image=image)], check=True)
         subprocess.run(["buildah", "tag", "localhost/{image}".format(image=image), "docker.io/{image}".format(image=image)], check=True)
         subprocess.run(["buildah", "push", "docker.io/{image}".format(image=image)], check=True)
@@ -70,7 +73,10 @@ class Generator:
         self._banner("fpm")
         container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
         subprocess.run(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container], check=True)
-        subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/php-fpm.conf", "/etc/php{major}/php-fpm.conf".format(major=self.content["version"]["major"])], check=True)
+        if self.content["version"]["major"] == "5":
+            subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/php-fpm.conf", "/etc/php{major}/php-fpm.conf".format(major=self.content["version"]["major"])], check=True)
+        else:
+            subprocess.run(["buildah", "copy", container, "assets/fpm-nginx/conf/www.conf", "/etc/php{major}/php-fpm.d/www.conf".format(major=self.content["version"]["major"])], check=True)
         self._build(container, "fpm")
 
     def build_fpm_apache(self):
