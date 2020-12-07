@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-FPMCONFIG="/etc/php7/php-fpm.d/www.conf"
-if [ ! -f "$FPMCONFIG" ]
+FPMCONFIG="/etc/$PHP_VARIANT/php-fpm.d/www.conf"
+if [ "$PHP_VARIANT" == "php5" ]
 then
     FPMCONFIG="/etc/php5/php-fpm.conf"
 fi

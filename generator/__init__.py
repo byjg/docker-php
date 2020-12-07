@@ -43,6 +43,8 @@ class Generator:
         config_template = "php-" + config + ".j2"
         image = "byjg/php:{major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config)
         subprocess.run(["buildah", "config", "--env", "DOCKER_IMAGE={image}".format(image=image), container], check=True)
+        subprocess.run(["buildah", "config", "--env", "PHP_VERSION={major}.{minor}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), container], check=True)
+        subprocess.run(["buildah", "config", "--env", "PHP_VARIANT=php{major}".format(major=self.content["version"]["major"]), container], check=True)
         if self.debug:
             [subprocess.run(["buildah", "run", container, "/bin/sh", "-c", command], check=True) for command in self.parse_config(config_template)]
         else:
