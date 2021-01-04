@@ -14,11 +14,17 @@ env:
   - PHP_VERSION=7.4
   - PHP_VERSION=8.0
 
-before_install:
+install:
   - ./install-buildah-ubuntu.sh
   - pip install -r requirements.txt
   - buildah login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
-  - python ./build.py $PHP_VERSION --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx
+  - python ./build.py $PHP_VERSION --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
 
+jobs:
+  include:
+    - stage: documentation
+      if: branch = master
+      install: skip
+      script: "curl https://opensource.byjg.com/add-doc.sh | bash /dev/stdin devops docker-php docs"

@@ -56,10 +56,17 @@ my_parser.add_argument('--build-fpm-nginx',
                        default="",
                        help='Build Fpm-nginx')
 
+my_parser.add_argument('--push',
+                       dest='push',
+                       nargs="?",
+                       const="push",
+                       default="",
+                       help='Push the image to the docker.io repository')
+
 # Execute the parse_args() method
 args = my_parser.parse_args()
 
-gen = Generator(args.PHP_Version, args.Debug)
+gen = Generator(args.PHP_Version, args.Debug, args.push != "")
 
 cmd_list = []
 cmd_list.append(args.buildBase) if args.buildBase != "" else None
