@@ -1,7 +1,9 @@
-language: php
+language: python
 
-php:
-  - "7.2"
+dist: bionic
+
+python:
+  - 3.6
 
 env:
   - PHP_VERSION=5.6
@@ -12,12 +14,17 @@ env:
   - PHP_VERSION=7.4
   - PHP_VERSION=8.0
 
-services:
-  - docker
-
-before_install:
-  - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
+install:
+  - ./install-buildah-ubuntu.sh
+  - pip install -r requirements.txt
+  - buildah login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
 script:
-  - ./build.sh $PHP_VERSION $DOCKER_USER $DOCKER_PASSWORD $DOCKER_REGISTRY
+  - python ./build.py $PHP_VERSION --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
 
+jobs:
+  include:
+    - stage: documentation
+      if: branch = master
+      install: skip
+      script: "curl https://opensource.byjg.com/add-doc.sh | bash /dev/stdin devops docker-php docs"

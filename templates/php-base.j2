@@ -1,0 +1,26 @@
+# Install Packages
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add git bash php{{ version.major }} {% for ext in extensions %} php{{ version.major }}-{{ ext }}{% endfor %}
+ln -s /usr/bin/php{{ version.major }} /usr/bin/php || true
+ln -s /usr/bin/pecl{{ version.major }} /usr/bin/pecl || true
+mkdir -p /etc/php/conf.d
+
+# Install PECL
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add {% for pkg in additionalPackages %}{{ pkg }} {% endfor %}
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add --virtual .build php{{ version.major }}-pear php{{ version.major }}-dev {% for pkg in peclBuildPackages %}{{ pkg }} {% endfor %}
+sed -ie "s/ -n / /" /usr/bin/pecl
+{% for ext in pecl -%}
+{% if ext.install is not defined or ext.install %}yes "" | pecl install {{ ext.name }}{% if ext.version is defined %}-{{ ext.version }}{% endif %}{% endif %}
+printf "{% if ext.zend %}zend_{% endif %}extension={{ ext.name }}.so{% for config in ext.config %}\n{{ config }}{% endfor %}\n" > /etc/php{{ version.major }}/conf.d/{{ ext.name }}.ini
+{% endfor %}
+apk del --no-cache .build
+
+# Install Composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+mv composer.phar /usr/local/bin/composer
+
+# COPY assets/entrypoint.sh /
+# ENTRYPOINT [ "/entrypoint.sh" ]
+

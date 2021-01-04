@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-FPMCONFIG="/etc/php7/php-fpm.d/www.conf"
-if [ ! -f "$FPMCONFIG" ]
+FPMCONFIG="/etc/$PHP_VARIANT/php-fpm.d/www.conf"
+if [ "$PHP_VARIANT" == "php5" ]
 then
     FPMCONFIG="/etc/php5/php-fpm.conf"
 fi
+
+sed -i -e 's/^\(listen *=\).*/\1 0.0.0.0:9000/g' $FPMCONFIG
 
 # Function to update the fpm configuration to make the service environment variables available
 function setEnvironmentVariable() {
@@ -35,4 +37,4 @@ done
 echo "DONE"
 
 # Now start php-fpm
-`which php-fpm` --nodaemonize --fpm-config "$FPMCONFIG"
+$(command -v php-fpm) --nodaemonize --fpm-config "$FPMCONFIG"

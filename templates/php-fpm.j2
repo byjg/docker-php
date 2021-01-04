@@ -1,0 +1,2 @@
+apk add --no-cache php{{ version.major }}-fpm
+ln -s $(which php-fpm{{ version.major }}) /usr/bin/php-fpm || true

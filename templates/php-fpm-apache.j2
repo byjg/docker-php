@@ -1,0 +1,7 @@
+apk add --no-cache apache2-proxy supervisor bash
+ln -sf /dev/stdout /var/log/apache2/access.log
+ln -sf /dev/stderr /var/log/apache2/error.log
+mkdir -p /run/apache2
+chmod a+x /start-fpm.sh
+ln -s /usr/bin/python3 /usr/bin/python || true
+echo "<?php phpinfo(); ?>" >> /var/www/localhost/htdocs/info.php

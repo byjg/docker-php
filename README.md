@@ -1,5 +1,7 @@
 # PHP Docker Images ByJG
 
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+
 A complete and small PHP Docker image based on Alpine Linux.
 
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
@@ -10,17 +12,17 @@ The PHP images are ready to use in:
  - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
  - IDE Integration
  
-# PHP Versions
+## PHP Versions
 
 - 8.0.0 (some extensions are not available yet)
-- 7.4.8
-- 7.3.20
-- 7.2.31
+- 7.4.13
+- 7.3.25
+- 7.2.33
 - 7.1.33
 - 7.0.33
 - 5.6.40
 
-# PHP Images
+## PHP Images
 
 Five different images for each PHP Version
 
@@ -30,7 +32,7 @@ Five different images for each PHP Version
 * fpm-apache - PHP and Apache using FPM
 * fpm-nginx - PHP and Nginx using FPM
 
-# Supported Tags
+## Supported Tags
 
 - 8.0-base
 - 8.0-cli
@@ -68,126 +70,10 @@ Five different images for each PHP Version
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
 
-# PHP "*-base" Image 
-
-All "*-base" images are based on Alpine Linux and only the necessary layers. Because of that the images 
-are tiny and very optimized.
-
-You can found more than 45 extensions pre-installed in all images:
-
-```text
-bcmath, ctype, curl, date, dba, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, 
-json, libxml, mbstring, mcrypt, memcached, mongodb, mysqli, mysqlnd, openssl,pcntl, 
-pcre, PDO, pdo_dblib, pdo_mysql, pdo_pgsql, pdo_sqlite, Phar, posix, readline, redis,
-Reflection, session, SimpleXML, soap, sockets, SPL, sqlite3, standard, tokenizer, xdebug, xml, 
-xmlreader, xmlwriter, xsl, zip, zlib, Xdebug
-```
-
-**plus** [Composer](https://getcomposer.org/) in the most recent version
-
-Example:
-
-```bash
-docker run -it --rm byjg/php:7.1-base php --version
-```
-
-This image expose the port:
- - 9001 for the XDebug
-
-## Adding Custom Config
-
-You can create a volume or copy all *.ini files to `/etc/php/conf.d`
-
-# PHP "*-cli" Images
-
-The CLI images extends from "*-base" Image and have also:
-
-- PHPUnit
-- PHP Code Sniffer
-- PHP Mess Detector
-- PHP Code Beautifier and Fixer
-
-You can create an alias to use easily the commands: 
-
-```bash
-alias php='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS[0]} byjg/php:7.2-cli php "$@"'
-alias phpunit='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS[0]} byjg/php:7.2-cli phpunit "$@"'
-alias phpcs='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS[0]} byjg/php:7.2-cli phpcs "$@"'
-alias phpmd='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $UID:${GROUPS[0]} byjg/php:7.2-cli phpmd "$@"'
-```
+More info read the documentation on: [https://opensource.byjg.com/devops/docker-php]()
 
 
-# The "*-fpm" Images
-
-The FPM images extends the "*-base" Image and have installed the modules PHP-FPM.
-
-This image exposes the port:
-- 9000 for the FPM
-
-# PHP "*-fpm-nginx" Images
-
-The FPM-NGINX images extends "\*-fpm" and "\*-base" images and have also 
-a full featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
-
-This image exposes the ports:
- - 80
- - 443
-
-The home directory is defined by the NGINX_ROOT environment variable. If not set defaults to  `/var/www/html`.
-
-Basically to start type:
-
-```bash
-docker run -v $PWD:/var/www/html -p 80:80 byjg/php:7.2-fpm-nginx
-```
-
-By default the nginx serves all files in /var/www/html.
- 
-You can set your own FPM configurations by attaching a volume to:
-- /etc/nginx/nginx.conf
-- /etc/nginx/conf.d/default.conf
-
-
-*Setting PHP Controller*
-
-You can define a PHP Controller which is a single PHP file that will process all request. This could be useful for 
-REST Applications like Silex, Lumen, Symfony, etc. 
-
-```bash
-docker run -e PHP_CONTROLLER="/index.php" byjg/php:7.2-fpm-nginx
-```
-
-*Setting SSL Certificate*
-
-
-```bash
-docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:7.2-fpm-nginx
-```
-
-# PHP "*-fpm-apache" Images
-
-The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also 
-a full featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
-
-This image exposes the ports:
- - 80
- - 443
-
-The home directory is in /srv/web.
-
-Basically to start type:
-
-```bash
-docker run -v $PWD:/srv/web -p 80:80 byjg/php:7.2-fpm-apache
-```
-
-By default the nginx serves all files in /srv/web.
- 
-You can set your own APACHE configurations by attaching a volume to:
-- /etc/apache2/httpd.conf
-- /etc/apache2/conf.d/
-
-# Image Sizes
+## Image Sizes
 
 Below a table with images uncompressed
 
@@ -199,47 +85,6 @@ Below a table with images uncompressed
 | 7.2           |   94MB | 140MB | 104MB  | 151MB     | 150MB      |
 | 7.3           |   99MB | 151MB | 104MB  | 152MB     | 152MB      |
 
-# Environment Variables
-
-You dont need to replace the nginx configuration. The `byjg/php` image, you can adjust the NGINX configuration 
-and enable/disable modules. If fits for most of the users.    
-
-Any ENVIRONMENT variable can be accessible by your running PHP Instance. 
- 
-## PHP_CONTROLLER=path
-
-If set, will enable the PHP controller
-
-```bash
-docker run -e PHP_CONTROLLER=/app.php byjg/php:7.2-cli
-```
-## NGINX_ROOT
-
-Changes the server root. Defaults to `/var/www/html`.
-
-## NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
-
-If set, will enable to serve HTTPS pages. 
-
-```bash
-docker run -e NGINX_SSL_CERT=/etc/my.cert -e NGINX_SSL_CERT_KEY=/etc/my.key byjg/php:7.2-cli
-```
-
-
-## DISABLEMODULE_[name]=true
-
-You can disable a module when you start the instance:
-
-```bash
-docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true byjg/php:7.2-cli
-```
-
-## VERBOSE=true
-
-When you pass `VERBOSE=true` you can get a more verbose output about the entrypoint changes
-
-```bash
-docker run -e VERBOSE=true byjg/php:7.2-cli
-```
-
+----
+[Open source ByJG](http://opensource.byjg.com)
 
