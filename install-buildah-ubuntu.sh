@@ -16,7 +16,7 @@ sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcont
 wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${ID^}_${VERSION_ID}/Release.key -O Release.key
 apt-key add - < Release.key
 apt-get update -qq
-apt-get -qq -y install buildah
+apt-get -qq -y install podman buildah
 
 #apt-get -qq -y install qemu binfmt-support qemu-user-static
 #if [ ! -d /proc/sys/fs/binfmt_misc ]; then
