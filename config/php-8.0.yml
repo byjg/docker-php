@@ -1,4 +1,5 @@
-image: alpine:edge
+image:
+  default: alpine:edge
 
 repositories:
   - http://nl.alpinelinux.org/alpine/edge/testing

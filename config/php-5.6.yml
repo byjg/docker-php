@@ -1,4 +1,5 @@
-image: alpine:3.8
+image:
+  default: alpine:3.8
 
 version:
   major: 5

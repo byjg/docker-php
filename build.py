@@ -21,6 +21,12 @@ my_parser.add_argument('--debug',
                        default=False,
                        help='Enable Debug Build (multiple layers)')
 
+my_parser.add_argument('--arch',
+                       dest='arch',
+                       default="amd64,arm64,s390x",
+                       help='Build Base')
+
+
 my_parser.add_argument('--build-base',
                        dest='buildBase',
                        nargs="?",
@@ -75,4 +81,9 @@ cmd_list.append(args.buildFpm) if args.buildFpm != "" else None
 cmd_list.append(args.buildFpmApache) if args.buildFpmApache != "" else None
 cmd_list.append(args.buildFpmNginx) if args.buildFpmNginx != "" else None
 
-[getattr(gen, "build_" + cmd)() for cmd in cmd_list]
+for cmd in cmd_list:
+    gen.manifest_create(cmd)
+    for arch in args.arch.split(","):
+        iid = getattr(gen, "build_" + cmd)(arch)
+        gen.manifest_add(iid, cmd, arch)
+    gen.manifest_push(cmd)

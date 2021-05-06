@@ -1,4 +1,6 @@
-image: alpine:3.5
+image:
+  default: alpine:3.5
+  arm64: arm64v8/alpine:3.5
 
 version:
   major: 7

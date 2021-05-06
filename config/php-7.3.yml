@@ -1,4 +1,5 @@
-image: alpine:3.12
+image:
+  default: alpine:3.12
 
 version:
   major: 7

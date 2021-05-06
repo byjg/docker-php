@@ -17,10 +17,12 @@ class Generator:
         self.push = push
         self.build_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.content = yaml.load(stream=open(content), Loader=yaml.SafeLoader)
+        self.local_base = False
         print("--------------------------------------------")
         print("PHP Version: " + php_version)
         print("Debug: " + ("true" if debug else "false"))
         print("--------------------------------------------")
+        self._run_cli(["podman", "run", "--rm", "--events-backend=file", "--cgroup-manager=cgroupfs", "--privileged", "docker://multiarch/qemu-user-static", "--reset", "-p", "yes"])
         
     def _run_cli(self, cmds):
         if self.debug:
@@ -46,10 +48,12 @@ class Generator:
         print("===================================================================")
         print("")
 
-    def _build(self, container, config):
+    def _build(self, container, config, arch):
         config_template = "php-" + config + ".j2"
-        image = "byjg/php:{major}.{minor}-{config}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"], config=config)
-        imageMonth = "{image}-{year}.{month:02d}".format(image=image, year=date.today().year, month=date.today().month)
+        image = "{image}-{arch}".format(
+            image=self.imageName(config),
+            arch=arch
+        )
         self._run_cli(["buildah", "config", "--env", "DOCKER_IMAGE={image}".format(image=image), container])
         self._run_cli(["buildah", "config", "--env", "PHP_VERSION={major}.{minor}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), container])
         self._run_cli(["buildah", "config", "--env", "PHP_VARIANT=php{major}".format(major=self.content["version"]["major"]), container])
@@ -58,46 +62,82 @@ class Generator:
         else:
             self._run_cli(["buildah", "run", container, "/bin/sh", "-c", " \\\n && ".join(self.parse_config(config_template))])
         self._run_cli(["buildah", "config", "--env", "BUILD_DATE={date}".format(date=self.build_date), container])
-        self._run_cli(["buildah", "commit", container, "localhost/{image}".format(image=image)])
-        self._run_cli(["buildah", "tag", "localhost/{image}".format(image=image), "docker.io/{image}".format(image=image)])
-        self._run_cli(["buildah", "tag", "localhost/{image}".format(image=image), "docker.io/{image}".format(image=imageMonth)])
-        if self.push:
-            self._run_cli(["buildah", "push", "docker.io/{image}".format(image=image)])
-            self._run_cli(["buildah", "push", "docker.io/{image}".format(image=imageMonth)])
+        self._run_cli(["buildah", "commit", "--iidfile", "/tmp/iid", container, "localhost/{image}".format(image=image)])
+        with open('/tmp/iid', 'r') as f:
+            iid = f.read()
+        return iid
 
-    def build_base(self):
+    def _from(self, image, arch):
+        cmd = "buildah --arch {arch} from {image}".format(image=image, arch=arch)
+        if self.debug:
+            print("\n>>>> " + cmd)
+        return subprocess.check_output(cmd, shell=True).decode("UTF-8").strip()
+
+    def imageName(self, config):
+        return "byjg/php:{major}.{minor}-{config}".format(
+            major=self.content["version"]["major"],
+            minor=self.content["version"]["minor"],
+            config=config.replace("_", "-")
+        )
+
+    def source_repo(self, arch, php_source):
+        return "{source_repo}byjg/php:{major}.{minor}-{php_source}{arch}".format(
+            source_repo="localhost/" if self.local_base else "docker://",
+            major=self.content["version"]["major"],
+            minor=self.content["version"]["minor"],
+            php_source=php_source,
+            arch="-" + arch if self.local_base else "")
+
+    def manifest_create(self, config):
+        self._run_cli(["buildah", "manifest", "create", self.imageName(config)])
+
+    def manifest_add(self, iid, config, arch):
+        self._run_cli(["buildah", "manifest", "add", self.imageName(config), "--arch", arch]
+                      + (["--variant", "v8"] if arch in ['arm64', 'aarch64'] else [])
+                      + [iid])
+
+    def manifest_push(self, config):
+        if not self.push:
+            return
+        image_month = "{image}-{year}.{month:02d}".format(image=self.imageName(config), year=date.today().year, month=date.today().month)
+        self._run_cli(["buildah", "manifest", "push", "--all", self.imageName(config), "docker://" + self.imageName(config)])
+        self._run_cli(["buildah", "manifest", "push", "--all", self.imageName(config), "docker://" + image_month])
+
+    def build_base(self, arch):
         self._banner("base")
-        container = subprocess.check_output("buildah from {image}".format(image=self.content["image"]), shell=True).decode("UTF-8").strip()
+        base_image = self.content["image"][arch] if arch in self.content["image"] else self.content["image"]["default"]
+        container = self._from("docker://" + base_image, arch)
         self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
         self._run_cli(["buildah", "config", "--workingdir", "/srv/web", container])
         self._run_cli(["buildah", "copy", container, "assets/entrypoint.sh", "/"])
-        self._build(container, "base")
+        self.local_base = True
+        return self._build(container, "base", arch)
 
-    def build_cli(self):
+    def build_cli(self, arch):
         self._banner("cli")
-        container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
-        self._build(container, "cli")
+        container = self._from(self.source_repo(arch, "base"), arch)
+        return self._build(container, "cli", arch)
 
-    def build_fpm(self):
+    def build_fpm(self, arch):
         self._banner("fpm")
-        container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-base".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
+        container = self._from(self.source_repo(arch, "base"), arch)
         self._run_cli(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container])
-        self._build(container, "fpm")
+        return self._build(container, "fpm", arch)
 
-    def build_fpm_apache(self):
+    def build_fpm_apache(self, arch):
         self._banner("fpm-apache")
-        container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-fpm".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
+        container = self._from(self.source_repo(arch, "fpm"), arch)
         self._run_cli(["buildah", "config", "--cmd", '/usr/bin/supervisord -n -c /etc/supervisord.conf', container])
         self._run_cli(["buildah", "copy", container, "assets/fpm-apache/conf/httpd.conf", "/etc/apache2/httpd.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-apache/conf/vhost.conf", "/etc/apache2/conf.d/"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-apache/conf/supervisord.conf", "/etc/supervisord.conf"])
         self._run_cli(["buildah", "copy", container, "assets/script/exit-event-listener.py", "/exit-event-listener.py"])
         self._run_cli(["buildah", "copy", container, "assets/script/start-fpm.sh", "/start-fpm.sh"])
-        self._build(container, "fpm-apache")
+        return self._build(container, "fpm-apache", arch)
 
-    def build_fpm_nginx(self):
+    def build_fpm_nginx(self, arch):
         self._banner("fpm-nginx")
-        container = subprocess.check_output("buildah from localhost/byjg/php:{major}.{minor}-fpm".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), shell=True).decode("UTF-8").strip()
+        container = self._from(self.source_repo(arch, "fpm"), arch)
         self._run_cli(["buildah", "config", "--cmd", '/usr/bin/supervisord -n -c /etc/supervisord.conf', container])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/conf.d/default.conf"])
@@ -108,4 +148,4 @@ class Generator:
         with open(".tmp.sh", "w") as file:
             file.write(script)
         self._run_cli(["buildah", "copy", container, ".tmp.sh", "/tmp/install_nginx.sh"])
-        self._build(container, "fpm-nginx")
+        return self._build(container, "fpm-nginx", arch)

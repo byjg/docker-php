@@ -1,4 +1,5 @@
-image: alpine:edge
+image:
+  default: alpine:edge
 
 version:
   major: 7

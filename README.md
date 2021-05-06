@@ -2,7 +2,9 @@
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 
-A complete and small PHP Docker image based on Alpine Linux.
+A complete and small PHP Docker image based on Alpine Linux and run on the archictectures
+- amd64 (x86_64)
+- arm64 (Raspberry PI, Graviton, etc) - available after February 2021
 
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
@@ -69,6 +71,9 @@ Five different images for each PHP Version
 - 5.6-fpm
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
+
+Since January 2021 all tags have also the suffix YYYY.MM. e.d
+- 8.0-fpm-nginx-2021.01
 
 More info read the documentation on: [https://opensource.byjg.com/devops/docker-php]()
 
