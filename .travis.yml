@@ -15,7 +15,7 @@ env:
   - PHP_VERSION=8.0
 
 install:
-  - ./install-buildah-ubuntu.sh
+  - sudo ./install-buildah-ubuntu.sh
   - pip install -r requirements.txt
   - buildah login --username $DOCKER_USER --password $DOCKER_PASSWORD $DOCKER_REGISTRY
 
