@@ -3,7 +3,7 @@ language: python
 dist: focal
 
 python:
-  - 3.6
+  - 3.8
 
 env:
   - PHP_VERSION=5.6
@@ -25,6 +25,6 @@ script:
 jobs:
   include:
     - stage: documentation
-      if: branch = master
+      if: (branch = master) AND (NOT (type IN (pull_request)))
       install: skip
       script: "curl https://opensource.byjg.com/add-doc.sh | bash /dev/stdin devops docker-php docs"

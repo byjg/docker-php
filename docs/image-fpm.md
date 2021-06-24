@@ -1,4 +1,4 @@
-# # PHP "*-fpm" Images
+# PHP "*-fpm" Images
 
 ## The "*-fpm" Images
 

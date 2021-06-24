@@ -1,5 +1,5 @@
 image:
-  default: alpine:edge
+  default: alpine:3.14
 
 version:
   major: 7
@@ -115,3 +115,4 @@ peclBuildPackages:
 additionalPackages:
   - libssl1.1
   - libcrypto1.1
+  - python3

@@ -5,7 +5,7 @@ ln -s /usr/bin/php{{ version.major }} /usr/bin/php || true
 ln -s /usr/bin/pecl{{ version.major }} /usr/bin/pecl || true
 mkdir -p /etc/php/conf.d
 
-# Install PECL
+# Install PECL and additional packages
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add {% for pkg in additionalPackages %}{{ pkg }} {% endfor %}
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add --virtual .build php{{ version.major }}-pear php{{ version.major }}-dev {% for pkg in peclBuildPackages %}{{ pkg }} {% endfor %}
 sed -ie "s/ -n / /" /usr/bin/pecl

@@ -1,5 +1,5 @@
 image:
-  default: alpine:edge
+  default: alpine:3.14
 
 repositories:
   - http://nl.alpinelinux.org/alpine/edge/testing
@@ -113,3 +113,4 @@ peclBuildPackages:
 additionalPackages:
   - libssl1.1
   - libcrypto1.1
+  - python3
