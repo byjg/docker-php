@@ -18,9 +18,9 @@ The PHP images are ready to use in:
  
 ## PHP Versions
 
-- 8.0.0 (some extensions are not available yet)
-- 7.4.13
-- 7.3.25
+- 8.0.7
+- 7.4.20
+- 7.3.27
 - 7.2.33
 - 7.1.33
 - 7.0.33
