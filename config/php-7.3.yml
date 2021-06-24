@@ -26,6 +26,7 @@ extensions:
   - mysqlnd
   - openssl
   - pcntl
+  - pecl-yaml
   - pdo
   - pdo_dblib
   - pdo_mysql

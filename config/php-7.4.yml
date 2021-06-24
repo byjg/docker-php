@@ -20,8 +20,11 @@ extensions:
   - intl
   - json
   - mbstring
-  - mcrypt
-  - memcached
+  - pecl-mcrypt
+  - pecl-memcached
+  - pecl-mongodb
+  - pecl-xdebug
+  - pecl-yaml
   - mysqli
   - mysqlnd
   - openssl
@@ -42,7 +45,6 @@ extensions:
   - sockets
   - sqlite3
   - tokenizer
-  - xdebug
   - xml
   - xmlreader
   - xmlwriter
@@ -51,7 +53,6 @@ extensions:
   - zlib
 
 pecl:
-  - name: mongodb
   - name: xdebug
     install: False
     zend: True
