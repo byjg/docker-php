@@ -71,7 +71,7 @@ composer:
     - phpmd
 
 nginx:
-  version: 1.17.9
+  version: 1.21.0
   more_set_header_version: 0.33
   extensions:
     - compat
