@@ -26,13 +26,14 @@ extensions:
   - mysqlnd
   - openssl
   - pcntl
-  - pecl-yaml
   - pdo
   - pdo_dblib
   - pdo_mysql
   - pdo_pgsql
   - pdo_sqlite
   - pear
+  - pecl-mongodb
+  - pecl-yaml
   - phar
   - posix
   - redis
@@ -52,7 +53,6 @@ extensions:
   - zlib
 
 pecl:
-  - name: mongodb
   - name: xdebug
     install: False
     zend: True

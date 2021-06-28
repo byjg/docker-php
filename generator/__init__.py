@@ -100,8 +100,8 @@ class Generator:
         if not self.push:
             return
         image_month = "{image}-{year}.{month:02d}".format(image=self.imageName(config), year=date.today().year, month=date.today().month)
-        self._run_cli(["buildah", "manifest", "push", "--all", self.imageName(config), "docker://" + self.imageName(config)])
-        self._run_cli(["buildah", "manifest", "push", "--all", self.imageName(config), "docker://" + image_month])
+        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", self.imageName(config), "docker://" + self.imageName(config)])
+        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", self.imageName(config), "docker://" + image_month])
 
     def build_base(self, arch):
         self._banner("base")

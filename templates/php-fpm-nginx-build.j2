@@ -126,3 +126,5 @@ ln -sf /dev/stderr /var/log/nginx/error.log
 mkdir -p /var/www/html
 cp /usr/share/nginx/html/* /var/www/html
 echo "<?php phpinfo(); ?>" >> /var/www/html/info.php
+
+date > /etc/build-date
