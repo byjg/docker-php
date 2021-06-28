@@ -44,41 +44,43 @@ Five different images for each PHP Version
 
 ## Supported Tags
 
-- 8.0-base
-- 8.0-cli
-- 8.0-fpm
-- 8.0-fpm-apache
-- 8.0-fpm-nginx
-- 7.4-base
-- 7.4-cli
-- 7.4-fpm
-- 7.4-fpm-apache
-- 7.4-fpm-nginx
-- 7.3-base
-- 7.3-cli
-- 7.3-fpm
-- 7.3-fpm-apache
-- 7.3-fpm-nginx
-- 7.2-base
-- 7.2-cli
-- 7.2-fpm
-- 7.2-fpm-apache
-- 7.2-fpm-nginx
-- 7.1-base
-- 7.1-cli
-- 7.1-fpm
-- 7.1-fpm-apache
-- 7.1-fpm-nginx
-- 7.0-base
-- 7.0-cli
-- 7.0-fpm
-- 7.0-fpm-apache
-- 7.0-fpm-nginx
-- 5.6-base
-- 5.6-cli
-- 5.6-fpm
-- 5.6-fpm-apache
-- 5.6-fpm-nginx
+| Tag             | Montly builds |
+|:----------------|:-------------:|
+| 8.0-base        | yes           |
+| 8.0-cli         | yes           |
+| 8.0-fpm         | yes           |
+| 8.0-fpm-apache  | yes           |
+| 8.0-fpm-nginx   | yes           |
+| 7.4-base        | yes           |
+| 7.4-cli         | yes           |
+| 7.4-fpm         | yes           |
+| 7.4-fpm-apache  | yes           |
+| 7.4-fpm-nginx   | yes           |
+| 7.3-base        | yes           |
+| 7.3-cli         | yes           |
+| 7.3-fpm         | yes           |
+| 7.3-fpm-apache  | yes           |
+| 7.3-fpm-nginx   | yes           |
+| 7.2-base        | -             |
+| 7.2-cli         | -             |
+| 7.2-fpm         | -             |
+| 7.2-fpm-apache  | -             |
+| 7.2-fpm-nginx   | -             |
+| 7.1-base        | -             |
+| 7.1-cli         | -             |
+| 7.1-fpm         | -             |
+| 7.1-fpm-apache  | -             |
+| 7.1-fpm-nginx   | -             |
+| 7.0-base        | -             |
+| 7.0-cli         | -             |
+| 7.0-fpm         | -             |
+| 7.0-fpm-apache  | -             |
+| 7.0-fpm-nginx   | -             |
+| 5.6-base        | -             |
+| 5.6-cli         | -             |
+| 5.6-fpm         | -             |
+| 5.6-fpm-apache  | -             |
+| 5.6-fpm-nginx   | -             |
 
 Since January 2021 all tags have also the suffix YYYY.MM. e.d
 - 8.0-fpm-nginx-2021.01

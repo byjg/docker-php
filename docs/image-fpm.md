@@ -21,7 +21,7 @@ The home directory is defined by the NGINX_ROOT environment variable. If not set
 Basically to start type:
 
 ```bash
-docker run -v $PWD:/var/www/html -p 80:80 byjg/php:7.2-fpm-nginx
+docker run -v $PWD:/var/www/html -p 80:80 byjg/php:8.0-fpm-nginx
 ```
 
 By default the nginx serves all files in /var/www/html.
@@ -37,14 +37,14 @@ You can define a PHP Controller which is a single PHP file that will process all
 REST Applications like Silex, Lumen, Symfony, etc.
 
 ```bash
-docker run -e PHP_CONTROLLER="/index.php" byjg/php:7.2-fpm-nginx
+docker run -e PHP_CONTROLLER="/index.php" byjg/php:8.0-fpm-nginx
 ```
 
 *Setting SSL Certificate*
 
 
 ```bash
-docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:7.2-fpm-nginx
+docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:8.0-fpm-nginx
 ```
 
 ## PHP "*-fpm-apache" Images
@@ -61,7 +61,7 @@ The home directory is in /srv/web.
 Basically to start type:
 
 ```bash
-docker run -v $PWD:/srv/web -p 80:80 byjg/php:7.2-fpm-apache
+docker run -v $PWD:/srv/web -p 80:80 byjg/php:8.0-fpm-apache
 ```
 
 By default the nginx serves all files in /srv/web.
