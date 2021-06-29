@@ -1,3 +1,5 @@
+set -e
+
 # Install Packages
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add git bash php{{ version.major }} {% for ext in extensions %} php{{ version.major }}-{{ ext }}{% endfor %}

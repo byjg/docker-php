@@ -32,7 +32,6 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-  - pecl-mongodb
   - pecl-yaml
   - phar
   - posix
@@ -53,6 +52,7 @@ extensions:
   - zlib
 
 pecl:
+  - name: mongodb
   - name: xdebug
     install: False
     zend: True
