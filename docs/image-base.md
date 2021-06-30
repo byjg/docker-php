@@ -24,6 +24,6 @@ docker run -it --rm byjg/php:7.1-base php --version
 This image expose the port:
 - 9001 for the XDebug
 
-### Adding Custom Config
+## Adding Custom Config
 
 You can create a volume or copy all *.ini files to `/etc/php/conf.d`

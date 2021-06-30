@@ -45,18 +45,18 @@ When you pass `VERBOSE=true` you can get a more verbose output about the entrypo
 docker run -e VERBOSE=true byjg/php:8.0-cli
 ```
 
-## DOCKER_IMAGE (read onlu)
+## DOCKER_IMAGE (read only)
 
 The name of the image is running.
 
-## PHP_VERSION (read onlu)
+## PHP_VERSION (read only)
 
 The PHP Version is running (e.g. 7.3)
 
-## PHP_VARIANT (read onlu)
+## PHP_VARIANT (read only)
 
 The PHP variant is running (e.g. 7)
 
-## BUILD_DATE (read onlu)
+## BUILD_DATE (read only)
 
 The date the image was built

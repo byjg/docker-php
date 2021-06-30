@@ -29,8 +29,8 @@ docker pull byjg/php:7.3-cli
 ```
 
 ```tip
-This tagging are always pointing to the latest version and they are updated monthly.
-For production environments we recommend use an image that does not change monthly.
+This tagging are always pointing to the latest version and they are updated monthly. 
+For production environments we recommend use an image that does not change monthly. 
 To have this just add the suffix {YEAR}{MONTH}
 
 e.g.
