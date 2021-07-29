@@ -18,6 +18,7 @@ extensions:
   - gettext
   - iconv
   - intl
+  - fileinfo
   - json
   - mbstring
   - mcrypt
