@@ -99,9 +99,10 @@ class Generator:
     def manifest_push(self, config):
         if not self.push:
             return
+        local_image = "containers-storage:localhost/" + self.imageName(config)
         image_month = "{image}-{year}.{month:02d}".format(image=self.imageName(config), year=date.today().year, month=date.today().month)
-        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", self.imageName(config), "docker://" + self.imageName(config)])
-        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", self.imageName(config), "docker://" + image_month])
+        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", local_image, "docker://" + self.imageName(config)])
+        self._run_cli(["buildah", "manifest", "push", "--all", "--format", "v2s2", local_image, "docker://" + image_month])
 
     def build_base(self, arch):
         self._banner("base")
