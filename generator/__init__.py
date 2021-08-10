@@ -62,7 +62,7 @@ class Generator:
         else:
             self._run_cli(["buildah", "run", container, "/bin/sh", "-c", " \\\n && ".join(self.parse_config(config_template))])
         self._run_cli(["buildah", "config", "--env", "BUILD_DATE={date}".format(date=self.build_date), container])
-        self._run_cli(["buildah", "commit", "--iidfile", "/tmp/iid", container, "localhost/{image}".format(image=image)])
+        self._run_cli(["buildah", "commit", "--iidfile", "/tmp/iid", container, "containers-storage:localhost/{image}".format(image=image)])
         with open('/tmp/iid', 'r') as f:
             iid = f.read()
         return iid
@@ -82,7 +82,7 @@ class Generator:
 
     def source_repo(self, arch, php_source):
         return "{source_repo}byjg/php:{major}.{minor}-{php_source}{arch}".format(
-            source_repo="localhost/" if self.local_base else "docker://",
+            source_repo="containers-storage:localhost/" if self.local_base else "docker://",
             major=self.content["version"]["major"],
             minor=self.content["version"]["minor"],
             php_source=php_source,
