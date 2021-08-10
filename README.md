@@ -20,9 +20,9 @@ The PHP images are ready to use in:
  
 ## PHP Versions
 
-- 8.0.7
-- 7.4.20
-- 7.3.27
+- 8.0.9
+- 7.4.22
+- 7.3.29
 - 7.2.33
 - 7.1.33
 - 7.0.33
