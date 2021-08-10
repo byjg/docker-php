@@ -16,11 +16,11 @@ Where PHP_VERSION can be:
 - 5.6
 
 And IMAGE_TYPE can be:
-- base: a minimal image with PHP
-- cli: an image ready to use as a PHP command line replacement
-- fpm: an image with the PHP ready to use
-- fpm-nginx: an image bundled PHP+FPM+NGinx
-- fpm-apache: an image bundled PHP+FPM+APACHE
+- `base`: a minimal image with PHP
+- `cli`: an image ready to use as a PHP command line replacement
+- `fpm`: an image with the PHP FPM ready to use
+- `fpm-nginx`: an image bundled PHP+FPM+NGinx
+- `fpm-apache`: an image bundled PHP+FPM+APACHE
 
 Example:
 
@@ -35,5 +35,5 @@ To have this just add the suffix {YEAR}{MONTH}
 
 e.g.
 
-docker pull byjg/php:7.3-cli-2021.01
+docker pull byjg/php:7.3-cli-2021.06
 ```

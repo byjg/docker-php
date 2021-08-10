@@ -6,11 +6,11 @@ are tiny and very optimized.
 You can find more than 45 extensions pre-installed in all images:
 
 ```text
-bcmath, ctype, curl, date, dba, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, 
-json, libxml, mbstring, mcrypt, memcached, mongodb, mysqli, mysqlnd, openssl,pcntl, 
-pcre, PDO, pdo_dblib, pdo_mysql, pdo_pgsql, pdo_sqlite, Phar, posix, readline, redis,
-Reflection, session, SimpleXML, soap, sockets, SPL, sqlite3, standard, tokenizer, xdebug, xml, 
-xmlreader, xmlwriter, xsl, zip, zlib, Xdebug
+bcmath, Core, ctype, curl, date, dba, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, igbinary, intl, 
+json, libxml, mbstring, mcrypt, memcached, mongodb, mysqli, mysqlnd, openssl, pcntl, 
+pcre, PDO, pdo_dblib, pdo_mysql, pdo_pgsql, pdo_sqlite, Phar, posix, readline, redis, 
+Reflection, session, shmop, SimpleXML, soap, sockets, SPL, sqlite3, standard, tokenizer, xdebug, xml, 
+xmlreader, xmlwriter, xsl, yaml, zip, zlib
 ```
 
 **plus** [Composer](https://getcomposer.org/) in the most recent version

@@ -1,6 +1,6 @@
 # Environment Variables
 
-You dont need to replace the nginx configuration. The `byjg/php` image, you can adjust the NGINX configuration
+You don't need to replace the nginx configuration. The `byjg/php` image, you can adjust the NGINX configuration
 and enable/disable modules. If fits for most of the users.
 
 Any ENVIRONMENT variable can be accessible by your running PHP Instance.
@@ -27,7 +27,6 @@ docker run -v /etc/ssl:/etc/ssl \
   -e NGINX_SSL_CERT_KEY=/etc/ssl/my.key \
   byjg/php:8.0-fpm-ngnix
 ```
-
 
 ## DISABLEMODULE_[name]=true
 
