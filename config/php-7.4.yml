@@ -1,9 +1,10 @@
 image:
-  default: alpine:3.14
+  default: alpine:3.15
 
 version:
   major: 7
   minor: 4
+  suffix: 7
 
 extensions:
   - bcmath

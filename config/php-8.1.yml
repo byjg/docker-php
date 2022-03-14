@@ -1,10 +1,13 @@
 image:
-  default: alpine:3.7
+  default: alpine:edge
+
+repositories:
+  - http://nl.alpinelinux.org/alpine/edge/testing
 
 version:
-  major: 7
+  major: 8
   minor: 1
-  suffix: 7
+  suffix: 81
 
 extensions:
   - bcmath
@@ -19,10 +22,9 @@ extensions:
   - gettext
   - iconv
   - intl
+  - fileinfo
   - json
   - mbstring
-  - mcrypt
-  - memcached
   - mysqli
   - mysqlnd
   - openssl
@@ -33,6 +35,11 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
+#  - pecl-mcrypt
+  - pecl-memcached
+  - pecl-mongodb
+  - pecl-xdebug
+  - pecl-yaml
   - phar
   - posix
   - redis
@@ -43,7 +50,6 @@ extensions:
   - sockets
   - sqlite3
   - tokenizer
-  - xdebug
   - xml
   - xmlreader
   - xmlwriter
@@ -52,7 +58,6 @@ extensions:
   - zlib
 
 pecl:
-  - name: mongodb
   - name: xdebug
     install: False
     zend: True
@@ -71,7 +76,7 @@ composer:
     - phpmd
 
 nginx:
-  version: 1.14.2
+  version: 1.21.0
   more_set_header_version: 0.33
   extensions:
     - compat
@@ -114,5 +119,6 @@ peclBuildPackages:
   - zlib-dev
 
 additionalPackages:
-  - libssl1.0
-  - libcrypto1.0
+  - libssl1.1
+  - libcrypto1.1
+  - python3

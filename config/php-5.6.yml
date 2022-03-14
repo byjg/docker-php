@@ -4,6 +4,7 @@ image:
 version:
   major: 5
   minor: 6
+  suffix: 5
 
 extensions:
   - bcmath

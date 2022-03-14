@@ -56,7 +56,7 @@ class Generator:
         )
         self._run_cli(["buildah", "config", "--env", "DOCKER_IMAGE={image}".format(image=image), container])
         self._run_cli(["buildah", "config", "--env", "PHP_VERSION={major}.{minor}".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"]), container])
-        self._run_cli(["buildah", "config", "--env", "PHP_VARIANT=php{major}".format(major=self.content["version"]["major"]), container])
+        self._run_cli(["buildah", "config", "--env", "PHP_VARIANT=php{suffix}".format(suffix=self.content["version"]["suffix"]), container])
         if not self.debug:
             [self._run_cli(["buildah", "run", container, "/bin/sh", "-c", command]) for command in self.parse_config(config_template)]
         else:

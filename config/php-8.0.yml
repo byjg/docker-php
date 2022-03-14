@@ -1,12 +1,10 @@
 image:
-  default: alpine:3.14
-
-repositories:
-  - http://nl.alpinelinux.org/alpine/edge/testing
+  default: alpine:3.15
 
 version:
   major: 8
   minor: 0
+  suffix: 8
 
 extensions:
   - bcmath
