@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: pip install -r requirements.txt
-      - run: buildah login --username ${{ secrets.DOCKER_REGISTRY_USER }} --password ${{ secrets.DOCKER_REGISTRY_PASSWORD }} ${{ secrets.DOCKER_REGISTRY }}
+      - run: buildah login --username ${{ secrets.DOCKER_REGISTRY_USER }} --password ${{ secrets.DOCKER_REGISTRY_TOKEN }} ${{ secrets.DOCKER_REGISTRY }}
       - run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
 
   Documentation:
