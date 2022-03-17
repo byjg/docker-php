@@ -2,7 +2,7 @@
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/docker-php/)
-[![Build Status](https://travis-ci.com/byjg/docker-php.svg?branch=master)](https://travis-ci.com/byjg/docker-php)
+[![Build Status](https://github.com/byjg/docker-php/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/docker-php/actions/workflows/build.yml)
 
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
 
@@ -20,9 +20,10 @@ The PHP images are ready to use in:
  
 ## PHP Versions
 
-- 8.0.9
-- 7.4.22
-- 7.3.29
+- 8.1.3
+- 8.0.16
+- 7.4.26
+- 7.3.33
 - 7.2.33
 - 7.1.33
 - 7.0.33
@@ -44,43 +45,48 @@ Five different images for each PHP Version
 
 ## Supported Tags
 
-| Tag             | Montly builds |
-|:----------------|:-------------:|
-| 8.0-base        | yes           |
-| 8.0-cli         | yes           |
-| 8.0-fpm         | yes           |
-| 8.0-fpm-apache  | yes           |
-| 8.0-fpm-nginx   | yes           |
-| 7.4-base        | yes           |
-| 7.4-cli         | yes           |
-| 7.4-fpm         | yes           |
-| 7.4-fpm-apache  | yes           |
-| 7.4-fpm-nginx   | yes           |
-| 7.3-base        | yes           |
-| 7.3-cli         | yes           |
-| 7.3-fpm         | yes           |
-| 7.3-fpm-apache  | yes           |
-| 7.3-fpm-nginx   | yes           |
-| 7.2-base        | -             |
-| 7.2-cli         | -             |
-| 7.2-fpm         | -             |
-| 7.2-fpm-apache  | -             |
-| 7.2-fpm-nginx   | -             |
-| 7.1-base        | -             |
-| 7.1-cli         | -             |
-| 7.1-fpm         | -             |
-| 7.1-fpm-apache  | -             |
-| 7.1-fpm-nginx   | -             |
-| 7.0-base        | -             |
-| 7.0-cli         | -             |
-| 7.0-fpm         | -             |
-| 7.0-fpm-apache  | -             |
-| 7.0-fpm-nginx   | -             |
-| 5.6-base        | -             |
-| 5.6-cli         | -             |
-| 5.6-fpm         | -             |
-| 5.6-fpm-apache  | -             |
-| 5.6-fpm-nginx   | -             |
+| Tag            | Montly builds |
+|:---------------|:-------------:|
+| 8.1-base       |      yes      |
+| 8.1-cli        |      yes      |
+| 8.1-fpm        |      yes      |
+| 8.1-fpm-apache |      yes      |
+| 8.1-fpm-nginx  |      yes      |
+| 8.0-base       |      yes      |
+| 8.0-cli        |      yes      |
+| 8.0-fpm        |      yes      |
+| 8.0-fpm-apache |      yes      |
+| 8.0-fpm-nginx  |      yes      |
+| 7.4-base       |      yes      |
+| 7.4-cli        |      yes      |
+| 7.4-fpm        |      yes      |
+| 7.4-fpm-apache |      yes      |
+| 7.4-fpm-nginx  |      yes      |
+| 7.3-base       |       -       |
+| 7.3-cli        |       -       |
+| 7.3-fpm        |       -       |
+| 7.3-fpm-apache |       -       |
+| 7.3-fpm-nginx  |       -       |
+| 7.2-base       |       -       |
+| 7.2-cli        |       -       |
+| 7.2-fpm        |       -       |
+| 7.2-fpm-apache |       -       |
+| 7.2-fpm-nginx  |       -       |
+| 7.1-base       |       -       |
+| 7.1-cli        |       -       |
+| 7.1-fpm        |       -       |
+| 7.1-fpm-apache |       -       |
+| 7.1-fpm-nginx  |       -       |
+| 7.0-base       |       -       |
+| 7.0-cli        |       -       |
+| 7.0-fpm        |       -       |
+| 7.0-fpm-apache |       -       |
+| 7.0-fpm-nginx  |       -       |
+| 5.6-base       |       -       |
+| 5.6-cli        |       -       |
+| 5.6-fpm        |       -       |
+| 5.6-fpm-apache |       -       |
+| 5.6-fpm-nginx  |       -       |
 
 Since January 2021 all tags have also the suffix YYYY.MM. e.d
 - 8.0-fpm-nginx-2021.01
