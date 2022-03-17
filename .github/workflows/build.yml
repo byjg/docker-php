@@ -18,7 +18,9 @@ env:
 jobs:
   Build:
     runs-on: 'ubuntu-latest'
-    container: 'byjg/k8s-ci:latest'
+    container: 
+      image: 'byjg/k8s-ci:latest'
+      options: --privileged
     strategy:
       matrix:
         php-version:
