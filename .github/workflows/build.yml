@@ -20,7 +20,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     container: 
       image: 'byjg/k8s-ci:latest'
-      options: --privileged
+      options: --privileged -v /tmp/z:/var/lib/containers
     strategy:
       matrix:
         php-version:
