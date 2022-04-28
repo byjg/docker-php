@@ -3,3 +3,4 @@
 /.tmp.sh
 /venv/
 .env
+*.pyc
