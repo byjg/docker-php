@@ -35,8 +35,8 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-#  - pecl-mcrypt
-  - pecl-memcached
+  # - pecl-mcrypt
+  # - pecl-memcached
   - pecl-mongodb
   - pecl-xdebug
   - pecl-yaml
