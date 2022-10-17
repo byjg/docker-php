@@ -13,16 +13,18 @@ A complete and small PHP Docker image based on Alpine Linux and run on the archi
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
 The PHP images are ready to use in:
- - Development Environment
- - Production Environment
- - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
- - [IDE Integration](ide)
- 
+
+- Development Environment
+- Production Environment
+- CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
+- [IDE Integration](ide)
+
 ## PHP Versions
 
-- 8.1.3
-- 8.0.16
-- 7.4.26
+- 8.2.0RC4
+- 8.1.11
+- 8.0.24
+- 7.4.32
 - 7.3.33
 - 7.2.33
 - 7.1.33
@@ -33,11 +35,11 @@ The PHP images are ready to use in:
 
 Five different images for each PHP Version
 
-* [base](image-base) - Minimal Image, base for the other
-* [cli](image-cli) - PHP with Command Line installed (composer, phpunit, etc)
-* [fpm](image-fpm) - PHP with FPM installed
-* [fpm-apache](image-fpm) - PHP and Apache using FPM
-* [fpm-nginx](image-fpm) - PHP and Nginx using FPM
+- [base](image-base) - Minimal Image, base for the other
+- [cli](image-cli) - PHP with Command Line installed (composer, phpunit, etc)
+- [fpm](image-fpm) - PHP with FPM installed
+- [fpm-apache](image-fpm) - PHP and Apache using FPM
+- [fpm-nginx](image-fpm) - PHP and Nginx using FPM
 
 ## Environment variables
 
@@ -47,6 +49,11 @@ Five different images for each PHP Version
 
 | Tag            | Montly builds |
 |:---------------|:-------------:|
+| 8.2-base       |      yes      |
+| 8.2-cli        |      yes      |
+| 8.2-fpm        |      yes      |
+| 8.2-fpm-apache |      yes      |
+| 8.2-fpm-nginx  |      yes      |
 | 8.1-base       |      yes      |
 | 8.1-cli        |      yes      |
 | 8.1-fpm        |      yes      |
@@ -111,4 +118,3 @@ Detailed instructions can be found [here](building).
 
 ----
 [Open source ByJG](http://opensource.byjg.com)
-
