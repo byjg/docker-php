@@ -2,7 +2,7 @@ image:
   default: alpine:edge
 
 repositories:
-  - http://nl.alpinelinux.org/alpine/edge/testing
+  - https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 version:
   major: 8

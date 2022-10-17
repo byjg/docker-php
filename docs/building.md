@@ -42,7 +42,7 @@ image: alpine:edge
 
 # (Optional) If we are getting packages from other resources define here
 repositories:
-  - http://nl.alpinelinux.org/alpine/edge/testing
+  - https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 # The PHP Version
 version:
