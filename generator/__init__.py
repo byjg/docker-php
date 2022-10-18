@@ -141,11 +141,11 @@ class Generator:
         container = self._from(self.source_repo(arch, "fpm"), arch)
         self._run_cli(["buildah", "config", "--cmd", '/usr/bin/supervisord -n -c /etc/supervisord.conf', container])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"])
-        self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/conf.d/default.conf"])
+        self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/http.d/default.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/supervisord.conf", "/etc/supervisord.conf"])
         self._run_cli(["buildah", "copy", container, "assets/script/exit-event-listener.py", "/exit-event-listener.py"])
         self._run_cli(["buildah", "copy", container, "assets/script/start-fpm.sh", "/start-fpm.sh"])
-        script = self.parse_config("php-fpm-nginx-build.j2", False)
+        script = self.parse_config("php-fpm-nginx.j2", False)
         with open(".tmp.sh", "w") as file:
             file.write(script)
         self._run_cli(["buildah", "copy", container, ".tmp.sh", "/tmp/install_nginx.sh"])
