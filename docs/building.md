@@ -75,14 +75,6 @@ composer:
     - phpbcbf
     - phpmd
 
-# Nginx configuration
-nginx:
-  version: 1.17.9
-  more_set_header_version: 0.33
-  extensions:
-    - (name)
-    - (name)
-
 # Temporary Packages to be used to build the PECL packages 
 peclBuildPackages:
   - autoconf

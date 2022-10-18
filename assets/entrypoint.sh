@@ -51,12 +51,6 @@ then
         sed -i "s|^\(\s*\)#\(ssl_certificate .*\)@cert@;$|\1\2$NGINX_SSL_CERT;|g" /etc/nginx/conf.d/default.conf
         sed -i "s|^\(\s*\)#\(ssl_certificate_key .*\)@certkey@;$|\1\2$NGINX_SSL_CERT_KEY;|g" /etc/nginx/conf.d/default.conf
     fi
-
-    if [[ -n "$NGINX_DISABLE_CORS" ]]
-    then
-        ${VERBOSE_MODE} && echo "Disabling CORS"
-        sed -i '/# @CORS-START/,/# @CORS-END/{//!d}' /etc/nginx/conf.d/default.conf
-    fi
 fi
 
 # Disable modules

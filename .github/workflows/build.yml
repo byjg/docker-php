@@ -44,7 +44,7 @@ jobs:
         run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
         if: github.event_name != 'pull_request'
       - name: Building PHP
-        run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
+        run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --debug
         if: github.event_name == 'pull_request'
 
   Documentation:
