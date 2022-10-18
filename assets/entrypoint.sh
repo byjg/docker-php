@@ -31,25 +31,25 @@ then
 fi
 
 # Adjust NGINX
-if [[ -f /etc/nginx/conf.d/default.conf ]]
+if [[ -f /etc//default.conf ]]
 then
     ${VERBOSE_MODE} && echo "Setting root to '$NGINX_ROOT'"
-    sed -i "s|^\(\s*root\s*\)@root@;$|\1$NGINX_ROOT;|g" /etc/nginx/conf.d/default.conf
+    sed -i "s|^\(\s*root\s*\)@root@;$|\1$NGINX_ROOT;|g" /etc//default.conf
 
     if [[ -n "$PHP_CONTROLLER" ]]
     then
         ${VERBOSE_MODE} && echo "Setting controller as '$PHP_CONTROLLER'"
-        sed -i "s|^\(\s*\)#\(try_files.*\)@controller@\(.*\);$|\1\2$PHP_CONTROLLER\3;|g" /etc/nginx/conf.d/default.conf
-        sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)#\(try_files.*\)@controller@\(.*\);$|\1\2$PHP_CONTROLLER\3;|g" /etc//default.conf
+        sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc//default.conf
     fi
 
     if [[ -n "$NGINX_SSL_CERT" ]]
     then
         ${VERBOSE_MODE} && echo "Setting CERT as '$NGINX_SSL_CERT'"
         ${VERBOSE_MODE} && echo "Setting CERT_KEY as '$NGINX_SSL_CERT_KEY'"
-        sed -i "s|^\(\s*\)#\(listen 443.*\)$|\1\2|g" /etc/nginx/conf.d/default.conf
-        sed -i "s|^\(\s*\)#\(ssl_certificate .*\)@cert@;$|\1\2$NGINX_SSL_CERT;|g" /etc/nginx/conf.d/default.conf
-        sed -i "s|^\(\s*\)#\(ssl_certificate_key .*\)@certkey@;$|\1\2$NGINX_SSL_CERT_KEY;|g" /etc/nginx/conf.d/default.conf
+        sed -i "s|^\(\s*\)#\(listen 443.*\)$|\1\2|g" /etc//default.conf
+        sed -i "s|^\(\s*\)#\(ssl_certificate .*\)@cert@;$|\1\2$NGINX_SSL_CERT;|g" /etc//default.conf
+        sed -i "s|^\(\s*\)#\(ssl_certificate_key .*\)@certkey@;$|\1\2$NGINX_SSL_CERT_KEY;|g" /etc//default.conf
     fi
 fi
 
