@@ -35,10 +35,17 @@ jobs:
 #          - "5.6"
 
     steps:
-      - uses: actions/checkout@v2
-      - run: pip install -r requirements.txt
-      - run: buildah login --username ${{ secrets.DOCKER_REGISTRY_USER }} --password ${{ secrets.DOCKER_REGISTRY_TOKEN }} ${{ secrets.DOCKER_REGISTRY }}
-      - run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
+      - uses: actions/checkout@v3
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Login repository
+        run: buildah login --username ${{ secrets.DOCKER_REGISTRY_USER }} --password ${{ secrets.DOCKER_REGISTRY_TOKEN }} ${{ secrets.DOCKER_REGISTRY }}
+      - name: Building and Push PHP
+        run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --push --debug
+        if: github.event_name != 'pull_request'
+      - name: Building PHP
+        run: python3 ./build.py ${{ matrix.php-version }} --arch arm64,amd64 --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --debug
+        if: github.event_name == 'pull_request'
 
   Documentation:
     runs-on: 'ubuntu-latest'

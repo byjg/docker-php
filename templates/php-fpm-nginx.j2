@@ -1,4 +1,8 @@
-sh /tmp/install_nginx.sh
-rm /tmp/install_nginx.sh
+apk add --no-cache nginx nginx-mod-http-headers-more nginx-mod-http-zip nginx-mod-http-js supervisor bash
+
+ln -sf /dev/stdout /var/log/nginx/access.log
+ln -sf /dev/stderr /var/log/nginx/error.log
+mkdir -p /var/www/html
+echo "<?php phpinfo(); ?>" >> /var/www/html/info.php
 
 date > /etc/build-date
