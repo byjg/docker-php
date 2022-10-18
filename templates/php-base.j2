@@ -1,7 +1,7 @@
 set -e
 
 # Install Packages
-apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
+# apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add git bash php{{ version.suffix }} {% for ext in extensions %} php{{ version.suffix }}-{{ ext }}{% endfor %}
 ln -s /usr/bin/php{{ version.suffix }} /usr/bin/php || true
 ln -s /usr/bin/pecl{{ version.suffix }} /usr/bin/pecl || true
