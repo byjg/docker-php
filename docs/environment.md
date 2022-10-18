@@ -28,6 +28,11 @@ docker run -v /etc/ssl:/etc/ssl \
   byjg/php:8.0-fpm-ngnix
 ```
 
+## NGINX_DISABLE_CORS
+
+Nginx is setup with a pre-defined CORS handle. If you want you can disable the default implementation and use
+from the framework, e.g. Laravel. 
+
 ## DISABLEMODULE_[name]=true
 
 All modules are installed by default. You can disable a module when you start the instance:
