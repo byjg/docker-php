@@ -42,7 +42,7 @@ image: alpine:edge
 
 # (Optional) If we are getting packages from other resources define here
 repositories:
-  - http://nl.alpinelinux.org/alpine/edge/testing
+  - https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 # The PHP Version
 version:
@@ -74,14 +74,6 @@ composer:
     - phpcs
     - phpbcbf
     - phpmd
-
-# Nginx configuration
-nginx:
-  version: 1.17.9
-  more_set_header_version: 0.33
-  extensions:
-    - (name)
-    - (name)
 
 # Temporary Packages to be used to build the PECL packages 
 peclBuildPackages:

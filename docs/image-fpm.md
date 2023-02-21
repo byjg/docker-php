@@ -26,9 +26,10 @@ docker run -v $PWD:/var/www/html -p 80:80 byjg/php:8.0-fpm-nginx
 
 By default the nginx serves all files in /var/www/html.
 
-You can set your own FPM configurations by attaching a volume to:
+You can set your own NGINX configurations by attaching a volume to:
 - /etc/nginx/nginx.conf
-- /etc/nginx/conf.d/default.conf
+- /etc/nginx/http.d/   # Vhosts
+- /etc/nginx/conf.d/   # Root level configuration
 
 
 *Setting PHP Controller*

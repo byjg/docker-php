@@ -41,11 +41,11 @@ The PHP images are ready to use in:
 
 Five different images for each PHP Version
 
-* [base](image-base) - Minimal Image, base for the other
-* [cli](image-cli) - PHP with Command Line installed (composer, phpunit, etc)
-* [fpm](image-fpm) - PHP with FPM installed
-* [fpm-apache](image-fpm) - PHP and Apache using FPM
-* [fpm-nginx](image-fpm) - PHP and Nginx using FPM
+- [base](image-base) - Minimal Image, base for the other
+- [cli](image-cli) - PHP with Command Line installed (composer, phpunit, etc)
+- [fpm](image-fpm) - PHP with FPM installed
+- [fpm-apache](image-fpm) - PHP and Apache using FPM
+- [fpm-nginx](image-fpm) - PHP and Nginx using FPM
 
 ## Environment variables
 
@@ -55,6 +55,11 @@ Five different images for each PHP Version
 
 | Tag            | Montly builds |
 |:---------------|:-------------:|
+| 8.2-base       |      yes      |
+| 8.2-cli        |      yes      |
+| 8.2-fpm        |      yes      |
+| 8.2-fpm-apache |      yes      |
+| 8.2-fpm-nginx  |      yes      |
 | 8.1-base       |      yes      |
 | 8.1-cli        |      yes      |
 | 8.1-fpm        |      yes      |
@@ -119,4 +124,3 @@ Detailed instructions can be found [here](building).
 
 ----
 [Open source ByJG](http://opensource.byjg.com)
-

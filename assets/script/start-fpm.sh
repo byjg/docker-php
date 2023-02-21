@@ -6,7 +6,8 @@ then
     FPMCONFIG="/etc/php5/php-fpm.conf"
 fi
 
-sed -i -e 's/^\(listen *=\).*/\1 0.0.0.0:9000/g' $FPMCONFIG
+sed -i  's/^\(listen *=\).*/\1 0.0.0.0:9000/g' $FPMCONFIG
+sed -i "s/^[;\s]*clear_env.*/clear_env = no/g" $FPMCONFIG
 
 # Function to update the fpm configuration to make the service environment variables available
 function setEnvironmentVariable() {
@@ -27,11 +28,11 @@ function setEnvironmentVariable() {
 }
 
 # Grep for variables that look like docker set them (_PORT_)
-for _curVar in `env | awk -F = '{print $1}'`;do
-    # awk has split them by the equals sign
-    # Pass the name and value to our function
-    setEnvironmentVariable ${_curVar} ${!_curVar}
-done
+# for _curVar in `env | awk -F = '{print $1}'`;do
+#     # awk has split them by the equals sign
+#     # Pass the name and value to our function
+#     setEnvironmentVariable ${_curVar} ${!_curVar}
+# done
 
 # Log something to the supervisord log so we know this script as run
 echo "DONE"
