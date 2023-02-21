@@ -56,10 +56,10 @@ fi
 # Disable modules
 for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
 do
-    if [[ -f "$PHPMODULES/$VAR.ini" ]]
+    if [[ -f "$PHPMODULES/*$VAR.ini" ]]
     then
         ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
-        rm "$PHPMODULES/$VAR.ini"
+        rm "$PHPMODULES/*$VAR.ini"
     else
         ${VERBOSE_MODE} && echo "Module not found $VAR"
     fi

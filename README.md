@@ -7,21 +7,29 @@
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
 
 A complete and small PHP Docker image based on Alpine Linux and run on the archictectures
+
 - amd64 (x86_64)
 - arm64 (Raspberry PI, Graviton, etc) - available after February 2021
 
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
 The PHP images are ready to use in:
- - Development Environment
- - Production Environment
- - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
- - [IDE Integration](ide)
- 
+
+- Development Environment
+- Production Environment
+- CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
+- [IDE Integration](ide)
+
 ## PHP Versions
 
-- 8.1.3
-- 8.0.16
+### "Live" versions
+
+- 8.2.3
+- 8.1.16
+- 8.0.28
+
+### Versions are not updated
+
 - 7.4.26
 - 7.3.33
 - 7.2.33

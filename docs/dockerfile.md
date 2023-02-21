@@ -1,0 +1,65 @@
+# Dockerfile example
+
+To use the Docker PHP with your application you can use the following Dockerfile:
+
+```dockerfile
+FROM php:8.1-cli
+
+# Verbose Mode
+# ENV VERBOSE="true"
+
+# Configure NGINX/FPM
+ENV NGINX_ROOT=/var/www/html
+ENV PHP_CONTROLLER=/app.php
+# ENV NGINX_SSL_CERT=/path/to/ssl.crt
+# ENV NGINX_SSL_CERT_KEY=/path/to/ssl.key
+
+# Disable unnecessary modules
+# ENV DISABLEMODULE_bcmath=1
+# ENV DISABLEMODULE_ctype=1
+# ENV DISABLEMODULE_curl=1
+# ENV DISABLEMODULE_dba=1
+# ENV DISABLEMODULE_dom=1
+# ENV DISABLEMODULE_fileinfo=1
+# ENV DISABLEMODULE_ftp=1
+# ENV DISABLEMODULE_gd=1
+# ENV DISABLEMODULE_gettext=1
+# ENV DISABLEMODULE_iconv=1
+# ENV DISABLEMODULE_intl=1
+# ENV DISABLEMODULE_mbstring=1
+# ENV DISABLEMODULE_openssl=1
+# ENV DISABLEMODULE_pcntl=1
+# ENV DISABLEMODULE_pdo=1
+# ENV DISABLEMODULE_posix=1
+# ENV DISABLEMODULE_session=1
+# ENV DISABLEMODULE_shmop=1
+# ENV DISABLEMODULE_simplexml=1
+# ENV DISABLEMODULE_soap=1
+# ENV DISABLEMODULE_sockets=1
+# ENV DISABLEMODULE_sqlite3=1
+# ENV DISABLEMODULE_tokenizer=1
+# ENV DISABLEMODULE_xml=1
+# ENV DISABLEMODULE_xmlwriter=1
+# ENV DISABLEMODULE_zip=1
+# ENV DISABLEMODULE_exif=1
+# ENV DISABLEMODULE_mysqlnd=1
+# ENV DISABLEMODULE_pdo_dblib=1
+# ENV DISABLEMODULE_pdo_pgsql=1
+# ENV DISABLEMODULE_pdo_sqlite=1
+# ENV DISABLEMODULE_phar=1
+# ENV DISABLEMODULE_xmlreader=1
+# ENV DISABLEMODULE_xsl=1
+# ENV DISABLEMODULE_mysqli=1
+# ENV DISABLEMODULE_pdo_mysql=1
+# ENV DISABLEMODULE_igbinary=1
+# ENV DISABLEMODULE_memcached=1
+# ENV DISABLEMODULE_redis=1
+# ENV DISABLEMODULE_msgpack=1
+# ENV DISABLEMODULE_xdebug=1
+# ENV DISABLEMODULE_yaml=1
+# ENV DISABLEMODULE_mcrypt=1
+# ENV DISABLEMODULE_mongodb=1
+# ENV DISABLEMODULE_xdebug=1
+
+# You commands goes here
+```
