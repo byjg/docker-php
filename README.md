@@ -24,13 +24,13 @@ The PHP images are ready to use in:
 
 ### "Live" versions
 
-- 8.2.3
-- 8.1.16
+- 8.2.5
+- 8.1.18
 - 8.0.28
 
 ### Versions are not updated
 
-- 7.4.26
+- 7.4.33
 - 7.3.33
 - 7.2.33
 - 7.1.33
