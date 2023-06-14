@@ -23,11 +23,11 @@ after setup continue the process as you can see below:
 ![img_2.png](img_2.png)
 
 If everything is OK you can see the PHP Version and XDebug. You can deselect the option
-"Visible only for this project" if you want to have this configurations for all PHP projects you have.
+"Visible only for this project" if you want to have these configurations for all PHP projects you have.
 
 ![img_3.png](img_3.png)
 
-And voilá. Just select this new version to your project and you can have auto-complete, debug, and etc 
+And voilá. Just select this new version to your project, and you can have auto-complete, debug, etc.
 as if you have the PHP installed in your machine
 
 ![img_4.png](img_4.png)

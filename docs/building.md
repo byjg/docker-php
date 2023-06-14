@@ -85,4 +85,18 @@ additionalPackages:
   - libssl1.1
   - libcrypto1.1
 ```
+## Example
 
+### Build the images
+
+```bash
+docker run -it --privileged -v /tmp/z:/var/lib/containers -v $PWD:/work -w /work byjg/k8s-ci:latest bash
+python3 ./build.py 8.2 --arch amd64 --build-base --debug
+```
+
+### Check images
+
+```bash
+buildah images
+buildah rmi ...
+```

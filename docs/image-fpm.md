@@ -10,7 +10,7 @@ This image exposes the port:
 ## PHP "*-fpm-nginx" Images
 
 The FPM-NGINX images extends "\*-fpm" and "\*-base" images and have also
-a full featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
+a full-featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
 
 This image exposes the ports:
 - 80
@@ -24,7 +24,7 @@ Basically to start type:
 docker run -v $PWD:/var/www/html -p 80:80 byjg/php:8.0-fpm-nginx
 ```
 
-By default the nginx serves all files in /var/www/html.
+By default, the nginx serves all files in /var/www/html.
 
 You can set your own NGINX configurations by attaching a volume to:
 - /etc/nginx/nginx.conf
@@ -51,7 +51,7 @@ docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/ph
 ## PHP "*-fpm-apache" Images
 
 The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also
-a full featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
+a full-featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
 
 This image exposes the ports:
 - 80
@@ -65,7 +65,7 @@ Basically to start type:
 docker run -v $PWD:/srv/web -p 80:80 byjg/php:8.0-fpm-apache
 ```
 
-By default the nginx serves all files in /srv/web.
+By default, the nginx serves all files in /srv/web.
 
 You can set your own APACHE configurations by attaching a volume to:
 - /etc/apache2/httpd.conf
