@@ -24,10 +24,10 @@ The PHP images are ready to use in:
 
 ### "Live" versions
 
-- 8.3-0alpha1
-- 8.2.7
-- 8.1.20
-- 8.0.29
+- 8.3-0-rc3
+- 8.2.11
+- 8.1.24
+- 8.0.30
 
 ### Versions are not updated
 

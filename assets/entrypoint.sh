@@ -60,6 +60,10 @@ do
     then
         ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
         rm "$PHPMODULES/*$VAR.ini"
+    elif [[ -f "$PHPMODULES/$VAR.ini" ]]
+    then
+        ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
+        rm "$PHPMODULES/$VAR.ini"
     else
         ${VERBOSE_MODE} && echo "Module not found $VAR"
     fi

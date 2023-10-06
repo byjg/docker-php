@@ -37,7 +37,7 @@ extensions:
   - pear
 #  - pecl-mcrypt        # TODO: enable mcrypt
 #  - pecl-memcached     # TODO: enable memcached
-#  - pecl-mongodb       # TODO: enable mongodb
+  - pecl-mongodb
   - pecl-xdebug
 #  - pecl-yaml          # TODO: enable yaml
   - phar
