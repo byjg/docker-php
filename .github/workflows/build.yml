@@ -23,12 +23,10 @@ jobs:
       matrix:
         include:
           - php-version: "8.3"
-            architeture: "amd64"
+            architeture: "arm64,amd64"
           - php-version: "8.2"
             architeture: "arm64,amd64"
           - php-version: "8.1"
-            architeture: "arm64,amd64"
-          - php-version: "8.0"
             architeture: "arm64,amd64"
 
     steps:
