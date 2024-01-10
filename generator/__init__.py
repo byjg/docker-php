@@ -111,6 +111,7 @@ class Generator:
         self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
         self._run_cli(["buildah", "config", "--workingdir", "/srv/web", container])
         self._run_cli(["buildah", "copy", container, "assets/entrypoint.sh", "/"])
+        self._run_cli(["buildah", "copy", container, "assets/script/install-sqlsvr.sh", "/install-sqlsvr.sh"])
         self.local_base = True
         return self._build(container, "base", arch)
 
