@@ -50,7 +50,7 @@ Five different images for each PHP Version
 Since January 2021 de tag convention is:
 
 ```
-byjg/php:<PHP_VERSION>-<TYPE>[-YYYY-MM]
+byjg/php:<PHP_VERSION>-<TYPE>[-YYYY.MM]
 ```
 
 Where:
@@ -66,6 +66,7 @@ e.g.
 
 ```
 byjg/php:8.2-fpm
+byjg/php:8.2-fpm-2023.01
 ```
 
 ## Environment variables
