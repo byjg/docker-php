@@ -42,91 +42,71 @@ The PHP images are ready to use in:
 
 Five different images for each PHP Version
 
-- [base](docs/image-base) - Minimal Image, base for the other
-- [cli](docs/image-cli) - PHP with Command Line installed (composer, phpunit, etc)
-- [fpm](docs/image-fpm) - PHP with FPM installed
-- [fpm-apache](docs/image-fpm) - PHP and Apache using FPM
-- [fpm-nginx](docs/image-fpm) - PHP and Nginx using FPM
+- [base](docs/image-base.md) - Minimal Image, base for the other
+- [cli](docs/image-cli.md) - PHP with Command Line installed (composer, phpunit, etc)
+- [fpm](docs/image-fpm.md) - PHP with FPM installed
+- [fpm-apache](docs/image-fpm.md) - PHP and Apache using FPM
+- [fpm-nginx](docs/image-fpm.md) - PHP and Nginx using FPM
 
 ## Environment variables
 
-[Here](docs/environment) a list of environment variables.
+[Here](docs/environment.md) a list of environment variables.
 
-## Supported Tags
+## PHP Versions Available
 
-| Tag            | Montly builds |
-|:---------------|:-------------:|
-| 8.3-base       |      yes      |
-| 8.3-cli        |      yes      |
-| 8.3-fpm        |      yes      |
-| 8.3-fpm-apache |      yes      |
-| 8.3-fpm-nginx  |      yes      |
-| 8.2-base       |      yes      |
-| 8.2-cli        |      yes      |
-| 8.2-fpm        |      yes      |
-| 8.2-fpm-apache |      yes      |
-| 8.2-fpm-nginx  |      yes      |
-| 8.1-base       |      yes      |
-| 8.1-cli        |      yes      |
-| 8.1-fpm        |      yes      |
-| 8.1-fpm-apache |      yes      |
-| 8.1-fpm-nginx  |      yes      |
-| 8.0-base       |      yes      |
-| 8.0-cli        |      yes      |
-| 8.0-fpm        |      yes      |
-| 8.0-fpm-apache |      yes      |
-| 8.0-fpm-nginx  |      yes      |
-| 7.4-base       |       -       |
-| 7.4-cli        |       -       |
-| 7.4-fpm        |       -       |
-| 7.4-fpm-apache |       -       |
-| 7.4-fpm-nginx  |       -       |
-| 7.3-base       |       -       |
-| 7.3-cli        |       -       |
-| 7.3-fpm        |       -       |
-| 7.3-fpm-apache |       -       |
-| 7.3-fpm-nginx  |       -       |
-| 7.2-base       |       -       |
-| 7.2-cli        |       -       |
-| 7.2-fpm        |       -       |
-| 7.2-fpm-apache |       -       |
-| 7.2-fpm-nginx  |       -       |
-| 7.1-base       |       -       |
-| 7.1-cli        |       -       |
-| 7.1-fpm        |       -       |
-| 7.1-fpm-apache |       -       |
-| 7.1-fpm-nginx  |       -       |
-| 7.0-base       |       -       |
-| 7.0-cli        |       -       |
-| 7.0-fpm        |       -       |
-| 7.0-fpm-apache |       -       |
-| 7.0-fpm-nginx  |       -       |
-| 5.6-base       |       -       |
-| 5.6-cli        |       -       |
-| 5.6-fpm        |       -       |
-| 5.6-fpm-apache |       -       |
-| 5.6-fpm-nginx  |       -       |
+|  Version     | Latest Version | Monthly Builds |
+|:------------:|:--------------:|:--------------:|
+| 8.3          | 8.3.1          | yes            |
+| 8.2          | 8.2.14         | yes            |
+| 8.1          | 8.1.27         | yes            |
+| 8.0          | 8.0.30         | -              |
+| 7.4          | 7.4.33         | -              |
+| 7.3          | 7.3.33         | -              |
+| 7.2          | 7.2.33         | -              |
+| 7.1          | 7.1.33         | -              |
+| 7.0          | 7.0.33         | -              |
+| 5.6          | 5.6.40         | -              |
 
-Since January 2021 all tags have also the suffix YYYY.MM. e.d
-- 8.0-fpm-nginx-2021.01
+ 
+## Image Tag Convention
+
+Since January 2021 de tag convention is:
+
+```
+byjg/php:<PHP_VERSION>-<TYPE>[-YYYY-MM]
+```
+
+Where:
+- PHP_VERSION: It is `<MAJOR>.<MINOR>`, e.g `8.2`
+- TYPE: It is `base`, `cli`,  `fpm`, `fpn-nginx`, `fpm-apache`
+- YYYY: The Year of the Build
+- MM: The month of the build.
+
+The images without YYYY-MM can be updated to the latest PHP version and new features. 
+The images with YYYY-MM are immutable
+
+e.g.
+
+```
+byjg/php:8.2-fpm
+```
 
 ## Image Sizes
 
 Below a table with images uncompressed
 
-|  PHP Version  | base  |  cli  |  fpm   | fpm-nginx | fpm-apache |
-|:-------------:|:-----:|:-----:|:------:|:---------:|:----------:|
-|      8.0      | 136MB | 154MB | 145MB  |   156MB   |   156MB    |
-|      7.4      | 136MB | 154MB | 144MB  |   156MB   |   156MB    |
-|      7.3      | 104MB | 123MB | 109MB  |   161MB   |   161MB    |
-|      7.2      | 106MB | 124MB | 111MB  |   157MB   |   157MB    |
-|      7.1      | 101MB | 119MB | 105MB  |   151MB   |   150MB    |
-|      7.0      | 117MB | 136MB | 125MB  |   170MB   |   169MB    |
-|      5.6      | 103MB | 122MB | 127MB  |   173MB   |   173MB    |
+|  Build Type  | Uncompressed Size |
+|:------------:|:-----------------:|
+|  base        |            ~135MB |
+|  cli         |            ~154MB |
+|  fpm         |            ~139MB |
+|  fpm-nginx   |            ~154MB |
+|  fpm-apache  |            ~154MB |
+
 
 ## Building your own image
 
-Detailed instructions can be found [here](docs/building).
+Detailed instructions can be found [here](docs/building.md).
 
 ----
 [Open source ByJG](http://opensource.byjg.com)
