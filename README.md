@@ -20,38 +20,6 @@ The PHP images are ready to use in:
 - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
 - [IDE Integration](docs/ide.md)
 
-## PHP Versions
-
-### "Live" versions
-
-- 8.3.1
-- 8.2.14
-- 8.1.27
-- 8.0.30
-
-### Versions are not updated
-
-- 7.4.33
-- 7.3.33
-- 7.2.33
-- 7.1.33
-- 7.0.33
-- 5.6.40
-
-## PHP Images
-
-Five different images for each PHP Version
-
-- [base](docs/image-base.md) - Minimal Image, base for the other
-- [cli](docs/image-cli.md) - PHP with Command Line installed (composer, phpunit, etc)
-- [fpm](docs/image-fpm.md) - PHP with FPM installed
-- [fpm-apache](docs/image-fpm.md) - PHP and Apache using FPM
-- [fpm-nginx](docs/image-fpm.md) - PHP and Nginx using FPM
-
-## Environment variables
-
-[Here](docs/environment.md) a list of environment variables.
-
 ## PHP Versions Available
 
 |  Version     | Latest Version | Monthly Builds |
@@ -67,7 +35,16 @@ Five different images for each PHP Version
 | 7.0          | 7.0.33         | -              |
 | 5.6          | 5.6.40         | -              |
 
- 
+## PHP Images
+
+Five different images for each PHP Version
+
+- [base](docs/image-base.md) - Minimal Image, base for the other
+- [cli](docs/image-cli.md) - PHP with Command Line installed (composer, phpunit, etc)
+- [fpm](docs/image-fpm.md) - PHP with FPM installed
+- [fpm-apache](docs/image-fpm.md) - PHP and Apache using FPM
+- [fpm-nginx](docs/image-fpm.md) - PHP and Nginx using FPM
+
 ## Image Tag Convention
 
 Since January 2021 de tag convention is:
@@ -91,6 +68,11 @@ e.g.
 byjg/php:8.2-fpm
 ```
 
+## Environment variables
+
+[Here](docs/environment.md) a list of environment variables.
+
+ 
 ## Image Sizes
 
 Below a table with images uncompressed
