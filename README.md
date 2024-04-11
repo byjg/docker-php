@@ -22,18 +22,22 @@ The PHP images are ready to use in:
 
 ## PHP Versions Available
 
-| Version | Latest Version | Monthly Builds |
-|:-------:|:--------------:|:--------------:|
-|   8.3   |     8.3.6      |      yes       |
-|   8.2   |     8.2.18     |      yes       |
-|   8.1   |     8.1.28     |      yes       |
-|   8.0   |     8.0.30     |       -        |
-|   7.4   |     7.4.33     |       -        |
-|   7.3   |     7.3.33     |       -        |
-|   7.2   |     7.2.33     |       -        |
-|   7.1   |     7.1.33     |       -        |
-|   7.0   |     7.0.33     |       -        |
-|   5.6   |     5.6.40     |       -        |
+| Version | Latest Version | Monthly Builds | Alpine Version |
+|:-------:|:--------------:|:--------------:|:--------------:|
+| **8.3** |   **8.3.6**    |    **yes**     |    **edge**    |
+| **8.2** |   **8.2.18**   |    **yes**     |    **3.19**    |
+| **8.1** |   **8.1.28**   |    **yes**     |    **3.19**    |      
+|   8.0   |     8.0.30     |       -        |      3.16      |     
+|   7.4   |     7.4.33     |       -        |      3.15      |    
+|   7.3   |     7.3.33     |       -        |      3.12      |   
+|   7.2   |     7.2.33     |       -        |      3.9       |  
+|   7.1   |     7.1.33     |       -        |      3.7       | 
+|   7.0   |     7.0.33     |       -        |      3.5       |
+|   5.6   |     5.6.40     |       -        |      3.8       |
+
+Notes:
+- PHP Images with no monthly builds are not updated anymore and there is no support.
+- PHP images using the edge base image are suitable for production. However, they may receive package updates. If you extend these images by adding more packages, those packages may not be available in future updates.
 
 ## PHP Images
 
