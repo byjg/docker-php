@@ -24,13 +24,13 @@ The PHP images are ready to use in:
 
 ### "Live" versions
 
-- 8.3.1
-- 8.2.14
-- 8.1.27
-- 8.0.30
+- 8.3.6
+- 8.2.18
+- 8.1.28
 
 ### Versions are not updated
 
+- 8.0.30
 - 7.4.33
 - 7.3.33
 - 7.2.33
@@ -71,11 +71,11 @@ Five different images for each PHP Version
 | 8.1-fpm        |      yes      |
 | 8.1-fpm-apache |      yes      |
 | 8.1-fpm-nginx  |      yes      |
-| 8.0-base       |      yes      |
-| 8.0-cli        |      yes      |
-| 8.0-fpm        |      yes      |
-| 8.0-fpm-apache |      yes      |
-| 8.0-fpm-nginx  |      yes      |
+| 8.0-base       |       -       |
+| 8.0-cli        |       -       |
+| 8.0-fpm        |       -       |
+| 8.0-fpm-apache |       -       |
+| 8.0-fpm-nginx  |       -       |
 | 7.4-base       |       -       |
 | 7.4-cli        |       -       |
 | 7.4-fpm        |       -       |
