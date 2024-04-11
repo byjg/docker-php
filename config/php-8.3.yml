@@ -1,5 +1,5 @@
 image:
-  default: alpine:3.19
+  default: alpine:edge
 
 repositories:
   - https://dl-cdn.alpinelinux.org/alpine/edge/testing

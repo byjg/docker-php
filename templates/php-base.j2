@@ -1,4 +1,4 @@
-set -e
+set -euo pipefail
 
 # Install Packages
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
