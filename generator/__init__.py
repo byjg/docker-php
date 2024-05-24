@@ -148,6 +148,7 @@ class Generator:
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/http.d/default.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/supervisord.conf", "/etc/supervisord.conf"])
         self._run_cli(["buildah", "copy", container, "assets/script/exit-event-listener.py", "/exit-event-listener.py"])
+        self._run_cli(["buildah", "copy", container, "assets/script/start-nginx.sh", "/start-nginx.sh"])
         script = self.parse_config("php-fpm-nginx.j2", False)
         with open(".tmp.sh", "w") as file:
             file.write(script)
@@ -158,10 +159,11 @@ class Generator:
         self._banner("nginx")
         base_image = self.content["image"][arch] if arch in self.content["image"] else self.content["image"]["default"]
         container = self._from("docker://" + base_image, arch)
-        self._run_cli(["buildah", "config", "--cmd", "nginx", container])
+        self._run_cli(["buildah", "config", "--cmd", "/start-nginx.sh", container])
         self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
         self._run_cli(["buildah", "config", "--workingdir", "/srv", container])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/http.d/default.conf"])
+        self._run_cli(["buildah", "copy", container, "assets/script/start-nginx.sh", "/start-nginx.sh"])
         self._run_cli(["buildah", "copy", container, "assets/entrypoint.sh", "/"])
         return self._build(container, "nginx", arch)

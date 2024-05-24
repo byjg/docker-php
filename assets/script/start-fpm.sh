@@ -1,21 +1,32 @@
 #!/usr/bin/env bash
 
 FPMBASE="/etc/$PHP_VARIANT/php-fpm.d/base.conf"
+FPMWWW="/etc/$PHP_VARIANT/php-fpm.d/www.conf"
 FPMENV="/etc/$PHP_VARIANT/php-fpm.d/env.conf"
 FPMMAIN="/etc/$PHP_VARIANT/php-fpm.conf" 
 
-if [ -z "$PHP_FPM_SERVER"]; then
-  sed -i  's/^\(listen *=\).*/\1 0.0.0.0:9000/g' $FPMBASE
+if [ "$VERBOSE" == "true" ]
+then
+    VERBOSE_MODE=true
 fi
+
+if [ -z "$PHP_FPM_SERVER" ]
+then
+  PHP_FPM_SERVER=0.0.0.0:9000
+fi
+${VERBOSE_MODE} && echo "Setting FPM fastcgi to '$PHP_FPM_SERVER'"
+sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $FPMBASE
+sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $FPMWWW
 
 # Function to update the fpm configuration to make the service environment variables available
 function setEnvironmentVariable() {
 
     if [ -z "$2" ]; then
-        echo "Environment variable '$1' not set."
+        ${VERBOSE_MODE} && echo "Environment variable '$1' is empty."
         return
     fi
 
+    ${VERBOSE_MODE} && echo "$1 = '$2'"
     # Check whether variable already exists
     if grep -q $1 "$FPMENV"; then
         # Reset variable
@@ -29,7 +40,7 @@ function setEnvironmentVariable() {
 # Grep for variables that look like docker set them (_PORT_)
 if [ -z "$PHP_FPM_IGNORE_ENV"]
 then
-  echo "clear_env = no" >> $FPMENV
+  echo "clear_env = no" > $FPMENV
   for _curVar in `env | awk -F = '{print $1}'`;do
      # awk has split them by the equals sign
      # Pass the name and value to our function
@@ -38,7 +49,7 @@ then
 fi
 
 # Log something to the supervisord log so we know this script as run
-echo "DONE"
+${VERBOSE_MODE} && echo "DONE"
 
 # Now start php-fpm
 $(command -v php-fpm) --nodaemonize --fpm-config "$FPMMAIN"

@@ -20,41 +20,6 @@ then
     echo
 fi
 
-if [ -z "$PHP_FPM_SERVER" ]
-then
-  PHP_FPM_SERVER=127.0.0.1:9000
-fi
-
-# Adjust NGINX
-if [[ -f /etc/nginx/http.d/default.conf ]]
-then
-  if [ -z "$NGINX_ROOT" ]
-  then
-    NGINX_ROOT=/var/www/html
-  fi
-
-  ${VERBOSE_MODE} && echo "Setting root to '$NGINX_ROOT'"
-  sed -i "s|^\(\s*root\s*\)@root@;$|\1$NGINX_ROOT;|g" /etc/nginx/http.d/default.conf
-  ${VERBOSE_MODE} && echo "Setting NGINX fastcgi to '$PHP_FPM_SERVER'"
-  sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" /etc/nginx/http.d/default.conf
-
-  if [[ -n "$PHP_CONTROLLER" ]]
-  then
-      ${VERBOSE_MODE} && echo "Setting controller as '$PHP_CONTROLLER'"
-      sed -i "s|^\(\s*\)#\(try_files.*\)@controller@\(.*\);$|\1\2$PHP_CONTROLLER\3;|g" /etc/nginx/http.d/default.conf
-      sed -i "s|^\(\s*\)\(index index.php.*\)$|\1#\2|g" /etc/nginx/http.d/default.conf
-  fi
-
-  if [[ -n "$NGINX_SSL_CERT" ]]
-  then
-      ${VERBOSE_MODE} && echo "Setting CERT as '$NGINX_SSL_CERT'"
-      ${VERBOSE_MODE} && echo "Setting CERT_KEY as '$NGINX_SSL_CERT_KEY'"
-      sed -i "s|^\(\s*\)#\(listen 443.*\)$|\1\2|g" /etc/nginx/http.d/default.conf
-      sed -i "s|^\(\s*\)#\(ssl_certificate .*\)@cert@;$|\1\2$NGINX_SSL_CERT;|g" /etc/nginx/http.d/default.conf
-      sed -i "s|^\(\s*\)#\(ssl_certificate_key .*\)@certkey@;$|\1\2$NGINX_SSL_CERT_KEY;|g" /etc/nginx/http.d/default.conf
-  fi
-fi
-
 # Adjust PHP
 if [[ -f /usr/bin/php ]]
 then
@@ -62,22 +27,6 @@ then
   PHPINI=`php -i | grep "Loaded Configuration File" | awk -F" => " '{print $2}'`
   PHPMODULES=`php -i | grep "Scan this dir" |  awk -F" => " '{print $2}'`
   PHPCUSTOM=/etc/php/conf.d
-  PHPWWWCONFPATH=$(find /etc -name www.conf 2>/dev/null)
-  PHPBASECONFPATH=$(find /etc -name base.conf 2>/dev/null)
-
-  # Setting PHP FPM Server
-  if [ -n "$PHP_FPM_SERVER" ]
-  then
-    ${VERBOSE_MODE} && echo "Setting FPM fastcgi to '$PHP_FPM_SERVER'"
-    if [ -f "$PHPWWWCONFPATH" ]
-    then
-        sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $PHPWWWCONFPATH
-    fi
-    if [ -f "$PHPBASECONFPATH" ]
-    then
-        sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $PHPBASECONFPATH
-    fi
-  fi
 
   # Disable modules
   for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
