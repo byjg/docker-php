@@ -91,7 +91,8 @@ additionalPackages:
 
 ```bash
 docker run -it --privileged -v /tmp/z:/var/lib/containers -v $PWD:/work -w /work byjg/k8s-ci:latest bash
-python3 ./build.py 8.2 --arch amd64 --build-base --debug
+pip install -r requirements.txt
+python3 ./build.py 8.2 --arch amd64 --build-base --build-fpm --build-nginx --debug
 ```
 
 ### Check images

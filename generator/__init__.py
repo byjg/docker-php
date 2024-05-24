@@ -109,7 +109,7 @@ class Generator:
         base_image = self.content["image"][arch] if arch in self.content["image"] else self.content["image"]["default"]
         container = self._from("docker://" + base_image, arch)
         self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
-        self._run_cli(["buildah", "config", "--workingdir", "/srv/web", container])
+        self._run_cli(["buildah", "config", "--workingdir", "/srv", container])
         self._run_cli(["buildah", "copy", container, "assets/entrypoint.sh", "/"])
         self._run_cli(["buildah", "copy", container, "assets/script/install-sqlsvr.sh", "/install-sqlsvr.sh"])
         self.local_base = True
@@ -124,6 +124,8 @@ class Generator:
         self._banner("fpm")
         container = self._from(self.source_repo(arch, "base"), arch)
         self._run_cli(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container])
+        self._run_cli(["buildah", "copy", container, "assets/fpm/conf/www.conf", "/etc/php{major}{minor}/php-fpm.d/www.conf".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"])])
+
         return self._build(container, "fpm", arch)
 
     def build_fpm_apache(self, arch):
@@ -151,3 +153,15 @@ class Generator:
             file.write(script)
         self._run_cli(["buildah", "copy", container, ".tmp.sh", "/tmp/install_nginx.sh"])
         return self._build(container, "fpm-nginx", arch)
+
+    def build_nginx(self, arch):
+        self._banner("nginx")
+        base_image = self.content["image"][arch] if arch in self.content["image"] else self.content["image"]["default"]
+        container = self._from("docker://" + base_image, arch)
+        self._run_cli(["buildah", "config", "--cmd", "nginx -g 'daemon off;'", container])
+        self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
+        self._run_cli(["buildah", "config", "--workingdir", "/srv", container])
+        self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"])
+        self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/http.d/default.conf"])
+        self._run_cli(["buildah", "copy", container, "assets/entrypoint.sh", "/"])
+        return self._build(container, "nginx", arch)

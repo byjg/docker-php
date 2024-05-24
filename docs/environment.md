@@ -5,7 +5,9 @@ and enable/disable modules. If fits for most of the users.
 
 Any ENVIRONMENT variable can be accessible by your running PHP Instance.
 
-## PHP_CONTROLLER=path
+## Change the Image Behaviour
+
+### PHP_CONTROLLER=path
 
 If set, will enable the PHP controller for the `fpm-nginx` and `fpm-apache` and
 all requests will be directed to the PHP file specified.
@@ -13,11 +15,16 @@ all requests will be directed to the PHP file specified.
 ```bash
 docker run -e PHP_CONTROLLER=/app.php byjg/php:8.0-cli
 ```
-## NGINX_ROOT=path
+### NGINX_ROOT=path
 
 Changes the server root. Defaults to `/var/www/html`.
 
-## NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
+### PHP_FPM_SERVER=server:port
+
+If set, will enable the FastCGI pass to the PHP-FPM server. Defaults to `127.0.0.1:9000`
+
+
+### NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
 
 If set, will enable to serve HTTPS pages.
 
@@ -28,7 +35,7 @@ docker run -v /etc/ssl:/etc/ssl \
   byjg/php:8.0-fpm-ngnix
 ```
 
-## DISABLEMODULE_[name]=true
+### DISABLEMODULE_[name]=true
 
 All modules are installed by default. You can disable a module when you start the instance:
 
@@ -36,7 +43,7 @@ All modules are installed by default. You can disable a module when you start th
 docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true byjg/php:8.0-cli
 ```
 
-## VERBOSE=true
+### VERBOSE=true
 
 When you pass `VERBOSE=true` you can get a more verbose output about the entrypoint changes
 
@@ -44,18 +51,20 @@ When you pass `VERBOSE=true` you can get a more verbose output about the entrypo
 docker run -e VERBOSE=true byjg/php:8.0-cli
 ```
 
-## DOCKER_IMAGE (read only)
+## Read Only Environment Variables
+
+### DOCKER_IMAGE (read only)
 
 The name of the image is running.
 
-## PHP_VERSION (read only)
+### PHP_VERSION (read only)
 
-The PHP Version is running (e.g. 7.3)
+The PHP Version is running (e.g. 8.2)
 
-## PHP_VARIANT (read only)
+### PHP_VARIANT (read only)
 
-The PHP variant is running (e.g. 7)
+The PHP variant is running (e.g. 8)
 
-## BUILD_DATE (read only)
+### BUILD_DATE (read only)
 
 The date the image was built
