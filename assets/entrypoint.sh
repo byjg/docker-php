@@ -108,13 +108,4 @@ then
   cp $PHPCUSTOM/*.ini $PHPMODULES/ 2>/dev/null || :
 fi
 
-# Run the parameters
-for arg in "$@"
-do
-    if [[ $arg =~ \  ]]; then
-        arg="'$arg'"
-    fi
-    set -- "$@" "$arg"  # Add to the new set of arguments
-    shift               # Remove the original argument at $1
-done
 exec "$@"
