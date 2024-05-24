@@ -125,6 +125,7 @@ class Generator:
         container = self._from(self.source_repo(arch, "base"), arch)
         self._run_cli(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container])
         self._run_cli(["buildah", "copy", container, "assets/fpm/conf/www.conf", "/etc/php{major}{minor}/php-fpm.d/www.conf".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"])])
+        self._run_cli(["buildah", "copy", container, "assets/fpm/conf/base.conf", "/etc/php{major}{minor}/php-fpm.d/base.conf".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"])])
 
         return self._build(container, "fpm", arch)
 

@@ -63,11 +63,20 @@ then
   PHPMODULES=`php -i | grep "Scan this dir" |  awk -F" => " '{print $2}'`
   PHPCUSTOM=/etc/php/conf.d
   PHPWWWCONFPATH=$(find /etc -name www.conf 2>/dev/null)
+  PHPBASECONFPATH=$(find /etc -name base.conf 2>/dev/null)
 
-  if [ -f "$PHPWWWCONFPATH" ]
+  # Setting PHP FPM Server
+  if [ -n "$PHP_FPM_SERVER" ]
   then
-      ${VERBOSE_MODE} && echo "Setting FPM fastcgi to '$PHP_FPM_SERVER'"
-      sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $PHPWWWCONFPATH
+    ${VERBOSE_MODE} && echo "Setting FPM fastcgi to '$PHP_FPM_SERVER'"
+    if [ -f "$PHPWWWCONFPATH" ]
+    then
+        sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $PHPWWWCONFPATH
+    fi
+    if [ -f "$PHPBASECONFPATH" ]
+    then
+        sed -i "s|@fastcgi@|${PHP_FPM_SERVER}|g" $PHPBASECONFPATH
+    fi
   fi
 
   # Disable modules
