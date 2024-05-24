@@ -48,6 +48,30 @@ docker run -e PHP_CONTROLLER="/index.php" byjg/php:8.0-fpm-nginx
 docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:8.0-fpm-nginx
 ```
 
+*Setting the NGINX Root*
+
+You can set the NGINX Root directory by setting the environment variable `NGINX_ROOT`. This is useful when you want to
+serve files from a different directory.
+
+```bash
+docker run -e NGINX_ROOT=/srv -v $PWD:/srv -p 80:80 byjg/php:8.0-fpm-nginx
+```
+
+*Setting the NGINX FastCGI*
+
+You can set the NGINX FastCGI by setting the environment variable `PHP_FPM_SERVER`. This is useful when you want to
+change the FPM port.
+
+```bash
+docker run -e PHP_FPM_SERVER=127.0.0.1:9000 byjg/php:8.0-fpm-nginx
+```
+
+## PHP "*-nginx" Images
+
+The NGINX images has only the NGINX server installed, and it is configured to connect to a PHP-FPM server.
+
+See the fpm-nginx image for more details.
+
 ## PHP "*-fpm-apache" Images
 
 The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also
@@ -57,15 +81,15 @@ This image exposes the ports:
 - 80
 - 443
 
-The home directory is in /srv/web.
+The home directory is in /srv.
 
 Basically to start type:
 
 ```bash
-docker run -v $PWD:/srv/web -p 80:80 byjg/php:8.0-fpm-apache
+docker run -v $PWD:/srv -p 80:80 byjg/php:8.0-fpm-apache
 ```
 
-By default, the nginx serves all files in /srv/web.
+By default, the nginx serves all files in /srv.
 
 You can set your own APACHE configurations by attaching a volume to:
 - /etc/apache2/httpd.conf

@@ -62,6 +62,13 @@ my_parser.add_argument('--build-fpm-nginx',
                        default="",
                        help='Build Fpm-nginx')
 
+my_parser.add_argument('--build-nginx',
+                       dest='buildNginx',
+                       nargs="?",
+                       const="nginx",
+                       default="",
+                       help='Build nginx')
+
 my_parser.add_argument('--push',
                        dest='push',
                        nargs="?",
@@ -80,6 +87,7 @@ cmd_list.append(args.buildCli) if args.buildCli != "" else None
 cmd_list.append(args.buildFpm) if args.buildFpm != "" else None
 cmd_list.append(args.buildFpmApache) if args.buildFpmApache != "" else None
 cmd_list.append(args.buildFpmNginx) if args.buildFpmNginx != "" else None
+cmd_list.append(args.buildNginx) if args.buildNginx != "" else None
 
 for cmd in cmd_list:
     gen.manifest_create(cmd)
