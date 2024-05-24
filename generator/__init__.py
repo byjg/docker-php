@@ -123,9 +123,10 @@ class Generator:
     def build_fpm(self, arch):
         self._banner("fpm")
         container = self._from(self.source_repo(arch, "base"), arch)
-        self._run_cli(["buildah", "config", "--cmd", 'php-fpm --nodaemonize', container])
+        self._run_cli(["buildah", "config", "--cmd", '/start-fpm.sh', container])
         self._run_cli(["buildah", "copy", container, "assets/fpm/conf/www.conf", "/etc/php{major}{minor}/php-fpm.d/www.conf".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"])])
         self._run_cli(["buildah", "copy", container, "assets/fpm/conf/base.conf", "/etc/php{major}{minor}/php-fpm.d/base.conf".format(major=self.content["version"]["major"], minor=self.content["version"]["minor"])])
+        self._run_cli(["buildah", "copy", container, "assets/script/start-fpm.sh", "/start-fpm.sh"])
 
         return self._build(container, "fpm", arch)
 
@@ -137,7 +138,6 @@ class Generator:
         self._run_cli(["buildah", "copy", container, "assets/fpm-apache/conf/vhost.conf", "/etc/apache2/conf.d/"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-apache/conf/supervisord.conf", "/etc/supervisord.conf"])
         self._run_cli(["buildah", "copy", container, "assets/script/exit-event-listener.py", "/exit-event-listener.py"])
-        self._run_cli(["buildah", "copy", container, "assets/script/start-fpm.sh", "/start-fpm.sh"])
         return self._build(container, "fpm-apache", arch)
 
     def build_fpm_nginx(self, arch):
@@ -148,7 +148,6 @@ class Generator:
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.vh.default.conf", "/etc/nginx/http.d/default.conf"])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/supervisord.conf", "/etc/supervisord.conf"])
         self._run_cli(["buildah", "copy", container, "assets/script/exit-event-listener.py", "/exit-event-listener.py"])
-        self._run_cli(["buildah", "copy", container, "assets/script/start-fpm.sh", "/start-fpm.sh"])
         script = self.parse_config("php-fpm-nginx.j2", False)
         with open(".tmp.sh", "w") as file:
             file.write(script)

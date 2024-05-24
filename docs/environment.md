@@ -23,6 +23,9 @@ Changes the server root. Defaults to `/var/www/html`.
 
 If set, will enable the FastCGI pass to the PHP-FPM server. Defaults to `127.0.0.1:9000`
 
+### PHP_FPM_IGNORE_ENV=true
+
+If set, with any value, will ignore the system environment variables in the PHP FPM
 
 ### NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
 
