@@ -62,7 +62,7 @@ then
   PHPINI=`php -i | grep "Loaded Configuration File" | awk -F" => " '{print $2}'`
   PHPMODULES=`php -i | grep "Scan this dir" |  awk -F" => " '{print $2}'`
   PHPCUSTOM=/etc/php/conf.d
-  PHPWWWCONFPATH=$(find / -name www.conf 2>/dev/null)
+  PHPWWWCONFPATH=$(find /etc -name www.conf 2>/dev/null)
 
   if [ -f "$PHPWWWCONFPATH" ]
   then

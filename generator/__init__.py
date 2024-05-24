@@ -158,7 +158,7 @@ class Generator:
         self._banner("nginx")
         base_image = self.content["image"][arch] if arch in self.content["image"] else self.content["image"]["default"]
         container = self._from("docker://" + base_image, arch)
-        self._run_cli(["buildah", "config", "--cmd", "nginx -g 'daemon off;'", container])
+        self._run_cli(["buildah", "config", "--cmd", "nginx -g \"'daemon off;'\"", container])
         self._run_cli(["buildah", "config", "--entrypoint", '["/entrypoint.sh"]', container])
         self._run_cli(["buildah", "config", "--workingdir", "/srv", container])
         self._run_cli(["buildah", "copy", container, "assets/fpm-nginx/conf/nginx.conf", "/etc/nginx/nginx.conf"])
