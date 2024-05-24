@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
+VERBOSE_MODE=false
 if [ "$VERBOSE" == "true" ]
 then
     VERBOSE_MODE=true
 fi
 
+${VERBOSE_MODE} && echo "=== NGINX ==========================================================="
+
 if [ -z "$NGINX_ROOT" ]
 then
   NGINX_ROOT=/var/www/html
+fi
+if [ -z "$PHP_FPM_SERVER" ]
+then
+  PHP_FPM_SERVER=127.0.0.1:9000
 fi
 
 ${VERBOSE_MODE} && echo "Setting root to '$NGINX_ROOT'"

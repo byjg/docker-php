@@ -5,10 +5,13 @@ FPMWWW="/etc/$PHP_VARIANT/php-fpm.d/www.conf"
 FPMENV="/etc/$PHP_VARIANT/php-fpm.d/env.conf"
 FPMMAIN="/etc/$PHP_VARIANT/php-fpm.conf" 
 
+VERBOSE_MODE=false
 if [ "$VERBOSE" == "true" ]
 then
     VERBOSE_MODE=true
 fi
+
+${VERBOSE_MODE} && echo "=== PHP-FPM ==========================================================="
 
 if [ -z "$PHP_FPM_SERVER" ]
 then
@@ -40,8 +43,9 @@ function setEnvironmentVariable() {
 # Grep for variables that look like docker set them (_PORT_)
 if [ -z "$PHP_FPM_IGNORE_ENV"]
 then
+  ${VERBOSE_MODE} && echo "Environment Variables: "
   echo "clear_env = no" > $FPMENV
-  for _curVar in `env | awk -F = '{print $1}'`;do
+  for _curVar in `env | sort | awk -F = '{print $1}'`;do
      # awk has split them by the equals sign
      # Pass the name and value to our function
      setEnvironmentVariable ${_curVar} ${!_curVar}
