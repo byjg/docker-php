@@ -29,7 +29,7 @@ then
   PHPCUSTOM=/etc/php/conf.d
 
   # Disable modules
-  for VAR in `printenv | grep DISABLEMODULE | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
+  for VAR in `printenv | grep DISABLEMODULE | grep -E '(true|yes|1)' | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
   do
       if [[ -f "$PHPMODULES/*$VAR.ini" ]]
       then
