@@ -24,7 +24,7 @@ The PHP images are ready to use in:
 
 | Version | Latest Version | Monthly Builds | Alpine Version |
 |:-------:|:--------------:|:--------------:|:--------------:|
-| **8.4** | **8.4.0 rc2**  |    **yes**     |    **edge**    |
+| **8.4** |  **8.4.0rc3**  |    **yes**     |    **edge**    |
 | **8.3** |   **8.3.13**   |    **yes**     |    **edge**    |
 | **8.2** |   **8.2.24**   |    **yes**     |    **3.20**    |
 |   8.1   |     8.1.29     |       -        |      3.19      |      
@@ -70,8 +70,8 @@ The images with YYYY-MM are immutable
 e.g.
 
 ```
-byjg/php:8.2-fpm
-byjg/php:8.2-fpm-2023.01
+byjg/php:8.3-fpm
+byjg/php:8.3-fpm-2024.10
 ```
 
 ## Environment variables
