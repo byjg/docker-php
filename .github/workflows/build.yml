@@ -28,6 +28,8 @@ jobs:
             architeture: "arm64,amd64"
           - php-version: "8.2"
             architeture: "arm64,amd64"
+          - php-version: "8.1"
+            architeture: "arm64,amd64"
 
     steps:
       - uses: actions/checkout@v4
