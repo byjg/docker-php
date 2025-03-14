@@ -1,13 +1,13 @@
 # PHP "*-cli" Images
 
-The CLI images extends from "*-base" Image and have also:
+The CLI images extend from the "*-base" image and also include:
 
 - PHPUnit
 - PHP Code Sniffer
 - PHP Mess Detector
 - PHP Code Beautifier and Fixer
 
-You can create an alias to use easily the commands:
+You can create aliases to easily use the commands:
 
 ```bash
 export PHP_VERSION="7.3"
@@ -18,7 +18,7 @@ alias phpmd='docker run -it --rm -v "$PWD":/workdir -w /workdir -u $(id -u):$(id
 alias composer='docker run -it --rm -v "$PWD":/workdir -v "$HOME/.composer:/.composer" -w /workdir -u $(id -u):$(id -g) byjg/php:$PHP_VERSION-cli composer "$@"'
 ```
 
-and, when you execute, e.g. `php --version`, you have:
+When you execute, e.g., `php --version`, you will see:
 
 ```text
 PHP 7.3.27 (cli) (built: Feb  4 2021 21:04:33) ( NTS )

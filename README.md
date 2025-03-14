@@ -4,6 +4,31 @@
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/docker-php/)
 [![Build Status](https://github.com/byjg/docker-php/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/docker-php/actions/workflows/build.yml)
 
+## Overview
+
+A complete, lightweight, and versatile PHP Docker image collection based on Alpine Linux. These images are designed to be small, efficient, and ready to use in various environments.
+
+### Key Features
+
+- **Lightweight**: Based on Alpine Linux, with optimized image sizes (~135-154MB)
+- **Multi-architecture support**: Runs on amd64 (x86_64) and arm64 (Raspberry PI, Graviton)
+- **Multiple PHP versions**: From PHP 5.6 to the latest PHP 8.4
+- **Variety of configurations**: Base, CLI, FPM, FPM-Nginx, and FPM-Apache variants
+- **Pre-installed extensions**: 45+ PHP extensions included in all images
+- **Development tools**: Composer, PHPUnit, PHP Code Sniffer, and more in CLI images
+- **Production-ready**: Optimized for both development and production environments
+
+## Documentation Index
+
+- [Base Image](docs/image-base.md) - Minimal image with 45+ extensions
+- [CLI Image](docs/image-cli.md) - Command-line tools for development
+- [FPM Images](docs/image-fpm.md) - PHP-FPM, Nginx, and Apache variants
+- [Environment Variables](docs/environment.md) - Configuration options
+- [Building Custom Images](docs/building.md) - Create your own images
+- [IDE Integration](docs/ide.md) - Using with your IDE
+- [Dockerfile Reference](docs/dockerfile.md) - Dockerfile details
+- [Tagging Convention](docs/tagging.md) - Understanding image tags
+
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
 
 A complete and small PHP Docker image based on Alpine Linux and run on the archictectures

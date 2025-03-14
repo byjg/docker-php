@@ -1,24 +1,24 @@
-# Building the image
+# Building the Image
 
 Docker PHP Image uses [buildah](https://buildah.io/) 
 to build a compatible [OCI container image](https://opencontainers.org/).
 
-The image is compatible to all platforms, and it is capable to run on docker, 
-podman, kubernetes and any other compatible with the OCI specification.
+The image is compatible with all platforms and is capable of running on Docker, 
+Podman, Kubernetes, and any other container runtime compatible with the OCI specification.
 
-## Preparing the environment
+## Preparing the Environment
 
 Requirements:
 * Python 3.x
 * buildah
 
-There is no necessary have docker installed, however you need to have the `buildah`
+It is not necessary to have Docker installed; however, you need to have `buildah`
 on your machine. 
 
-If you are using an ubuntu/debian system you can use the provided script
+If you are using an Ubuntu/Debian system, you can use the provided script
 `install-buildah-ubuntu.sh` to install it. 
 
-## Command to build
+## Command to Build
 
 ```text
 usage: build.py [-h] [--debug] [--build-base]
@@ -28,19 +28,19 @@ usage: build.py [-h] [--debug] [--build-base]
                 version
 ```
 
-You can build one image only, but you need to make sure you have the `base` 
+You can build one image only, but you need to make sure you have the `base` image
 on your machine.
 
-## The configuration file
+## The Configuration File
 
-The configuration for each environment is in the folder `config` and it is a yaml
+The configuration for each environment is in the folder `config` and is a YAML
 file like this:
 
 ```yaml
 # The base image to use
 image: alpine:edge
 
-# (Optional) If we are getting packages from other resources define here
+# (Optional) If we are getting packages from other resources, define them here
 repositories:
   - https://dl-cdn.alpinelinux.org/alpine/edge/testing
 
@@ -57,10 +57,10 @@ extensions:
 # The PECL extensions to be installed
 pecl:
   - name: xdebug                    # required
-    version: 2.5.5                  # optional - if not set get the latest
+    version: 2.5.5                  # optional - if not set, get the latest
     install: False                  # optional - do not call pecl install
     zend: True                      # optional - if true, add as zend extension
-    config:                         # optional - if set add extra config to php.ini 
+    config:                         # optional - if set, add extra config to php.ini 
       - xdebug.remote_port=9001     #            for this extension
 
 # Composer packages to be installed
@@ -75,7 +75,7 @@ composer:
     - phpbcbf
     - phpmd
 
-# Temporary Packages to be used to build the PECL packages 
+# Temporary packages to be used to build the PECL packages 
 peclBuildPackages:
   - autoconf
   - build-base
@@ -85,9 +85,10 @@ additionalPackages:
   - libssl1.1
   - libcrypto1.1
 ```
+
 ## Example
 
-### Build the images
+### Build the Images
 
 ```bash
 docker run -it --privileged -v /tmp/z:/var/lib/containers -v $PWD:/work -w /work byjg/k8s-ci:latest bash
@@ -95,7 +96,7 @@ pip install -r requirements.txt
 python3 ./build.py 8.2 --arch amd64 --build-base --build-fpm --build-nginx --debug
 ```
 
-### Check images
+### Check Images
 
 ```bash
 buildah images

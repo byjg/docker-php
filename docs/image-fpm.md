@@ -2,31 +2,31 @@
 
 ## The "*-fpm" Images
 
-The FPM images extends the "*-base" Image and have installed the modules PHP-FPM.
+The FPM images extend the "*-base" image and have PHP-FPM installed.
 
 This image exposes the port:
 - 9000 for the FPM
 
 ## PHP "*-fpm-nginx" Images
 
-The FPM-NGINX images extends "\*-fpm" and "\*-base" images and have also
-a full-featured LEMP Server: PHP + NGINX 1.12.x (without mysql bundled).
+The FPM-NGINX images extend the "\*-fpm" and "\*-base" images and also include
+a full-featured LEMP Server: PHP + NGINX 1.12.x (without MySQL bundled).
 
 This image exposes the ports:
 - 80
 - 443
 
-The home directory is defined by the NGINX_ROOT environment variable. If not set defaults to  `/var/www/html`.
+The home directory is defined by the NGINX_ROOT environment variable. If not set, it defaults to `/var/www/html`.
 
-Basically to start type:
+To start, simply type:
 
 ```bash
 docker run -v $PWD:/var/www/html -p 80:80 byjg/php:8.0-fpm-nginx
 ```
 
-By default, the nginx serves all files in /var/www/html.
+By default, NGINX serves all files in /var/www/html.
 
-You can set your own NGINX configurations by attaching a volume to:
+You can set your own NGINX configurations by attaching volumes to:
 - /etc/nginx/nginx.conf
 - /etc/nginx/http.d/   # Vhosts
 - /etc/nginx/conf.d/   # Root level configuration
@@ -34,8 +34,8 @@ You can set your own NGINX configurations by attaching a volume to:
 
 *Setting PHP Controller*
 
-You can define a PHP Controller which is a single PHP file that will process all request. This could be useful for
-REST Applications like Silex, Lumen, Symfony, etc.
+You can define a PHP Controller, which is a single PHP file that will process all requests. This is useful for
+REST applications like Silex, Lumen, Symfony, etc.
 
 ```bash
 docker run -e PHP_CONTROLLER="/index.php" byjg/php:8.0-fpm-nginx
@@ -43,9 +43,8 @@ docker run -e PHP_CONTROLLER="/index.php" byjg/php:8.0-fpm-nginx
 
 *Setting SSL Certificate*
 
-
 ```bash
-docker run -e NGINX_SSL_CERT=/opt/my.cert NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:8.0-fpm-nginx
+docker run -e NGINX_SSL_CERT=/opt/my.cert -e NGINX_SSL_CERT_KEY=/opt/my.key byjg/php:8.0-fpm-nginx
 ```
 
 *Setting the NGINX Root*
@@ -68,14 +67,14 @@ docker run -e PHP_FPM_SERVER=127.0.0.1:9000 byjg/php:8.0-fpm-nginx
 
 ## PHP "*-nginx" Images
 
-The NGINX images has only the NGINX server installed, and it is configured to connect to a PHP-FPM server.
+The NGINX images have only the NGINX server installed and are configured to connect to a PHP-FPM server.
 
 See the fpm-nginx image for more details.
 
 ## PHP "*-fpm-apache" Images
 
-The FPM-APACHE images extends "\*-fpm" and "\*-base" images and have also
-a full-featured LAMP Server: PHP + APACHE 2.4.x (without mysql bundled).
+The FPM-APACHE images extend the "\*-fpm" and "\*-base" images and also include
+a full-featured LAMP Server: PHP + APACHE 2.4.x (without MySQL bundled).
 
 This image exposes the ports:
 - 80
@@ -83,14 +82,14 @@ This image exposes the ports:
 
 The home directory is in /srv.
 
-Basically to start type:
+To start, simply type:
 
 ```bash
 docker run -v $PWD:/srv -p 80:80 byjg/php:8.0-fpm-apache
 ```
 
-By default, the nginx serves all files in /srv.
+By default, Apache serves all files in /srv.
 
-You can set your own APACHE configurations by attaching a volume to:
+You can set your own APACHE configurations by attaching volumes to:
 - /etc/apache2/httpd.conf
 - /etc/apache2/conf.d/

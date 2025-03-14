@@ -1,9 +1,9 @@
-# Dockerfile example
+# Dockerfile Example
 
-To use the Docker PHP with your application you can use the following Dockerfile:
+To use the Docker PHP with your application, you can use the following Dockerfile:
 
 ```dockerfile
-FROM php:8.1-cli
+FROM byjg/php:8.1-cli
 
 # Verbose Mode
 # ENV VERBOSE="true"
@@ -59,7 +59,6 @@ ENV PHP_CONTROLLER=/app.php
 # ENV DISABLEMODULE_yaml=1
 # ENV DISABLEMODULE_mcrypt=1
 # ENV DISABLEMODULE_mongodb=1
-# ENV DISABLEMODULE_xdebug=1
 
-# You commands goes here
+# Your commands go here
 ```

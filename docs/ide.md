@@ -1,34 +1,34 @@
-# Using the Image in your IDE
+# Using the Image in Your IDE
 
-You don't need to have the PHP installed on your machine to have all features
-your IDE can offer. You can use the Docker PHP Image ByJG. 
+You don't need to have PHP installed on your machine to access all the features
+your IDE can offer. You can use the Docker PHP Image by ByJG. 
 
-If you are using the IDE [PHPStorm from](https://www.jetbrains.com/phpstorm/) Jetbrains you can easily add any PHP version using the
+If you are using [PHPStorm](https://www.jetbrains.com/phpstorm/) from Jetbrains, you can easily add any PHP version using the
 tutorial below.
 
-First, go to "File -> Settings -> Languages/Framework" and click in the elispis 
-besides the "CLI Interpreter" text box. 
+First, go to "File -> Settings -> Languages/Framework" and click on the ellipsis 
+beside the "CLI Interpreter" text box. 
 
 ![img.png](img.png)
 
-Then, click in "Add (+) -> From Docker, Vargrant, etc"
+Then, click on "Add (+) -> From Docker, Vagrant, etc."
 
 ![img_1.png](img_1.png)
 
-The next screen you have to set the proper image. If we want to use the PHP Version 7.3
-we need to fill the image `byjg/php:7.3-cli`. Make sure you have docker installed and properly
-setup in the [PHPStorm IDE](https://www.jetbrains.com/phpstorm/). If you can't see the "Server" `docker`, click in "New" and 
-after setup continue the process as you can see below:
+On the next screen, you need to set the proper image. If you want to use PHP Version 7.3,
+you need to fill in the image name `byjg/php:7.3-cli`. Make sure you have Docker installed and properly
+set up in the [PHPStorm IDE](https://www.jetbrains.com/phpstorm/). If you can't see the "Server" `docker`, click on "New" and 
+after setup, continue the process as shown below:
 
 ![img_2.png](img_2.png)
 
-If everything is OK you can see the PHP Version and XDebug. You can deselect the option
+If everything is OK, you will see the PHP Version and XDebug. You can deselect the option
 "Visible only for this project" if you want to have these configurations for all PHP projects you have.
 
 ![img_3.png](img_3.png)
 
-And voilá. Just select this new version to your project, and you can have auto-complete, debug, etc.
-as if you have the PHP installed in your machine
+And voilà! Just select this new version for your project, and you can have auto-complete, debug, etc.,
+as if you had PHP installed on your machine.
 
 ![img_4.png](img_4.png)
 

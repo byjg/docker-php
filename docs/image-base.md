@@ -1,6 +1,6 @@
 # PHP "*-base" Image
 
-All "*-base" images are based on Alpine Linux and only the necessary layers. Because of that the images
+All "*-base" images are based on Alpine Linux and include only the necessary layers. Because of this, the images
 are tiny and very optimized.
 
 You can find more than 45 extensions pre-installed in all images:
@@ -21,8 +21,8 @@ Example:
 docker run -it --rm byjg/php:7.1-base php --version
 ```
 
-This image expose the port:
-- 9001 for the XDebug
+This image exposes the port:
+- 9001 for XDebug
 
 ## Adding Custom Config
 
