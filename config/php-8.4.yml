@@ -86,6 +86,6 @@ peclBuildPackages:
   - zlib-dev
 
 additionalPackages:
-  - libssl1.1
-  - libcrypto1.1
+  - libssl3
+  - libcrypto3
   - python3
