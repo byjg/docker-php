@@ -2,6 +2,7 @@ import argparse
 import pathlib
 import os
 import sys
+from datetime import datetime
 
 from generator import Generator
 
@@ -89,10 +90,23 @@ cmd_list.append(args.buildFpmApache) if args.buildFpmApache != "" else None
 cmd_list.append(args.buildFpmNginx) if args.buildFpmNginx != "" else None
 cmd_list.append(args.buildNginx) if args.buildNginx != "" else None
 
+release_date = "{year}.{month}".format(year=datetime.now().year, month=datetime.now().month)
+docker_list = []
+buildx_list = []
 for cmd in cmd_list:
     gen = Generator(args.PHP_Version, args.Debug, args.push != "")
     image_name = getattr(gen, "build_" + cmd)()
     dockerfile_content = gen.get_dockerfile_content()
     dockerfile_name = gen.dockerfile_name()
-    print(f"docker build -t {image_name} -f {dockerfile_name} .")
+    docker_list.append(f"docker build -t {image_name} -f {dockerfile_name} .")
+    docker_list.append(f"docker build -t {image_name}-{release_date} -f {dockerfile_name} .")
+    buildx_list.append(f"docker buildx build --platform linux/amd64,linux/arm64 -t {image_name} -f {dockerfile_name} --push .")
+    buildx_list.append(f"docker buildx build --platform linux/amd64,linux/arm64 -t {image_name}-{release_date} -f {dockerfile_name} --push .")
     pathlib.Path(dockerfile_name).write_text(dockerfile_content)
+
+print("\n".join(docker_list))
+print("\n")
+print("docker run --privileged --rm tonistiigi/binfmt --install all")
+print("docker buildx create --name mybuilder --use")
+print("docker buildx inspect --bootstrap")
+print("\n".join(buildx_list))
