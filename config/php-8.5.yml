@@ -28,7 +28,7 @@ extensions:
   - mysqli
   - mysqlnd
   - openssl
-  - opcache
+#  - opcache
   - pcntl
   - pdo
   - pdo_dblib
