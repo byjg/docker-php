@@ -79,7 +79,7 @@ my_parser.add_argument('--push',
 # Execute the parse_args() method
 args = my_parser.parse_args()
 
-gen = Generator(args.PHP_Version, args.Debug, args.push != "")
+
 
 cmd_list = []
 cmd_list.append(args.buildBase) if args.buildBase != "" else None
@@ -90,8 +90,6 @@ cmd_list.append(args.buildFpmNginx) if args.buildFpmNginx != "" else None
 cmd_list.append(args.buildNginx) if args.buildNginx != "" else None
 
 for cmd in cmd_list:
-    gen.manifest_create(cmd)
-    for arch in args.arch.split(","):
-        iid = getattr(gen, "build_" + cmd)(arch)
-        gen.manifest_add(iid, cmd, arch)
-    gen.manifest_push(cmd)
+    gen = Generator(args.PHP_Version, args.Debug, args.push != "")
+    iid = getattr(gen, "build_" + cmd)("aa")
+    print(gen.get_dockerfile_content())

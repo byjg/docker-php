@@ -1,6 +1,6 @@
 .idea
 *~
 /.tmp.sh
-/venv/
+.venv/
 .env
 *.pyc
