@@ -22,11 +22,13 @@ jobs:
     strategy:
       matrix:
         include:
+          - php-version: "8.5"
+            architeture: "arm64,amd64"
           - php-version: "8.4"
             architeture: "arm64,amd64"
           - php-version: "8.3"
             architeture: "arm64,amd64"
-          - php-version: "8.2"
+          - php-version: "5.6"
             architeture: "arm64,amd64"
 
     steps:

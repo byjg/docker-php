@@ -1,0 +1,92 @@
+image:
+  default: alpine:edge
+
+repositories:
+  - https://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+version:
+  major: 8
+  minor: 5
+  suffix: 85
+
+extensions:
+  - bcmath
+  - common
+  - ctype
+  - curl
+  - dba
+  - dom
+  - exif
+  - ftp
+  - gd
+  - gettext
+  - iconv
+  - intl
+  - fileinfo
+  - json
+  - mbstring
+  - mysqli
+  - mysqlnd
+  - openssl
+  - opcache
+  - pcntl
+  - pdo
+  - pdo_dblib
+  - pdo_mysql
+  - pdo_pgsql
+  - pdo_sqlite
+  - pear
+#  - pecl-mcrypt
+  - pecl-memcached
+  - pecl-mongodb
+  - pecl-xdebug
+  - pecl-yaml
+  - phar
+  - posix
+  - redis
+  - session
+  - shmop
+  - simplexml
+  - soap
+  - sockets
+  - sqlite3
+  - tokenizer
+  - xml
+  - xmlreader
+  - xmlwriter
+  - xsl
+  - zip
+  - zlib
+
+pecl:
+  - name: xdebug
+    install: False
+    zend: True
+    config:
+      - xdebug.remote_port=9001
+
+composer:
+  packages:
+    - phpunit/phpunit:*
+    - squizlabs/php_codesniffer:*
+    - phpmd/phpmd:@stable
+  links:
+    - phpunit
+    - phpcs
+    - phpbcbf
+    - phpmd
+
+peclBuildPackages:
+  - autoconf
+  - build-base
+  - cyrus-sasl-dev
+  - gcc
+  - libtool
+  - make
+  - openssl-dev
+  - zlib-dev
+
+additionalPackages:
+  - libssl3
+  - libcrypto3
+  - python3
