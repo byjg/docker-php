@@ -1,0 +1,16 @@
+services:
+  php:
+    image:  php-fpm-example
+    build:
+      dockerfile: Dockerfile-example-fpm
+      context: $PWD
+
+  nginx:
+    image: byjg/php:8.3-nginx-2024.06
+    ports:
+      - "9080:80"
+    environment:
+      - NGINX_ROOT=/srv/public
+      - PHP_CONTROLLER=/app.php
+      - PHP_FPM_SERVER=php:9000
+      - VERBOSE=true

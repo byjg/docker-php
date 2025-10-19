@@ -27,7 +27,6 @@ jobs:
           - "8.4"
           - "8.3"
           - "8.2"
-          - "5.6"
 
     steps:
       - name: Get current date
@@ -39,9 +38,6 @@ jobs:
 
       - name: Install requirements
         run: pip install -r requirements.txt
-
-      - name: Building and Push PHP
-        run: python3 ./build.py ${{ matrix.php-version }} --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --build-nginx
 
 #      - name: Set up Docker
 #        uses: docker/setup-docker-action@v4
@@ -66,6 +62,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --build-nginx
 
       - name: Build Docker image base
         uses: docker/build-push-action@v5
