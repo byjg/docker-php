@@ -57,7 +57,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-base,
-            byjg/php:${{ matrix.php-version }}-base-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image
@@ -70,7 +70,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-cli,
-            byjg/php:${{ matrix.php-version }}-cli-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image
@@ -83,7 +83,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm,
-            byjg/php:${{ matrix.php-version }}-fpm-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image
@@ -96,7 +96,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-apache,
-            byjg/php:${{ matrix.php-version }}-fpm-apache-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image
@@ -109,7 +109,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-nginx,
-            byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image
@@ -122,7 +122,7 @@ jobs:
           load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-nginx,
-            byjg/php:${{ matrix.php-version }}-nginx-${{ YEAR }}.${{ MONTH }}
+            byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Push all built images
@@ -132,17 +132,17 @@ jobs:
           push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-base,
-            byjg/php:${{ matrix.php-version }}-base-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }},
             byjg/php:${{ matrix.php-version }}-cli,
-            byjg/php:${{ matrix.php-version }}-cli-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }},
             byjg/php:${{ matrix.php-version }}-fpm,
-            byjg/php:${{ matrix.php-version }}-fpm-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }},
             byjg/php:${{ matrix.php-version }}-fpm-apache,
-            byjg/php:${{ matrix.php-version }}-fpm-apache-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }},
             byjg/php:${{ matrix.php-version }}-fpm-nginx,
-            byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }},
             byjg/php:${{ matrix.php-version }}-nginx,
-            byjg/php:${{ matrix.php-version }}-nginx-${{ YEAR }}.${{ MONTH }},
+            byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }},
 
   Documentation:
     if: github.ref == 'refs/heads/master'
