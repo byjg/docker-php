@@ -74,7 +74,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-base
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-base,
             byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
@@ -87,7 +86,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-cli
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-cli,
             byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
@@ -100,7 +98,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-fpm
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm,
             byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
@@ -113,7 +110,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-apache
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-apache,
             byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
@@ -126,7 +122,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-nginx
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-nginx,
             byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
@@ -139,7 +134,6 @@ jobs:
           file: Dockerfile-php-${{ matrix.php-version }}-nginx
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true
           tags: |
             byjg/php:${{ matrix.php-version }}-nginx,
             byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
