@@ -141,6 +141,7 @@ jobs:
       - name: Push all built images
         if: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
         run: |
+            docker images
             docker push byjg/php:${{ matrix.php-version }}-base
             docker push byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
             docker push byjg/php:${{ matrix.php-version }}-cli
