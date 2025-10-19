@@ -1,5 +1,5 @@
 import argparse
-
+import pathlib
 import os
 import sys
 
@@ -91,5 +91,8 @@ cmd_list.append(args.buildNginx) if args.buildNginx != "" else None
 
 for cmd in cmd_list:
     gen = Generator(args.PHP_Version, args.Debug, args.push != "")
-    iid = getattr(gen, "build_" + cmd)("aa")
-    print(gen.get_dockerfile_content())
+    image_name = getattr(gen, "build_" + cmd)()
+    dockerfile_content = gen.get_dockerfile_content()
+    dockerfile_name = gen.dockerfile_name()
+    print(f"docker build -t {image_name} -f {dockerfile_name} .")
+    pathlib.Path(dockerfile_name).write_text(dockerfile_content)
