@@ -43,16 +43,16 @@ jobs:
       - name: Building and Push PHP
         run: python3 ./build.py ${{ matrix.php-version }} --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --build-nginx
 
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4
-        with:
-          daemon-config: |
-            {
-              "debug": true,
-              "features": {
-                "containerd-snapshotter": true
-              }
-            }
+#      - name: Set up Docker
+#        uses: docker/setup-docker-action@v4
+#        with:
+#          daemon-config: |
+#            {
+#              "debug": true,
+#              "features": {
+#                "containerd-snapshotter": true
+#              }
+#            }
 
       - name: Log into registry
         uses: docker/login-action@v3
@@ -146,23 +146,20 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Push all built images
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
-          tags: |
-            byjg/php:${{ matrix.php-version }}-base,
-            byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }},
-            byjg/php:${{ matrix.php-version }}-cli,
-            byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }},
-            byjg/php:${{ matrix.php-version }}-fpm,
-            byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }},
-            byjg/php:${{ matrix.php-version }}-fpm-apache,
-            byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }},
-            byjg/php:${{ matrix.php-version }}-fpm-nginx,
-            byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }},
-            byjg/php:${{ matrix.php-version }}-nginx,
-            byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }},
+        if: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
+        run: |
+            docker push byjg/php:${{ matrix.php-version }}-base
+            docker push byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
+            docker push byjg/php:${{ matrix.php-version }}-cli
+            docker push byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
+            docker push byjg/php:${{ matrix.php-version }}-fpm
+            docker push byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
+            docker push byjg/php:${{ matrix.php-version }}-fpm-apache
+            docker push byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
+            docker push byjg/php:${{ matrix.php-version }}-fpm-nginx
+            docker push byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
+            docker push byjg/php:${{ matrix.php-version }}-nginx
+            docker push byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
 
   Documentation:
     if: github.ref == 'refs/heads/master'
