@@ -1,0 +1,11 @@
+services:
+  php:
+    image:  php-fpm-nginx-example
+    build:
+      dockerfile: Dockerfile-example-nginx
+      context: $PWD
+    environment:
+      NGINX_ROOT: "/srv/public"
+      PHP_CONTROLLER: "/app.php"
+    ports:
+      - "9090:80"

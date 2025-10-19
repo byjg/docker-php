@@ -1,0 +1,5 @@
+FROM byjg/php:8.3-fpm-nginx
+
+COPY php /srv
+
+RUN rm -rf /srv/vendor && composer update

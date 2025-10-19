@@ -1,0 +1,5 @@
+{
+    "require": {
+        "byjg/restserver": "^5.0"
+    }
+}

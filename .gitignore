@@ -1,6 +1,9 @@
 .idea
 *~
 /.tmp.sh
-/venv/
+.venv/
 .env
 *.pyc
+Dockerfile-php-*
+/examples/php/vendor/
+/examples/php/composer.lock
