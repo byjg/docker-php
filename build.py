@@ -15,19 +15,6 @@ my_parser.add_argument('PHP_Version',
                        type=str,
                        help='The PHP Version')
 
-my_parser.add_argument('--debug',
-                       dest='Debug',
-                       nargs="?",
-                       const=True,
-                       default=False,
-                       help='Enable Debug Build (multiple layers)')
-
-my_parser.add_argument('--arch',
-                       dest='arch',
-                       default="amd64,arm64,s390x",
-                       help='Build Base')
-
-
 my_parser.add_argument('--build-base',
                        dest='buildBase',
                        nargs="?",
@@ -70,13 +57,6 @@ my_parser.add_argument('--build-nginx',
                        default="",
                        help='Build nginx')
 
-my_parser.add_argument('--push',
-                       dest='push',
-                       nargs="?",
-                       const="push",
-                       default="",
-                       help='Push the image to the docker.io repository')
-
 # Execute the parse_args() method
 args = my_parser.parse_args()
 
@@ -94,7 +74,7 @@ release_date = "{year}.{month}".format(year=datetime.now().year, month=datetime.
 docker_list = []
 buildx_list = []
 for cmd in cmd_list:
-    gen = Generator(args.PHP_Version, args.Debug, args.push != "")
+    gen = Generator(args.PHP_Version)
     image_name = getattr(gen, "build_" + cmd)()
     dockerfile_content = gen.get_dockerfile_content()
     dockerfile_name = gen.dockerfile_name()

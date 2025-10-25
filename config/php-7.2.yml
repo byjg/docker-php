@@ -83,3 +83,7 @@ peclBuildPackages:
 additionalPackages:
   - libssl1.1
   - libcrypto1.1
+
+additionalPackagesCli:
+  - git
+  - openssh-client

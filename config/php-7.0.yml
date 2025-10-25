@@ -84,3 +84,7 @@ additionalPackages:
   - libssl1.0
   - libcrypto1.0
   - libmemcached
+
+additionalPackagesCli:
+  - git
+  - openssh-client

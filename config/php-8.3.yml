@@ -90,3 +90,7 @@ additionalPackages:
   - libssl3
   - libcrypto3
   - python3
+
+additionalPackagesCli:
+  - git
+  - openssh-client

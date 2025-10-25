@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 from datetime import datetime, date
 
 class Generator:
-    def __init__(self, php_version, debug, push):
+    def __init__(self, php_version):
         build_config = "{dir}/config/php-{version}.yml".format(dir=os.getcwd(), version=php_version)
 
         if not os.path.exists(build_config):
@@ -12,8 +12,6 @@ class Generator:
             sys.exit(1)
 
         self.php_version = php_version
-        self.debug = debug
-        self.push = push
         self.build_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.build_config = yaml.load(stream=open(build_config), Loader=yaml.SafeLoader)
         self.local_base = False
@@ -115,6 +113,7 @@ class Generator:
     def build_cli(self):
         self._banner("cli")
         self._from(self.source_repo("base"))
+        self.dockerfile_content["env"] += "ENV COMPOSER_ALLOW_SUPERUSER=1\n"
         return self._build()
 
     def build_fpm(self):
