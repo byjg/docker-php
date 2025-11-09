@@ -31,21 +31,32 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
 
-A complete and small PHP Docker image based on Alpine Linux and run on the archictectures
+## Quick Start
 
-- amd64 (x86_64)
-- arm64 (Raspberry PI, Graviton, etc) - available after February 2021
+```bash
+# Pull an image
+docker pull byjg/php:8.3-cli
 
-The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
+# Run PHP
+docker run -it --rm byjg/php:8.3-cli php --version
 
-The PHP images are ready to use in:
+# Use with your project
+docker run -v $PWD:/workdir -w /workdir byjg/php:8.3-cli php script.php
+```
 
-- Development Environment
-- Production Environment
-- CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
-- [IDE Integration](docs/ide.md)
+## Image Variants
 
-## PHP Versions Available
+Five different images for each PHP Version:
+
+| Image Type   | Description                                             |
+|--------------|---------------------------------------------------------|
+| `base`       | Minimal image with 45+ PHP extensions and Composer      |
+| `cli`        | Development tools (PHPUnit, PHP_CodeSniffer, PHPMD)     |
+| `fpm`        | PHP-FPM for custom web server configurations            |
+| `fpm-nginx`  | Complete LEMP stack (Nginx + PHP-FPM)                   |
+| `fpm-apache` | Complete LAMP stack (Apache + PHP-FPM)                  |
+
+## Supported PHP Versions
 
 | Version | Latest Version | Monthly Builds | Alpine Version |
 |:-------:|:--------------:|:--------------:|:--------------:|
@@ -53,61 +64,35 @@ The PHP images are ready to use in:
 | **8.4** |   **8.4.13**   |    **yes**     |    **edge**    |
 | **8.3** |   **8.3.26**   |    **yes**     |    **edge**    |
 | **8.2** |  **8.2.29r2**  |    **yes**     |    **edge**    |
-|   8.1   |     8.1.31     |       -        |      3.19      |      
-|   8.0   |     8.0.30     |       -        |      3.16      |     
-|   7.4   |     7.4.33     |       -        |      3.15      |    
-|   7.3   |     7.3.33     |       -        |      3.12      |   
-|   7.2   |     7.2.33     |       -        |      3.9       |  
-|   7.1   |     7.1.33     |       -        |      3.7       | 
+|   8.1   |     8.1.31     |       -        |      3.19      |
+|   8.0   |     8.0.30     |       -        |      3.16      |
+|   7.4   |     7.4.33     |       -        |      3.15      |
+|   7.3   |     7.3.33     |       -        |      3.12      |
+|   7.2   |     7.2.33     |       -        |      3.9       |
+|   7.1   |     7.1.33     |       -        |      3.7       |
 |   7.0   |     7.0.33     |       -        |      3.5       |
 |   5.6   |     5.6.40     |       -        |      3.8       |
 
-Notes:
-- PHP Images with no monthly builds are not updated anymore and there is no support.
-- PHP images using the edge base image are suitable for production. However, they may receive package updates. If you extend these images by adding more packages, those packages may not be available in future updates.
+:::info
+PHP versions with monthly builds receive regular updates. Legacy versions (without monthly builds) are no longer supported.
+:::
 
-## PHP Images
+:::warning
+Images using Alpine `edge` are production-ready but may receive package updates. Pin to a specific YYYY.MM tag for guaranteed stability.
+:::
 
-Five different images for each PHP Version
+## Use Cases
 
-- [base](docs/image-base.md) - Minimal Image, base for the other
-- [cli](docs/image-cli.md) - PHP with Command Line installed (composer, phpunit, etc)
-- [fpm](docs/image-fpm.md) - PHP with FPM installed
-- [fpm-apache](docs/image-fpm.md) - PHP and Apache using FPM
-- [fpm-nginx](docs/image-fpm.md) - PHP and Nginx using FPM
+These images are ready to use in:
 
-## Image Tag Convention
+- **Development Environment** - Fast setup with all tools included
+- **Production Environment** - Optimized, lightweight containers
+- **CI/CD Pipelines** - Travis-CI, Circle-CI, Jenkins, Bitbucket Pipelines, GitHub Actions
+- **IDE Integration** - Full PHP support without local installation (see [IDE Integration](docs/ide.md))
 
-Since January 2021 de tag convention is:
-
-```
-byjg/php:<PHP_VERSION>-<TYPE>[-YYYY.MM]
-```
-
-Where:
-- PHP_VERSION: It is `<MAJOR>.<MINOR>`, e.g `8.2`
-- TYPE: It is `base`, `cli`,  `fpm`, `fpn-nginx`, `fpm-apache`
-- YYYY: The Year of the Build
-- MM: The month of the build.
-
-The images without YYYY-MM can be updated to the latest PHP version and new features. 
-The images with YYYY-MM are immutable
-
-e.g.
-
-```
-byjg/php:8.3-fpm
-byjg/php:8.3-fpm-2024.10
-```
-
-## Environment variables
-
-[Here](docs/environment.md) a list of environment variables.
-
- 
 ## Image Sizes
 
-Below a table with images uncompressed
+Uncompressed sizes for reference:
 
 | Build Type | Uncompressed Size |
 |:-----------|------------------:|
@@ -117,10 +102,6 @@ Below a table with images uncompressed
 | fpm-nginx  |            ~154MB |
 | fpm-apache |            ~154MB |
 
+---
 
-## Building your own image
-
-Detailed instructions can be found [here](docs/building.md).
-
-----
 [Open source ByJG](http://opensource.byjg.com)

@@ -36,6 +36,7 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
+  - pecl-imagick
   - pecl-mcrypt
   - pecl-memcached
   - pecl-mongodb

@@ -1,74 +1,117 @@
+---
+sidebar_position: 4
+---
+
 # Environment Variables
 
-You don't need to replace the nginx configuration. With the `byjg/php` image, you can adjust the NGINX configuration
-and enable/disable modules. It fits for most users.
+You can configure the `byjg/php` images using environment variables without modifying configuration files. All environment variables are accessible by your running PHP instance.
 
-Any ENVIRONMENT variable can be accessible by your running PHP instance.
+## Configuration Variables
 
-## Change the Image Behavior
+### Web Server Configuration
 
-### PHP_CONTROLLER=path
+#### `PHP_CONTROLLER`
 
-If set, will enable the PHP controller for the `fpm-nginx` and `fpm-apache` images, and
-all requests will be directed to the PHP file specified.
+Enable single-file controller pattern (for `fpm-nginx` and `fpm-apache` images). All requests will be routed to the specified PHP file.
+
+**Default:** Not set
 
 ```bash
-docker run -e PHP_CONTROLLER=/app.php byjg/php:8.0-cli
+docker run -e PHP_CONTROLLER=/app.php byjg/php:8.3-fpm-nginx
 ```
 
-### NGINX_ROOT=path
+:::note Use Case
+This is useful for frameworks like Symfony, Laravel, or Slim that use a single entry point.
+:::
 
-Changes the server root. Defaults to `/var/www/html`.
+#### `NGINX_ROOT`
 
-### PHP_FPM_SERVER=server:port
+Set the web server document root.
 
-If set, will enable the FastCGI pass to the PHP-FPM server. Defaults to `127.0.0.1:9000`.
-
-### PHP_FPM_IGNORE_ENV=true
-
-If set, with any value, will ignore the system environment variables in the PHP FPM.
-
-### NGINX_SSL_CERT and NGINX_SSL_CERT_KEY
-
-If set, will enable serving HTTPS pages.
+**Default:** `/var/www/html`
 
 ```bash
-docker run -v /etc/ssl:/etc/ssl \
+docker run -e NGINX_ROOT=/srv/public byjg/php:8.3-fpm-nginx
+```
+
+#### `PHP_FPM_SERVER`
+
+Configure the FastCGI server address for PHP-FPM.
+
+**Default:** `127.0.0.1:9000`
+
+```bash
+docker run -e PHP_FPM_SERVER=127.0.0.1:9000 byjg/php:8.3-fpm-nginx
+```
+
+### SSL/TLS Configuration
+
+#### `NGINX_SSL_CERT` and `NGINX_SSL_CERT_KEY`
+
+Enable HTTPS by providing paths to SSL certificate and key files.
+
+**Default:** Not set (HTTP only)
+
+```bash
+docker run \
+  -v /etc/ssl:/etc/ssl \
   -e NGINX_SSL_CERT=/etc/ssl/my.cert \
   -e NGINX_SSL_CERT_KEY=/etc/ssl/my.key \
-  byjg/php:8.0-fpm-nginx
+  byjg/php:8.3-fpm-nginx
 ```
 
-### DISABLEMODULE_[name]=true
+### PHP Module Management
 
-All modules are installed by default. You can disable a module when you start the instance:
+#### `DISABLEMODULE_[name]`
+
+Disable specific PHP modules at runtime. All modules are enabled by default.
 
 ```bash
-docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true byjg/php:8.0-cli
+docker run \
+  -e DISABLEMODULE_DOM=true \
+  -e DISABLEMODULE_XSL=true \
+  byjg/php:8.3-cli
 ```
 
-### VERBOSE=true
+:::tip
+Disabling unused modules can slightly improve performance and reduce memory footprint.
+:::
 
-When you pass `VERBOSE=true`, you can get a more verbose output about the entrypoint changes:
+### PHP-FPM Configuration
+
+#### `PHP_FPM_IGNORE_ENV`
+
+Prevent PHP-FPM from inheriting system environment variables.
+
+**Default:** Not set (environment variables are passed to PHP)
 
 ```bash
-docker run -e VERBOSE=true byjg/php:8.0-cli
+docker run -e PHP_FPM_IGNORE_ENV=true byjg/php:8.3-fpm
 ```
 
-## Read Only Environment Variables
+### Debugging
 
-### DOCKER_IMAGE (read only)
+#### `VERBOSE`
 
-The name of the image that is running.
+Enable verbose logging for troubleshooting startup and configuration.
 
-### PHP_VERSION (read only)
+**Default:** Not set
 
-The PHP Version that is running (e.g. 8.2).
+```bash
+docker run -e VERBOSE=true byjg/php:8.3-cli
+```
 
-### PHP_VARIANT (read only)
+## Read-Only Environment Variables
 
-The PHP variant that is running (e.g. 8).
+These variables are set automatically by the image and provide information about the running container:
 
-### BUILD_DATE (read only)
+| Variable        | Description                                   | Example  |
+|-----------------|-----------------------------------------------|----------|
+| `DOCKER_IMAGE`  | The name of the image that is running        | `byjg/php:8.3-cli` |
+| `PHP_VERSION`   | The PHP version that is running              | `8.3`    |
+| `PHP_VARIANT`   | The PHP major version that is running        | `8`      |
+| `BUILD_DATE`    | The date when the image was built            | `2024-10-15` |
 
-The date the image was built.
+:::info
+These variables are automatically available in your PHP code via `getenv()` or `$_ENV`.
+:::

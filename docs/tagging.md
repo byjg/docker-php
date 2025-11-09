@@ -1,4 +1,8 @@
-# PHP Docker Images
+---
+sidebar_position: 8
+---
+
+# Tagging Convention
 
 ## Tag Format
 
