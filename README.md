@@ -29,7 +29,7 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 - [Dockerfile Reference](docs/dockerfile.md) - Dockerfile details
 - [Tagging Convention](docs/tagging.md) - Understanding image tags
 
-**See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
+**See full documentation at: [https://opensource.byjg.com/docs/devops/docker-php](https://opensource.byjg.com/docs/devops/docker-php)**
 
 ## Quick Start
 

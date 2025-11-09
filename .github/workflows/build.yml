@@ -18,7 +18,7 @@ on:
         required: true
 
 jobs:
-  Build:
+  Build-Base:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
@@ -39,16 +39,56 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
 
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4
+      - name: Log into registry
+        uses: docker/login-action@v3
         with:
-          daemon-config: |
-            {
-              "debug": true,
-              "features": {
-                "containerd-snapshotter": true
-              }
-            }
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-base
+
+      - name: Build Docker image base
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile-php-${{ matrix.php-version }}-base
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
+          tags: |
+            byjg/php:${{ matrix.php-version }}-base,
+            byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  Build-CLI:
+    if: github.ref == 'refs/heads/master'
+    needs: Build-Base
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - "8.5"
+          - "8.4"
+          - "8.3"
+          - "8.2"
+
+    steps:
+      - name: Get current date
+        run: |
+          echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
+          echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
 
       - name: Log into registry
         uses: docker/login-action@v3
@@ -64,20 +104,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Generate Dockerfiles
-        run: python3 ./build.py ${{ matrix.php-version }} --build-base --build-cli --build-fpm --build-fpm-apache --build-fpm-nginx --build-nginx
-
-      - name: Build Docker image base
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile-php-${{ matrix.php-version }}-base
-          platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
-          tags: |
-            byjg/php:${{ matrix.php-version }}-base,
-            byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
-          labels: ${{ steps.meta.outputs.labels }}
+        run: python3 ./build.py ${{ matrix.php-version }} --build-cli
 
       - name: Build Docker image cli
         uses: docker/build-push-action@v5
@@ -85,12 +112,50 @@ jobs:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-cli
           platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-cli,
             byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  Build-FPM:
+    if: github.ref == 'refs/heads/master'
+    needs: Build-Base
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - "8.5"
+          - "8.4"
+          - "8.3"
+          - "8.2"
+
+    steps:
+      - name: Get current date
+        run: |
+          echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
+          echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-fpm
 
       - name: Build Docker image fpm
         uses: docker/build-push-action@v5
@@ -98,12 +163,50 @@ jobs:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm
           platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm,
             byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  Build-FPM-Apache:
+    if: github.ref == 'refs/heads/master'
+    needs: Build-FPM
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - "8.5"
+          - "8.4"
+          - "8.3"
+          - "8.2"
+
+    steps:
+      - name: Get current date
+        run: |
+          echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
+          echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-fpm-apache
 
       - name: Build Docker image fpm-apache
         uses: docker/build-push-action@v5
@@ -111,12 +214,50 @@ jobs:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-apache
           platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-apache,
             byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  Build-FPM-Nginx:
+    if: github.ref == 'refs/heads/master'
+    needs: Build-FPM
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - "8.5"
+          - "8.4"
+          - "8.3"
+          - "8.2"
+
+    steps:
+      - name: Get current date
+        run: |
+          echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
+          echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-fpm-nginx
 
       - name: Build Docker image fpm-nginx
         uses: docker/build-push-action@v5
@@ -124,12 +265,50 @@ jobs:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-nginx
           platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-fpm-nginx,
             byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  Build-Nginx:
+    if: github.ref == 'refs/heads/master'
+    needs: Build-Base
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - "8.5"
+          - "8.4"
+          - "8.3"
+          - "8.2"
+
+    steps:
+      - name: Get current date
+        run: |
+          echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
+          echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate Dockerfiles
+        run: python3 ./build.py ${{ matrix.php-version }} --build-nginx
 
       - name: Build Docker image nginx
         uses: docker/build-push-action@v5
@@ -137,33 +316,15 @@ jobs:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-nginx
           platforms: linux/amd64,linux/arm64
-          push: false
-          load: true
+          push: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
           tags: |
             byjg/php:${{ matrix.php-version }}-nginx,
             byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Push all built images
-        if: ${{ github.event_name != 'pull_request' || github.event.inputs.push == 'true' }}
-        run: |
-            docker images
-            docker push byjg/php:${{ matrix.php-version }}-base
-            docker push byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
-            docker push byjg/php:${{ matrix.php-version }}-cli
-            docker push byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
-            docker push byjg/php:${{ matrix.php-version }}-fpm
-            docker push byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
-            docker push byjg/php:${{ matrix.php-version }}-fpm-apache
-            docker push byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
-            docker push byjg/php:${{ matrix.php-version }}-fpm-nginx
-            docker push byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
-            docker push byjg/php:${{ matrix.php-version }}-nginx
-            docker push byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
-
   Documentation:
     if: github.ref == 'refs/heads/master'
-    needs: Build
+    needs: [Build-Base, Build-CLI, Build-FPM, Build-FPM-Apache, Build-FPM-Nginx, Build-Nginx]
     uses: byjg/byjg.github.io/.github/workflows/add-doc.yaml@master
     with:
       folder: devops
