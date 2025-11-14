@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByJG PHP Docker Image</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4B79A1 0%, #283E51 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 10px 5px 0;
+            font-size: 0.9em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #283E51;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #283E51;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .extensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .extension-item {
+            background: #f1f3f5;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .env-var {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .env-var h3 {
+            color: #28a745;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+        }
+
+        .env-var p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .env-var code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            display: block;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .example-box h4 {
+            color: #283E51;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .example-box code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            display: block;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .info-table th {
+            background: #f8f9fa;
+            color: #283E51;
+            font-weight: 600;
+        }
+
+        .info-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        footer {
+            background: #283E51;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐳 ByJG PHP Docker Image</h1>
+            <p>Lightweight, Production-Ready PHP Containers</p>
+            <div>
+                <span class="badge">Alpine Linux</span>
+                <span class="badge">45+ Extensions</span>
+                <span class="badge">Multi-Architecture</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>✨ Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>🪶 Lightweight</h3>
+                        <p>Based on Alpine Linux with optimized image sizes ranging from 135-154MB uncompressed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🚀 Production Ready</h3>
+                        <p>Optimized for both development and production environments with security best practices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔧 45+ Extensions</h3>
+                        <p>Pre-installed with all essential PHP extensions including database drivers, image processing, and caching.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎯 Multiple Variants</h3>
+                        <p>Choose from base, CLI, FPM, FPM-Nginx, or FPM-Apache configurations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🌍 Multi-Architecture</h3>
+                        <p>Native support for amd64 (x86_64) and arm64 (Raspberry Pi, AWS Graviton).</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🛠️ Developer Tools</h3>
+                        <p>CLI images include Composer, PHPUnit, PHP_CodeSniffer, and PHPMD.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📦 Pre-installed PHP Extensions</h2>
+                <p>All images come with 45+ PHP extensions ready to use:</p>
+                <div class="extensions-grid">
+                    <div class="extension-item">bcmath</div>
+                    <div class="extension-item">ctype</div>
+                    <div class="extension-item">curl</div>
+                    <div class="extension-item">dba</div>
+                    <div class="extension-item">dom</div>
+                    <div class="extension-item">exif</div>
+                    <div class="extension-item">fileinfo</div>
+                    <div class="extension-item">filter</div>
+                    <div class="extension-item">ftp</div>
+                    <div class="extension-item">gd</div>
+                    <div class="extension-item">gettext</div>
+                    <div class="extension-item">iconv</div>
+                    <div class="extension-item">igbinary</div>
+                    <div class="extension-item">imagick</div>
+                    <div class="extension-item">intl</div>
+                    <div class="extension-item">json</div>
+                    <div class="extension-item">mbstring</div>
+                    <div class="extension-item">mcrypt</div>
+                    <div class="extension-item">memcached</div>
+                    <div class="extension-item">mongodb</div>
+                    <div class="extension-item">mysqli</div>
+                    <div class="extension-item">mysqlnd</div>
+                    <div class="extension-item">opcache</div>
+                    <div class="extension-item">openssl</div>
+                    <div class="extension-item">pcntl</div>
+                    <div class="extension-item">pdo</div>
+                    <div class="extension-item">pdo_dblib</div>
+                    <div class="extension-item">pdo_mysql</div>
+                    <div class="extension-item">pdo_pgsql</div>
+                    <div class="extension-item">pdo_sqlite</div>
+                    <div class="extension-item">phar</div>
+                    <div class="extension-item">posix</div>
+                    <div class="extension-item">redis</div>
+                    <div class="extension-item">session</div>
+                    <div class="extension-item">shmop</div>
+                    <div class="extension-item">simplexml</div>
+                    <div class="extension-item">soap</div>
+                    <div class="extension-item">sockets</div>
+                    <div class="extension-item">sqlite3</div>
+                    <div class="extension-item">tokenizer</div>
+                    <div class="extension-item">xdebug</div>
+                    <div class="extension-item">xml</div>
+                    <div class="extension-item">xmlreader</div>
+                    <div class="extension-item">xmlwriter</div>
+                    <div class="extension-item">xsl</div>
+                    <div class="extension-item">yaml</div>
+                    <div class="extension-item">zip</div>
+                    <div class="extension-item">zlib</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔧 Environment Variables Configuration</h2>
+                <p>Configure your container without modifying configuration files:</p>
+
+                <div class="env-var">
+                    <h3>PHP_CONTROLLER</h3>
+                    <p><strong>Description:</strong> Enable single-file controller pattern. All requests route to the specified PHP file.</p>
+                    <p><strong>Default:</strong> Not set</p>
+                    <p><strong>Use Case:</strong> Perfect for Symfony, Laravel, Slim frameworks</p>
+                    <code>docker run -e PHP_CONTROLLER=/index.php @@DOCKER_IMAGE@@</code>
+                </div>
+
+                <div class="env-var">
+                    <h3>NGINX_ROOT</h3>
+                    <p><strong>Description:</strong> Set the web server document root</p>
+                    <p><strong>Default:</strong> /var/www/html</p>
+                    <code>docker run -e NGINX_ROOT=/srv/public @@DOCKER_IMAGE@@</code>
+                </div>
+
+                <div class="env-var">
+                    <h3>NGINX_SSL_CERT & NGINX_SSL_CERT_KEY</h3>
+                    <p><strong>Description:</strong> Enable HTTPS by providing paths to SSL certificate and key files</p>
+                    <p><strong>Default:</strong> Not set (HTTP only)</p>
+                    <code>docker run -v /etc/ssl:/etc/ssl \
+  -e NGINX_SSL_CERT=/etc/ssl/my.cert \
+  -e NGINX_SSL_CERT_KEY=/etc/ssl/my.key \
+  @@DOCKER_IMAGE@@</code>
+                </div>
+
+                <div class="env-var">
+                    <h3>PHP_FPM_SERVER</h3>
+                    <p><strong>Description:</strong> Configure the FastCGI server address for PHP-FPM</p>
+                    <p><strong>Default:</strong> 127.0.0.1:9000</p>
+                    <code>docker run -e PHP_FPM_SERVER=127.0.0.1:9000 @@DOCKER_IMAGE@@</code>
+                </div>
+
+                <div class="env-var">
+                    <h3>DISABLEMODULE_[name]</h3>
+                    <p><strong>Description:</strong> Disable specific PHP modules at runtime to optimize performance</p>
+                    <p><strong>Default:</strong> All modules enabled</p>
+                    <code>docker run -e DISABLEMODULE_DOM=true -e DISABLEMODULE_XSL=true @@DOCKER_IMAGE@@</code>
+                </div>
+
+                <div class="env-var">
+                    <h3>VERBOSE</h3>
+                    <p><strong>Description:</strong> Enable verbose logging for troubleshooting startup and configuration</p>
+                    <p><strong>Default:</strong> Not set</p>
+                    <code>docker run -e VERBOSE=true @@DOCKER_IMAGE@@</code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 Image Information</h2>
+                <table class="info-table">
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Docker Image</strong></td>
+                        <td>@@DOCKER_IMAGE@@</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PHP Version</strong></td>
+                        <td>@@PHP_VERSION@@</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PHP Variant</strong></td>
+                        <td>@@PHP_VARIANT@@</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Build Date</strong></td>
+                        <td>@@BUILD_DATE@@</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base OS</strong></td>
+                        <td>Alpine Linux</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supported Architectures</strong></td>
+                        <td>amd64, arm64</td>
+                    </tr>
+                    <tr>
+                        <td><strong>XDebug Port</strong></td>
+                        <td>9001</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>🎯 Quick Start Examples</h2>
+
+                <h3 style="color: #283E51; margin-top: 30px; margin-bottom: 15px;">Development Environment</h3>
+                <div class="examples-grid">
+                    <div class="example-box">
+                        <h4>🔹 Using docker run</h4>
+                        <code>docker run -d \
+  -v $PWD:/var/www/html \
+  -p 80:80 \
+  @@DOCKER_IMAGE@@</code>
+                    </div>
+                    <div class="example-box">
+                        <h4>🔹 Using Dockerfile</h4>
+                        <code>FROM @@DOCKER_IMAGE@@
+
+COPY . /var/www/html
+
+EXPOSE 80</code>
+                    </div>
+                </div>
+
+                <h3 style="color: #283E51; margin-top: 30px; margin-bottom: 15px;">With Framework (Laravel, Symfony, PHP Rest Reference)</h3>
+                <div class="examples-grid">
+                    <div class="example-box">
+                        <h4>🔹 Using docker run</h4>
+                        <code>docker run -d \
+  -e PHP_CONTROLLER="/index.php" \
+  -e NGINX_ROOT="/srv/public" \
+  -v $PWD:/svr \
+  -w /svr \
+  -p 80:80 \
+  @@DOCKER_IMAGE@@</code>
+                    </div>
+                    <div class="example-box">
+                        <h4>🔹 Using Dockerfile</h4>
+                        <code>FROM @@DOCKER_IMAGE@@
+
+ENV PHP_CONTROLLER="/index.php"
+ENV NGINX_ROOT="/svr/public"
+WORKDIR /svr
+
+COPY . /svr
+
+EXPOSE 80</code>
+                    </div>
+                </div>
+
+                <h3 style="color: #283E51; margin-top: 30px; margin-bottom: 15px;">Production with SSL</h3>
+                <div class="examples-grid">
+                    <div class="example-box">
+                        <h4>🔹 Using docker run</h4>
+                        <code>docker run -d \
+  -e NGINX_SSL_CERT=/etc/ssl/cert.pem \
+  -e NGINX_SSL_CERT_KEY=/etc/ssl/key.pem \
+  -v /path/to/certs:/etc/ssl \
+  -v $PWD:/var/www/html \
+  -p 443:443 \
+  @@DOCKER_IMAGE@@</code>
+                    </div>
+                    <div class="example-box">
+                        <h4>🔹 Using Dockerfile</h4>
+                        <code>FROM @@DOCKER_IMAGE@@
+
+ENV NGINX_SSL_CERT=/etc/ssl/cert.pem
+ENV NGINX_SSL_CERT_KEY=/etc/ssl/key.pem
+
+COPY certs/ /etc/ssl/
+COPY . /var/www/html
+
+EXPOSE 443</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h2>🔍 Explore More</h2>
+                <p>View detailed PHP configuration and loaded extensions</p>
+                <a href="info.php" class="btn">View PHP Info</a>
+                <a href="https://opensource.byjg.com/docs/devops/docker-php" class="btn btn-secondary" target="_blank">Full Documentation</a>
+                <a href="https://github.com/byjg/docker-php" class="btn btn-secondary" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>PHP Docker Images ByJG | <a href="http://opensource.byjg.com" target="_blank">Open Source ByJG</a></p>
+            <p>Licensed under MIT | Built with ❤️ for the PHP Community</p>
+        </footer>
+    </div>
+</body>
+</html>
