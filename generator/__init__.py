@@ -134,6 +134,7 @@ class Generator:
         self.dockerfile_content["copy"] += "COPY assets/fpm-apache/conf/vhost.conf /etc/apache2/conf.d/\n"
         self.dockerfile_content["copy"] += "COPY assets/fpm-apache/conf/supervisord.conf /etc/supervisord.conf\n"
         self.dockerfile_content["copy"] += "COPY assets/script/exit-event-listener.py /exit-event-listener.py\n"
+        self.dockerfile_content["copy"] += "COPY assets/index.html /tmp/index.html\n"
         return self._build()
 
     def build_fpm_nginx(self):
@@ -145,6 +146,7 @@ class Generator:
         self.dockerfile_content["copy"] += "COPY assets/fpm-nginx/conf/supervisord.conf /etc/supervisord.conf\n"
         self.dockerfile_content["copy"] += "COPY assets/script/exit-event-listener.py /exit-event-listener.py\n"
         self.dockerfile_content["copy"] += "COPY assets/script/start-nginx.sh /start-nginx.sh\n"
+        self.dockerfile_content["copy"] += "COPY assets/index.html /tmp/index.html\n"
         self.dockerfile_content["run"] += "RUN " + self.parse_config("php-fpm-nginx.j2") + "\n"
         return self._build()
 
@@ -159,4 +161,5 @@ class Generator:
         self.dockerfile_content["copy"] += "COPY assets/fpm-nginx/conf/nginx.vh.default.conf /etc/nginx/http.d/default.conf\n"
         self.dockerfile_content["copy"] += "COPY assets/script/start-nginx.sh /start-nginx.sh\n"
         self.dockerfile_content["copy"] += "COPY assets/entrypoint.sh /\n"
+        self.dockerfile_content["copy"] += "COPY assets/index.html /tmp/index.html\n"
         return self._build()

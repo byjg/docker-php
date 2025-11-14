@@ -5,5 +5,6 @@ mkdir -p /run/apache2
 chmod a+x /start-fpm.sh
 (ln -s /usr/bin/python3 /usr/bin/python || true)
 echo "<?php phpinfo(); ?>" >> /var/www/localhost/htdocs/info.php
+cp /tmp/index.html /var/www/localhost/htdocs/index.html
 
 date > /etc/build-date
