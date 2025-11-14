@@ -4,7 +4,6 @@ ln -sf /dev/stdout /var/log/nginx/access.log
 ln -sf /dev/stderr /var/log/nginx/error.log
 mkdir -p /var/www/html
 echo "<?php phpinfo(); ?>" >> /var/www/html/info.php
-cp /tmp/index.html /var/www/html/index.html
 rm -rf /etc/nginx/conf.d
 mkdir -p /run/nginx
 

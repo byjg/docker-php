@@ -1,5 +1,4 @@
-Jinja2==3.1.4
+Jinja2==3.1.6
 jinja2-cli==0.8.2
-MarkupSafe==2.1.5
-argparse==1.4.0
-PyYAML==6.0.1
+MarkupSafe==3.0.3
+PyYAML==6.0.3

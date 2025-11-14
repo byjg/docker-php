@@ -135,7 +135,15 @@ class Generator:
         self.dockerfile_content["copy"] += "COPY assets/fpm-apache/conf/supervisord.conf /etc/supervisord.conf\n"
         self.dockerfile_content["copy"] += "COPY assets/script/exit-event-listener.py /exit-event-listener.py\n"
         self.dockerfile_content["copy"] += "COPY assets/index.html /tmp/index.html\n"
-        return self._build()
+        image = self._build()
+        # Process index.html with build-time variables
+        self.dockerfile_content["run"] += "RUN sed -i " + \
+            f"-e 's|@@DOCKER_IMAGE@@|{image}|g' " + \
+            f"-e 's|@@PHP_VERSION@@|{self.build_config['version']['major']}.{self.build_config['version']['minor']}|g' " + \
+            f"-e 's|@@PHP_VARIANT@@|php{self.build_config['version']['suffix']}|g' " + \
+            f"-e 's|@@BUILD_DATE@@|{self.build_date}|g' " + \
+            "/var/www/localhost/htdocs/index.html\n"
+        return image
 
     def build_fpm_nginx(self):
         self._banner("fpm-nginx")
@@ -146,9 +154,16 @@ class Generator:
         self.dockerfile_content["copy"] += "COPY assets/fpm-nginx/conf/supervisord.conf /etc/supervisord.conf\n"
         self.dockerfile_content["copy"] += "COPY assets/script/exit-event-listener.py /exit-event-listener.py\n"
         self.dockerfile_content["copy"] += "COPY assets/script/start-nginx.sh /start-nginx.sh\n"
-        self.dockerfile_content["copy"] += "COPY assets/index.html /tmp/index.html\n"
-        self.dockerfile_content["run"] += "RUN " + self.parse_config("php-fpm-nginx.j2") + "\n"
-        return self._build()
+        self.dockerfile_content["copy"] += "COPY assets/index.html /var/www/html/index.html\n"
+        image = self._build()
+        # Process index.html with build-time variables
+        self.dockerfile_content["run"] += "RUN sed -i " + \
+            f"-e 's|@@DOCKER_IMAGE@@|{image}|g' " + \
+            f"-e 's|@@PHP_VERSION@@|{self.build_config['version']['major']}.{self.build_config['version']['minor']}|g' " + \
+            f"-e 's|@@PHP_VARIANT@@|php{self.build_config['version']['suffix']}|g' " + \
+            f"-e 's|@@BUILD_DATE@@|{self.build_date}|g' " + \
+            "/var/www/html/index.html\n"
+        return image
 
     def build_nginx(self):
         self._banner("nginx")
