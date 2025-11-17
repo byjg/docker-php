@@ -7,6 +7,13 @@ echo "<?php phpinfo(); ?>" >> /var/www/html/info.php
 rm -rf /etc/nginx/conf.d
 mkdir -p /run/nginx
 
+# Hardening the IMAGE
+addgroup -S app && adduser -S app -G app
+mkdir -p /srv
+chown -R app:app /srv /var/log /tmp /run /entrypoint.sh
+chmod +x /entrypoint.sh
+
+# Hardening the RUNTIME
 chown -R app:app /etc/nginx /var/lib/nginx /run
 
 date > /etc/build-date
