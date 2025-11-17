@@ -214,7 +214,7 @@ While CVE-2023-27482 affects supervisor, our images avoid it entirely through ar
 
 ### Regular Updates
 
-Images with **Monthly Builds** tag in the [README](../README.md) are rebuilt every month to include:
+Images with **Monthly Builds** tag are rebuilt every month to include:
 
 - Latest PHP security patches
 - Alpine package security updates
