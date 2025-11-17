@@ -66,6 +66,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-base,
             byjg/php:${{ matrix.php-version }}-base-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Build-CLI:
     if: github.ref == 'refs/heads/master'
@@ -117,6 +119,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-cli,
             byjg/php:${{ matrix.php-version }}-cli-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Build-FPM:
     if: github.ref == 'refs/heads/master'
@@ -168,6 +172,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-fpm,
             byjg/php:${{ matrix.php-version }}-fpm-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Build-FPM-Apache:
     if: github.ref == 'refs/heads/master'
@@ -219,6 +225,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-fpm-apache,
             byjg/php:${{ matrix.php-version }}-fpm-apache-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Build-FPM-Nginx:
     if: github.ref == 'refs/heads/master'
@@ -270,6 +278,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-fpm-nginx,
             byjg/php:${{ matrix.php-version }}-fpm-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Build-Nginx:
     if: github.ref == 'refs/heads/master'
