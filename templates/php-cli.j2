@@ -1,7 +1,10 @@
 yes "" | composer global require {% for pkg in composer.packages %}{{ pkg }} {% endfor %}
-{% for link in composer.links -%}
-ln -s /root/.composer/vendor/bin/{{ link }} /usr/local/bin/
-{% endfor %}
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add {% for pkg in additionalPackagesCli %}{{ pkg }} {% endfor %}
+
+mv /root/.composer /home/app/.composer
+chown -R app:app /home/app/.composer
+{% for link in composer.links -%}
+ln -s /home/app/.composer/vendor/bin/{{ link }} /usr/local/bin/
+{% endfor %}
 
 date > /etc/build-date
