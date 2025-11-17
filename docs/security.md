@@ -349,5 +349,3 @@ If you discover a security issue:
 - [CVE-2023-27482 Details](https://nvd.nist.gov/vuln/detail/CVE-2023-27482)
 
 ---
-
-[Back to Documentation Index](../README.md#documentation-index)
