@@ -1,6 +1,7 @@
 # Install Packages
+apk --no-cache upgrade
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} upgrade
-apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add git bash php{{ version.suffix }} {% for ext in extensions %} php{{ version.suffix }}-{{ ext }}{% endfor %}
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add git bash vim php{{ version.suffix }} {% for ext in extensions %} php{{ version.suffix }}-{{ ext }}{% endfor %}
 (ln -s /usr/bin/php{{ version.suffix }} /usr/bin/php || true)
 (ln -s /usr/bin/pecl{{ version.suffix }} /usr/bin/pecl || true)
 mkdir -p /etc/php/conf.d
@@ -20,5 +21,11 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 mv composer.phar /usr/local/bin/composer
+
+# Hardening the IMAGE
+addgroup -S app && adduser -S app -G app
+mkdir -p /srv
+chown -R app:app /srv /etc/php /etc/php{{ version.suffix }} /var/log /tmp /run /entrypoint.sh
+chmod +x /entrypoint.sh
 
 date > /etc/build-date

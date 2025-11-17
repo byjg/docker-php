@@ -24,6 +24,18 @@ docker run -d -p 9000:9000 byjg/php:8.3-fpm
 The `*-fpm` images require an external web server (like Nginx or Apache) to proxy requests to PHP-FPM. For all-in-one solutions, use `*-fpm-nginx` or `*-fpm-apache` variants.
 :::
 
+### Security Context
+
+All FPM processes run as the `app` user (non-root) for security. Ensure your application files have appropriate permissions:
+
+```bash
+# Set proper ownership before mounting
+chown -R 1000:1000 /path/to/your/app
+
+# Run with volume
+docker run -d -p 9000:9000 -v /path/to/your/app:/srv byjg/php:8.3-fpm
+```
+
 ## The `*-fpm-nginx` Images
 
 The FPM-NGINX images provide a complete LEMP stack (Linux + Nginx + MySQL + PHP) without MySQL bundled.
@@ -45,6 +57,16 @@ docker run -d \
 ```
 
 By default, Nginx serves all files from `/var/www/html` (configurable via `NGINX_ROOT`).
+
+:::tip Permission Tips
+The container runs as the `app` user. Ensure your files are readable by this user:
+```bash
+# Set proper permissions before mounting
+chmod -R 755 /path/to/your/app
+# Or set ownership
+chown -R 1000:1000 /path/to/your/app
+```
+:::
 
 ### Configuration
 
@@ -142,6 +164,16 @@ docker run -d \
 ```
 
 By default, Apache serves all files from `/srv`.
+
+:::tip Permission Tips
+The container runs as the `app` user. Ensure your files are readable by this user:
+```bash
+# Set proper permissions before mounting
+chmod -R 755 /path/to/your/app
+# Or set ownership
+chown -R 1000:1000 /path/to/your/app
+```
+:::
 
 ### Configuration
 

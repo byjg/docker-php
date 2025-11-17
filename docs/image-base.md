@@ -29,6 +29,9 @@ xsl, yaml, zip, zlib
 ### Additional Tools
 
 - **[Composer](https://getcomposer.org/)** - Latest version included
+- **vim** - Text editor for file editing within containers
+- **git** - Version control system
+- **bash** - Enhanced shell
 
 ## Usage
 
@@ -49,6 +52,51 @@ docker run -v $PWD:/workdir -w /workdir byjg/php:8.3-base php script.php
 | Port | Purpose |
 |------|---------|
 | 9001 | XDebug  |
+
+## Security
+
+### Non-Root User
+
+All images run as a non-root user (`app`) for enhanced security. This follows container security best practices by limiting potential damage from container breakouts.
+
+**User Details:**
+- **Username:** `app`
+- **Group:** `app`
+- **Home Directory:** `/srv`
+
+### Permission Considerations
+
+When mounting volumes, ensure the non-root user has appropriate permissions:
+
+```bash
+# Option 1: Set ownership on host
+chown -R 1000:1000 /path/to/your/project
+
+# Option 2: Run container with user option (less secure)
+docker run --user root byjg/php:8.3-base
+
+# Option 3: Mount with appropriate permissions
+docker run -v $PWD:/srv:rw byjg/php:8.3-base
+```
+
+:::warning
+Running as root (`--user root`) defeats the security benefits of non-root containers. Only use this for debugging or when absolutely necessary.
+:::
+
+### Installing Additional Packages
+
+If you need to install additional packages in a derived Dockerfile, temporarily switch to root:
+
+```dockerfile
+FROM byjg/php:8.3-base
+
+USER root
+RUN apk add --no-cache additional-package
+USER app
+
+# Your application code
+COPY --chown=app:app . /srv
+```
 
 ## Customization
 

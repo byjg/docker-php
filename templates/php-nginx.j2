@@ -7,4 +7,6 @@ echo "<?php phpinfo(); ?>" >> /var/www/html/info.php
 rm -rf /etc/nginx/conf.d
 mkdir -p /run/nginx
 
+chown -R app:app /etc/nginx /var/lib/nginx /run
+
 date > /etc/build-date

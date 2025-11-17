@@ -1,4 +1,4 @@
-FROM byjg/php:8.3-fpm
+FROM byjg/php:8.4-fpm
 
 COPY php /srv
 

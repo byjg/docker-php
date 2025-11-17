@@ -1,4 +1,6 @@
 apk add --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} php{{ version.suffix }}-fpm
 (ln -s $(which php-fpm{{ version.suffix }}) /usr/bin/php-fpm || true)
 
+chown -R app:app /srv /etc/php /etc/php{{ version.suffix }} /var/log /tmp /entrypoint.sh /run
+
 date > /etc/build-date

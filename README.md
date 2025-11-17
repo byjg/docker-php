@@ -17,6 +17,7 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 - **Pre-installed extensions**: 45+ PHP extensions included in all images
 - **Development tools**: Composer, PHPUnit, PHP Code Sniffer, and more in CLI images
 - **Production-ready**: Optimized for both development and production environments
+- **Security-hardened**: Runs as non-root user (`app`) for enhanced security
 
 ## Documentation Index
 
@@ -61,9 +62,9 @@ Five different images for each PHP Version:
 | Version | Latest Version | Monthly Builds | Alpine Version |
 |:-------:|:--------------:|:--------------:|:--------------:|
 | **8.5** |  **8.5.0RC2**  |    **yes**     |    **edge**    |
-| **8.4** |   **8.4.13**   |    **yes**     |    **edge**    |
-| **8.3** |   **8.3.26**   |    **yes**     |    **edge**    |
-| **8.2** |  **8.2.29r2**  |    **yes**     |    **edge**    |
+| **8.4** |   **8.4.13**   |    **yes**     |   **3.22**     |
+| **8.3** |   **8.3.26**   |    **yes**     |   **3.22**     |
+| **8.2** |  **8.2.29r2**  |    **yes**     |   **3.22**     |
 |   8.1   |     8.1.31     |       -        |      3.19      |
 |   8.0   |     8.0.30     |       -        |      3.16      |
 |   7.4   |     7.4.33     |       -        |      3.15      |
@@ -78,7 +79,7 @@ PHP versions with monthly builds receive regular updates. Legacy versions (witho
 :::
 
 :::warning
-Images using Alpine `edge` are production-ready but may receive package updates. Pin to a specific YYYY.MM tag for guaranteed stability.
+Images using Alpine `edge` or specific versions like `3.22` are production-ready but may receive package updates. Pin to a specific YYYY.MM tag for guaranteed stability.
 :::
 
 ## Use Cases

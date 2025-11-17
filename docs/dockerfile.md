@@ -13,8 +13,8 @@ You can extend the ByJG PHP images to create custom images for your application.
 ```dockerfile title="Dockerfile"
 FROM byjg/php:8.3-cli
 
-# Copy your application
-COPY . /app
+# Copy your application with proper ownership
+COPY --chown=app:app . /app
 WORKDIR /app
 
 # Install Composer dependencies
@@ -23,6 +23,10 @@ RUN composer install --no-dev --optimize-autoloader
 # Run your application
 CMD ["php", "app.php"]
 ```
+
+:::tip Non-Root User
+The image runs as the `app` user by default. Use `--chown=app:app` when copying files to ensure proper permissions.
+:::
 
 ### For Web Applications (Nginx)
 
@@ -33,8 +37,8 @@ FROM byjg/php:8.3-fpm-nginx
 ENV NGINX_ROOT=/var/www/html
 ENV PHP_CONTROLLER=/index.php
 
-# Copy application files
-COPY . /var/www/html
+# Copy application files with proper ownership
+COPY --chown=app:app . /var/www/html
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
@@ -47,8 +51,8 @@ EXPOSE 80
 ```dockerfile title="Dockerfile"
 FROM byjg/php:8.3-fpm-apache
 
-# Copy application files
-COPY . /srv
+# Copy application files with proper ownership
+COPY --chown=app:app . /srv
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
@@ -57,6 +61,35 @@ EXPOSE 80
 ```
 
 ## Advanced Configuration
+
+### Installing Additional Packages
+
+When you need to install system packages, temporarily switch to root user:
+
+```dockerfile title="Dockerfile"
+FROM byjg/php:8.3-cli
+
+# Switch to root to install packages
+USER root
+RUN apk add --no-cache imagemagick imagemagick-dev
+
+# Install PHP extensions if needed
+RUN pecl install imagick && \
+    echo "extension=imagick.so" > /etc/php/conf.d/imagick.ini
+
+# Switch back to app user
+USER app
+
+# Copy application with proper ownership
+COPY --chown=app:app . /app
+WORKDIR /app
+
+RUN composer install --no-dev --optimize-autoloader
+```
+
+:::warning
+Always switch back to the `app` user after installing packages. Running your application as root negates security benefits.
+:::
 
 ### Full Configuration Example
 
@@ -120,8 +153,8 @@ ENV PHP_CONTROLLER=/index.php
 # ENV DISABLEMODULE_mcrypt=1
 # ENV DISABLEMODULE_mongodb=1
 
-# Copy application
-COPY . /app
+# Copy application with proper ownership
+COPY --chown=app:app . /app
 WORKDIR /app
 
 # Install dependencies
@@ -141,16 +174,16 @@ For production images, use multi-stage builds to keep image sizes small:
 FROM byjg/php:8.3-cli AS builder
 
 WORKDIR /app
-COPY composer.json composer.lock ./
+COPY --chown=app:app composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-COPY . .
+COPY --chown=app:app . .
 
 # Production stage
 FROM byjg/php:8.3-fpm-nginx
 
-# Copy only production files
-COPY --from=builder /app /var/www/html
+# Copy only production files with proper ownership
+COPY --from=builder --chown=app:app /app /var/www/html
 
 # Configure for production
 ENV PHP_CONTROLLER=/index.php

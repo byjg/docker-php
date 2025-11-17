@@ -7,4 +7,7 @@ chmod a+x /start-fpm.sh
 echo "<?php phpinfo(); ?>" >> /var/www/localhost/htdocs/info.php
 mv /tmp/index.html /var/www/localhost/htdocs/index.html
 
+mkdir -p /var/log/apache2
+chown -R app:app /var/www /var/log /run/apache2
+
 date > /etc/build-date

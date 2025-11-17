@@ -69,14 +69,16 @@ class Generator:
         # Write FROM directive to Dockerfile and return a dummy container id
         self.dockerfile_content["from"] += f"FROM {image}\n"
 
-    def get_dockerfile_content(self):
+    def get_dockerfile_content(self, non_root=False):
         return self.dockerfile_content["header"] + \
                self.dockerfile_content["from"] + \
+               "USER root\n" + \
                self.dockerfile_content["env"] + \
                self.dockerfile_content["workdir"] + \
                self.dockerfile_content["copy"] + \
                self.dockerfile_content["run"] + \
                self.dockerfile_content["cmd"] + \
+               "USER app\n" + \
                self.dockerfile_content["entrypoint"]
 
     def image_name(self):
