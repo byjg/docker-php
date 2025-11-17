@@ -321,6 +321,8 @@ jobs:
             byjg/php:${{ matrix.php-version }}-nginx,
             byjg/php:${{ matrix.php-version }}-nginx-${{ env.YEAR }}.${{ env.MONTH }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
   Documentation:
     if: github.ref == 'refs/heads/master'
