@@ -1,3 +1,7 @@
+---
+tags: [docker, php]
+---
+
 # PHP Docker Images ByJG
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
@@ -22,15 +26,15 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 
 ## Documentation Index
 
-- [Base Image](docs/image-base.md) - Minimal image with 45+ extensions
-- [CLI Image](docs/image-cli.md) - Command-line tools for development
-- [FPM Images](docs/image-fpm.md) - PHP-FPM, Nginx, and Apache variants
-- [Security Features](docs/security.md) - SBOM, Provenance, and Alpine version strategy
-- [Environment Variables](docs/environment.md) - Configuration options
-- [Building Custom Images](docs/building.md) - Create your own images
-- [IDE Integration](docs/ide.md) - Using with your IDE
-- [Dockerfile Reference](docs/dockerfile.md) - Dockerfile details
-- [Tagging Convention](docs/tagging.md) - Understanding image tags
+- [Base Image](image-base) - Minimal image with 45+ extensions
+- [CLI Image](image-cli) - Command-line tools for development
+- [FPM Images](image-fpm) - PHP-FPM, Nginx, and Apache variants
+- [Security Features](security) - SBOM, Provenance, and Alpine version strategy
+- [Environment Variables](environment) - Configuration options
+- [Building Custom Images](building) - Create your own images
+- [IDE Integration](ide) - Using with your IDE
+- [Dockerfile Reference](dockerfile) - Dockerfile details
+- [Tagging Convention](tagging) - Understanding image tags
 
 **See full documentation at: [https://opensource.byjg.com/docs/devops/docker-php](https://opensource.byjg.com/docs/devops/docker-php)**
 
@@ -81,7 +85,7 @@ PHP versions with monthly builds receive regular updates. Legacy versions (witho
 :::
 
 :::warning
-**Why Alpine edge?** PHP 8.2-8.5 use Alpine edge to avoid critical unpatched vulnerabilities in Alpine 3.22, including CVE-2023-27482 (supervisor) and other security issues. Monthly tagged releases (YYYY.MM) provide stability checkpoints. See [Security Features](docs/security.md) for details.
+**Why Alpine edge?** PHP 8.2-8.5 use Alpine edge to avoid critical unpatched vulnerabilities in Alpine 3.22, including CVE-2023-27482 (supervisor) and other security issues. Monthly tagged releases (YYYY.MM) provide stability checkpoints. See [Security Features](security) for details.
 :::
 
 :::tip
@@ -98,7 +102,7 @@ These images are ready to use in:
 - **Development Environment** - Fast setup with all tools included
 - **Production Environment** - Optimized, lightweight containers
 - **CI/CD Pipelines** - Travis-CI, Circle-CI, Jenkins, Bitbucket Pipelines, GitHub Actions
-- **IDE Integration** - Full PHP support without local installation (see [IDE Integration](docs/ide.md))
+- **IDE Integration** - Full PHP support without local installation (see [IDE Integration](ide))
 
 ## Image Sizes
 
