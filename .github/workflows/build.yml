@@ -26,7 +26,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -34,29 +33,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-base
 
       - name: Build Docker image base
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-base
@@ -79,7 +78,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -87,29 +85,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-cli
 
       - name: Build Docker image cli
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-cli
@@ -132,7 +130,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -140,29 +137,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-fpm
 
       - name: Build Docker image fpm
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm
@@ -185,7 +182,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -193,29 +189,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-fpm-apache
 
       - name: Build Docker image fpm-apache
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-apache
@@ -238,7 +234,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -246,29 +241,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-fpm-nginx
 
       - name: Build Docker image fpm-nginx
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-fpm-nginx
@@ -291,7 +286,6 @@ jobs:
           - "8.5"
           - "8.4"
           - "8.3"
-          - "8.2"
 
     steps:
       - name: Get current date
@@ -299,29 +293,29 @@ jobs:
           echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
           echo "MONTH=$(date +'%m')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install requirements
         run: pip install -r requirements.txt
 
       - name: Log into registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Generate Dockerfiles
         run: python3 ./build.py ${{ matrix.php-version }} --build-nginx
 
       - name: Build Docker image nginx
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile-php-${{ matrix.php-version }}-nginx
