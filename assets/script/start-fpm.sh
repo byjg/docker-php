@@ -30,14 +30,11 @@ function setEnvironmentVariable() {
     fi
 
     ${VERBOSE_MODE} && echo "$1 = '$2'"
-    # Check whether variable already exists
-    if grep -q $1 "$FPMENV"; then
-        # Reset variable
-        sed -i "s~^env\[$1\].*~env[$1] = $2~g" "$FPMENV"
-    else
-        # Add variable
-        echo "env[$1] = $2" >> "$FPMENV"
-    fi
+    # Escape double quotes in value and wrap in double quotes so special
+    # characters like '!' don't cause PHP-FPM's INI parser to fail
+    local escaped_value="${2//\"/\\\"}"
+    sed -i "/^env\[$1\]/d" "$FPMENV"
+    echo "env[$1] = \"${escaped_value}\"" >> "$FPMENV"
 }
 
 # Grep for variables that look like docker set them (_PORT_)
