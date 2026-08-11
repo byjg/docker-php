@@ -18,7 +18,7 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 
 - **Lightweight**: Based on Alpine Linux, with optimized image sizes (~135-154MB)
 - **Multi-architecture support**: Runs on amd64 (x86_64) and arm64 (Raspberry PI, Graviton)
-- **Multiple PHP versions**: From PHP 5.6 to the latest PHP 8.4
+- **Multiple PHP versions**: From PHP 5.6 to the latest PHP 8.6
 - **Variety of configurations**: Base, CLI, FPM, FPM-Nginx, and FPM-Apache variants
 - **Pre-installed extensions**: 45+ PHP extensions included in all images
 - **Development tools**: Composer, PHPUnit, PHP Code Sniffer, and more in CLI images
@@ -66,27 +66,32 @@ Five different images for each PHP Version:
 
 ## Supported PHP Versions
 
-| Version | Latest Version | Monthly Builds | Alpine Version |
-|:-------:|:--------------:|:--------------:|:--------------:|
-| **8.5** |   **8.5.7**    |    **yes**     |    **edge**    |
-| **8.4** |   **8.4.22**   |    **yes**     |    **edge**    |
-| **8.3** |   **8.3.31**   |    **yes**     |    **edge**    |
-|   8.2   |     8.2.31     |       -        |      3.22      |
-|   8.1   |     8.1.31     |       -        |      3.19      |
-|   8.0   |     8.0.30     |       -        |      3.16      |
-|   7.4   |     7.4.33     |       -        |      3.15      |
-|   7.3   |     7.3.33     |       -        |      3.12      |
-|   7.2   |     7.2.33     |       -        |      3.9       |
-|   7.1   |     7.1.33     |       -        |      3.7       |
-|   7.0   |     7.0.33     |       -        |      3.5       |
-|   5.6   |     5.6.40     |       -        |      3.8       |
+|  Version   |  Latest Version  | Monthly Builds |  Alpine Version  |
+|:----------:|:----------------:|:--------------:|:----------------:|
+| **8.6** ⚠ | **8.6.0alpha3**  |    **yes**     | **edge/testing** |
+|  **8.5**   |    **8.5.9**     |    **yes**     |     **edge**     |
+|  **8.4**   |    **8.4.24**    |    **yes**     |     **edge**     |
+|  **8.3**   |    **8.3.33**    |    **yes**     |     **edge**     |
+|    8.2     |      8.2.31      |       -        |       3.22       |
+|    8.1     |      8.1.31      |       -        |       3.19       |
+|    8.0     |      8.0.30      |       -        |       3.16       |
+|    7.4     |      7.4.33      |       -        |       3.15       |
+|    7.3     |      7.3.33      |       -        |       3.12       |
+|    7.2     |      7.2.33      |       -        |       3.9        |
+|    7.1     |      7.1.33      |       -        |       3.7        |
+|    7.0     |      7.0.33      |       -        |       3.5        |
+|    5.6     |      5.6.40      |       -        |       3.8        |
+
+⚠ PHP 8.6 is a **pre-release** (alpha). The images are meant for early testing only and do not
+ship the `redis`, `memcached` and `yaml` extensions yet, since Alpine has not published them for
+PHP 8.6.
 
 :::info
 PHP versions with monthly builds receive regular updates. Legacy versions (without monthly builds) are no longer supported.
 :::
 
 :::warning
-**Why Alpine edge?** PHP 8.2-8.5 use Alpine edge to avoid critical unpatched vulnerabilities in Alpine 3.22, including CVE-2023-27482 (supervisor) and other security issues. Monthly tagged releases (YYYY.MM) provide stability checkpoints. See [Security Features](docs/security.md) for details.
+**Why Alpine edge?** PHP 8.2-8.6 use Alpine edge to avoid critical unpatched vulnerabilities in Alpine 3.22, including CVE-2023-27482 (supervisor) and other security issues. Monthly tagged releases (YYYY.MM) provide stability checkpoints. See [Security Features](docs/security.md) for details.
 :::
 
 :::tip

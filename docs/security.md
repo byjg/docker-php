@@ -98,13 +98,14 @@ Our build process follows [SLSA](https://slsa.dev/) (Supply-chain Levels for Sof
 
 |  PHP Version  | Alpine Version | Rationale                                              |
 |:-------------:|:--------------:|--------------------------------------------------------|
-|      8.5      |      edge      | Required for PHP 8.5 (not yet in stable)               |
+|      8.6      |  edge/testing  | Required for PHP 8.6 (pre-release, only in testing)    |
+|      8.5      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 |      8.4      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 |      8.3      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 |      8.2      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 | 8.1 and older |    Various     | Pinned to last compatible Alpine versions              |
 
-### Why Edge for PHP 8.2, 8.3, and 8.4?
+### Why Edge for PHP 8.2 to 8.5?
 
 #### Alpine 3.22 Critical Vulnerabilities
 
@@ -122,7 +123,7 @@ Alpine 3.22 contains **critical unpatched vulnerabilities** that affect producti
 
 #### Our Security Decision
 
-To prioritize security, we use **Alpine edge** for actively maintained PHP versions (8.2, 8.3, 8.4):
+To prioritize security, we use **Alpine edge** for actively maintained PHP versions (8.2 to 8.5):
 
 **Advantages:**
 - ✅ **Latest security patches** applied immediately
@@ -155,21 +156,18 @@ To balance security with stability:
    docker pull byjg/php:8.4-base-2025.11
    ```
 
-### Why Edge for PHP 8.5?
+### Why Edge/Testing for PHP 8.6?
 
-PHP 8.5 is a bleeding-edge version that requires the latest packages and dependencies. Alpine Linux `edge` is:
+PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_alphaX` in the `edge/testing`
+repository, which is the only Alpine repository carrying PHP 8.6 packages.
 
-- The **only** Alpine branch with PHP 8.5 packages
-- Updated continuously with latest package versions
-- Necessary for testing and development with PHP 8.5
-- Marked as **8.5** in tags to clearly indicate its experimental status
+**Do not use PHP 8.6 in production** until it reaches a stable release. These images exist for:
 
-**Production Use**: PHP 8.5 images are intended for:
-- Development and testing environments
 - Early adoption and compatibility testing
-- Preview of upcoming PHP features
+- Previewing upcoming PHP features
 
-**Not recommended for production** until PHP 8.5 reaches stable release.
+Because PHP 8.6 is only available in `edge/testing`, a few extensions are **not** bundled in the
+8.6 images yet: `redis`, `memcached` and `yaml`. They are added as soon as Alpine publishes them.
 
 ### Legacy PHP Versions (8.1 and older)
 
@@ -280,7 +278,7 @@ If you scan both Alpine 3.22 and edge-based images, you may observe:
 3. **Scan before deployment** using your preferred security tool
 4. **Monitor security advisories** for PHP and Alpine
 5. **Update monthly tags regularly** to get security patches
-6. **Avoid PHP 8.5** (edge is acceptable for 8.2-8.4, but 8.5 itself is experimental)
+6. **Avoid PHP 8.6** (edge is acceptable for 8.2-8.5, but 8.6 itself is still a pre-release)
 
 ### For CI/CD
 
