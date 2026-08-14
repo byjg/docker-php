@@ -68,7 +68,7 @@ Five different images for each PHP Version:
 
 |  Version   |  Latest Version  | Monthly Builds |  Alpine Version  |
 |:----------:|:----------------:|:--------------:|:----------------:|
-| **8.6** ⚠ | **8.6.0alpha3**  |    **yes**     | **edge/testing** |
+| **8.6** ⚠ | **8.6.0beta1**   |    **yes**     | **edge/testing** |
 |  **8.5**   |    **8.5.9**     |    **yes**     |     **edge**     |
 |  **8.4**   |    **8.4.24**    |    **yes**     |     **edge**     |
 |  **8.3**   |    **8.3.33**    |    **yes**     |     **edge**     |
@@ -82,7 +82,7 @@ Five different images for each PHP Version:
 |    7.0     |      7.0.33      |       -        |       3.5        |
 |    5.6     |      5.6.40      |       -        |       3.8        |
 
-⚠ PHP 8.6 is a **pre-release** (alpha). The images are meant for early testing only and do not
+⚠ PHP 8.6 is a **pre-release** (beta). The images are meant for early testing only and do not
 ship the `redis`, `memcached` and `yaml` extensions yet, since Alpine has not published them for
 PHP 8.6.
 

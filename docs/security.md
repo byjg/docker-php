@@ -158,7 +158,7 @@ To balance security with stability:
 
 ### Why Edge/Testing for PHP 8.6?
 
-PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_alphaX` in the `edge/testing`
+PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_betaX` in the `edge/testing`
 repository, which is the only Alpine repository carrying PHP 8.6 packages.
 
 **Do not use PHP 8.6 in production** until it reaches a stable release. These images exist for:
