@@ -44,7 +44,7 @@ extensions:
 #  - pecl-yaml
   - phar
   - posix
-#  - redis
+  - redis
   - session
   - shmop
   - simplexml
