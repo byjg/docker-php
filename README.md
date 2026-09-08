@@ -68,9 +68,9 @@ Five different images for each PHP Version:
 
 |  Version   |  Latest Version  | Monthly Builds |  Alpine Version  |
 |:----------:|:----------------:|:--------------:|:----------------:|
-| **8.6** ⚠ | **8.6.0beta1**   |    **yes**     | **edge/testing** |
-|  **8.5**   |    **8.5.9**     |    **yes**     |     **edge**     |
-|  **8.4**   |    **8.4.24**    |    **yes**     |     **edge**     |
+| **8.6** ⚠ | **8.6.0beta2**   |    **yes**     | **edge/testing** |
+|  **8.5**   |    **8.5.10**    |    **yes**     |     **edge**     |
+|  **8.4**   |    **8.4.25**    |    **yes**     |     **edge**     |
 |  **8.3**   |    **8.3.33**    |    **yes**     |     **edge**     |
 |    8.2     |      8.2.31      |       -        |       3.22       |
 |    8.1     |      8.1.31      |       -        |       3.19       |
