@@ -36,8 +36,7 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-#  - pecl-imagick
-  - pecl-mcrypt
+# imagick: not bundled. Install when needed: apk add php82-pecl-imagick
   - pecl-memcached
   - pecl-mongodb
   - pecl-xdebug

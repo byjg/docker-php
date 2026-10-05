@@ -141,9 +141,18 @@ pecl:
   - name: xdebug                    # required
     version: 2.5.5                  # optional - if not set, get the latest
     install: False                  # optional - do not call pecl install
+    enable: False                   # optional - do not create the .ini file; the extension
+                                    #            is left in the image but not loaded
     zend: True                      # optional - if true, add as zend extension
     config:                         # optional - if set, add extra config to php.ini 
       - xdebug.remote_port=9001     #            for this extension
+    source:                         # optional - build from a git repository instead of
+      repository: https://...git    #            downloading the release from pecl.php.net
+      reference: (COMMIT/TAG)       #            optional - if not set, use the default branch
+    buildPackages:                  # optional - temporary packages needed only to build
+      - (NAME)                      #            this extension
+    packages:                       # optional - permanent packages this extension needs
+      - (NAME)                      #            at runtime
 
 # Composer packages to be installed
 composer:
@@ -157,12 +166,14 @@ composer:
     - phpbcbf
     - phpmd
 
-# Temporary packages to be used to build the PECL packages 
+# Temporary packages to be used to build the PECL packages (generic; packages needed
+# by a single extension go in `pecl[].buildPackages`)
 peclBuildPackages:
   - autoconf
   - build-base
 
-# Permanent packages to be installed in the image
+# Permanent packages to be installed in the image (generic; packages needed
+# by a single extension go in `pecl[].packages`)
 additionalPackages:
   - libssl1.1
   - libcrypto1.1

@@ -17,7 +17,7 @@ All base images come with over 45 PHP extensions pre-installed:
 
 ```
 bcmath, Core, ctype, curl, date, dba, dom, exif, fileinfo, filter, ftp, gd, gettext,
-hash, iconv, igbinary, intl, json, libxml, mbstring, mcrypt, memcached, mongodb,
+hash, iconv, igbinary, intl, json, libxml, mbstring, memcached, mongodb,
 mysqli, mysqlnd, openssl, pcntl, pcre, PDO, pdo_dblib, pdo_mysql, pdo_pgsql,
 pdo_sqlite, Phar, posix, readline, redis, Reflection, session, shmop, SimpleXML,
 soap, sockets, SPL, sqlite3, standard, tokenizer, xdebug, xml, xmlreader, xmlwriter,

@@ -68,10 +68,10 @@ Five different images for each PHP Version:
 
 |  Version   |  Latest Version  | Monthly Builds |  Alpine Version  |
 |:----------:|:----------------:|:--------------:|:----------------:|
-| **8.6** ⚠ | **8.6.0beta2**   |    **yes**     | **edge/testing** |
-|  **8.5**   |    **8.5.10**    |    **yes**     |     **edge**     |
-|  **8.4**   |    **8.4.25**    |    **yes**     |     **edge**     |
-|  **8.3**   |    **8.3.33**    |    **yes**     |     **edge**     |
+| **8.6** ⚠ | **8.6.0rc2**   |    **yes**     | **edge/testing** |
+|  **8.5**   |    **8.5.11**    |    **yes**     |     **edge**     |
+|  **8.4**   |    **8.4.26**    |    **yes**     |     **edge**     |
+|  **8.3**   |    **8.3.35**    |    **yes**     |     **edge**     |
 |    8.2     |      8.2.31      |       -        |       3.22       |
 |    8.1     |      8.1.31      |       -        |       3.19       |
 |    8.0     |      8.0.30      |       -        |       3.16       |
@@ -82,9 +82,10 @@ Five different images for each PHP Version:
 |    7.0     |      7.0.33      |       -        |       3.5        |
 |    5.6     |      5.6.40      |       -        |       3.8        |
 
-⚠ PHP 8.6 is a **pre-release** (beta). The images are meant for early testing only and do not
-ship the `redis`, `memcached` and `yaml` extensions yet, since Alpine has not published them for
-PHP 8.6.
+⚠ PHP 8.6 is a **pre-release** (release candidate). The images are meant for early testing only. Alpine has not
+published `imagick`, `memcached` and `yaml` for PHP 8.6 yet, so these three are built from their
+upstream git repositories until it does. `imagick` is shipped disabled; see
+[Imagick on PHP 8.6](docs/dockerfile.md#imagick-on-php-86).
 
 :::info
 PHP versions with monthly builds receive regular updates. Legacy versions (without monthly builds) are no longer supported.
