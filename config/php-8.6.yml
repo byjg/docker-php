@@ -28,7 +28,7 @@ extensions:
   - mysqli
   - mysqlnd
   - openssl
-#  - opcache
+# opcache: built into the PHP binary since 8.5, no package needed
   - pcntl
   - pdo
   - pdo_dblib
@@ -36,8 +36,7 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-#  - pecl-imagick
-#  - pecl-mcrypt
+# imagick: see the `pecl` section below (compiled but not enabled)
 #  - pecl-memcached
   - pecl-mongodb
   - pecl-xdebug
@@ -65,6 +64,35 @@ pecl:
     zend: True
     config:
       - xdebug.remote_port=9001
+  # The extensions below have no Alpine package for PHP 8.6 yet, and their latest pecl.php.net
+  # releases do not build on PHP 8.6 (XtOffsetOf / zval_dtor removed); the fix is only in git.
+  # Temporary: remove each entry and enable the matching `pecl-*` in `extensions` once Alpine
+  # publishes php86-pecl-imagick, php86-pecl-memcached and php86-pecl-yaml.
+  # imagick is only compiled, not enabled: the ImageMagick runtime is too large to ship by default.
+  # To use it: apk add imagemagick && echo "extension=imagick.so" > /etc/php86/conf.d/imagick.ini
+  - name: imagick
+    enable: False
+    source:
+      repository: https://github.com/Imagick/imagick.git
+      reference: 55ed2e9fda264395636a2e27e51f31673f5566ab
+    buildPackages:
+      - imagemagick-dev
+  - name: memcached
+    source:
+      repository: https://github.com/php-memcached-dev/php-memcached.git
+      reference: 0b52d3657140750fa0eddd20cdbfc6edc8fbdadd
+    buildPackages:
+      - libmemcached-dev
+    packages:
+      - libmemcached-libs
+  - name: yaml
+    source:
+      repository: https://github.com/php/pecl-file_formats-yaml.git
+      reference: a7a3b8680b8fbf0895fd63371a0ffc1305b1a5b8
+    buildPackages:
+      - yaml-dev
+    packages:
+      - yaml
 
 composer:
   packages:

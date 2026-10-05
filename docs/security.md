@@ -158,7 +158,7 @@ To balance security with stability:
 
 ### Why Edge/Testing for PHP 8.6?
 
-PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_betaX` in the `edge/testing`
+PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_rcX` in the `edge/testing`
 repository, which is the only Alpine repository carrying PHP 8.6 packages.
 
 **Do not use PHP 8.6 in production** until it reaches a stable release. These images exist for:
@@ -166,8 +166,11 @@ repository, which is the only Alpine repository carrying PHP 8.6 packages.
 - Early adoption and compatibility testing
 - Previewing upcoming PHP features
 
-Because PHP 8.6 is only available in `edge/testing`, a few extensions are **not** bundled in the
-8.6 images yet: `redis`, `memcached` and `yaml`. They are added as soon as Alpine publishes them.
+Because PHP 8.6 is only available in `edge/testing`, Alpine has not published every extension
+for it yet. `imagick`, `memcached` and `yaml` are built from a pinned commit of their upstream
+git repositories (see `pecl[].source` in `config/php-8.6.yml`), since their latest PECL releases
+do not compile on PHP 8.6. They are replaced by the Alpine packages as soon as those are published.
+`imagick` is compiled but not enabled; see [Imagick on PHP 8.6](dockerfile.md#imagick-on-php-86).
 
 ### Legacy PHP Versions (8.1 and older)
 

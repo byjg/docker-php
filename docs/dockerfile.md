@@ -71,11 +71,7 @@ FROM byjg/php:8.3-cli
 
 # Switch to root to install packages
 USER root
-RUN apk add --no-cache imagemagick imagemagick-dev
-
-# Install PHP extensions if needed
-RUN pecl install imagick && \
-    echo "extension=imagick.so" > /etc/php/conf.d/imagick.ini
+RUN apk add --no-cache php83-pecl-imagick
 
 # Switch back to app user
 USER app
@@ -90,6 +86,21 @@ RUN composer install --no-dev --optimize-autoloader
 :::warning
 Always switch back to the `app` user after installing packages. Running your application as root negates security benefits.
 :::
+
+#### Imagick on PHP 8.6
+
+The PHP 8.6 images already contain a compiled `imagick.so`, but it is not enabled and the
+ImageMagick runtime is not installed. There is nothing to compile; install the runtime and
+enable the extension:
+
+```dockerfile title="Dockerfile"
+FROM byjg/php:8.6-cli
+
+USER root
+RUN apk add --no-cache imagemagick && \
+    echo "extension=imagick.so" > /etc/php86/conf.d/imagick.ini
+USER app
+```
 
 ### Full Configuration Example
 
@@ -150,7 +161,6 @@ ENV PHP_CONTROLLER=/index.php
 # ENV DISABLEMODULE_msgpack=1
 # ENV DISABLEMODULE_xdebug=1
 # ENV DISABLEMODULE_yaml=1
-# ENV DISABLEMODULE_mcrypt=1
 # ENV DISABLEMODULE_mongodb=1
 
 # Copy application with proper ownership

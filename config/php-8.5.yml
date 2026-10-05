@@ -28,7 +28,7 @@ extensions:
   - mysqli
   - mysqlnd
   - openssl
-#  - opcache
+# opcache: built into the PHP binary since 8.5, no package needed
   - pcntl
   - pdo
   - pdo_dblib
@@ -36,8 +36,7 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-#  - pecl-imagick
-#  - pecl-mcrypt
+# imagick: not bundled. Install when needed: apk add php85-pecl-imagick
   - pecl-memcached
   - pecl-mongodb
   - pecl-xdebug
