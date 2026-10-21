@@ -58,7 +58,7 @@ extensions:
   - zip
   - zlib
 
-pecl:
+pie:
   - name: xdebug
     install: False
     zend: True
@@ -76,7 +76,7 @@ composer:
     - phpbcbf
     - phpmd
 
-peclBuildPackages:
+pieBuildPackages:
   - autoconf
   - build-base
   - cyrus-sasl-dev
@@ -84,6 +84,7 @@ peclBuildPackages:
   - libtool
   - make
   - openssl-dev
+  - pkgconf
   - zlib-dev
 
 additionalPackages:

@@ -167,9 +167,9 @@ repository, which is the only Alpine repository carrying PHP 8.6 packages.
 - Previewing upcoming PHP features
 
 Because PHP 8.6 is only available in `edge/testing`, Alpine has not published every extension
-for it yet. `imagick`, `memcached` and `yaml` are built from a pinned commit of their upstream
-git repositories (see `pecl[].source` in `config/php-8.6.yml`), since their latest PECL releases
-do not compile on PHP 8.6. They are replaced by the Alpine packages as soon as those are published.
+for it yet. `imagick`, `memcached` and `yaml` are built with [PIE](https://github.com/php/pie) from a pinned
+commit of their upstream development branch (see `pie[].package` in `config/php-8.6.yml`), since
+their latest releases do not compile on PHP 8.6. They are replaced by the Alpine packages as soon as those are published.
 `imagick` is compiled but not enabled; see [Imagick on PHP 8.6](dockerfile.md#imagick-on-php-86).
 
 ### Legacy PHP Versions (8.1 and older)

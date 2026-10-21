@@ -136,19 +136,23 @@ extensions:
   - (NAME)
   - (NAME)
 
-# The PECL extensions to be installed
-pecl:
-  - name: xdebug                    # required
-    version: 2.5.5                  # optional - if not set, get the latest
-    install: False                  # optional - do not call pecl install
-    enable: False                   # optional - do not create the .ini file; the extension
-                                    #            is left in the image but not loaded
-    zend: True                      # optional - if true, add as zend extension
-    config:                         # optional - if set, add extra config to php.ini 
-      - xdebug.remote_port=9001     #            for this extension
-    source:                         # optional - build from a git repository instead of
-      repository: https://...git    #            downloading the release from pecl.php.net
-      reference: (COMMIT/TAG)       #            optional - if not set, use the default branch
+# The extensions installed with PIE (https://github.com/php/pie), the PHP Foundation's
+# replacement for PECL. Prefer the Alpine package in `extensions` when there is one.
+# PIE needs PHP 8.1 or later. The configs of PHP 8.3+ use `pie:`; the older ones keep `pecl:` (see below).
+pie:
+  - name: imagick                   # required - the extension name (used for the .ini file)
+    package: imagick/imagick        # required unless `install: False` - the PIE (Packagist) package,
+                                    #            optionally with a constraint: `vendor/pkg:^3.8`, or a
+                                    #            pinned commit: `vendor/pkg:dev-master#<commit>`
+    options:                        # optional - extra `pie install` options, e.g. configure flags
+      - --with-imagick=/usr
+    install: False                  # optional - do not call `pie install` (the extension comes from
+                                    #            an Alpine package); only the .ini file is written
+    enable: False                   # optional - do not enable it; the extension is left in the
+                                    #            image but not loaded (`pie install --skip-enable-extension`)
+    zend: True                      # optional - with `install: False`, add as zend_extension
+    config:                         # optional - extra ini settings for this extension, written to
+      - imagick.skip_version_check=1 #           /etc/phpXY/conf.d/<name>.ini
     buildPackages:                  # optional - temporary packages needed only to build
       - (NAME)                      #            this extension
     packages:                       # optional - permanent packages this extension needs
@@ -166,14 +170,30 @@ composer:
     - phpbcbf
     - phpmd
 
-# Temporary packages to be used to build the PECL packages (generic; packages needed
-# by a single extension go in `pecl[].buildPackages`)
-peclBuildPackages:
+# Temporary packages used to build the PIE extensions (generic; packages needed
+# by a single extension go in `pie[].buildPackages`). `phpXY-dev` is always added.
+pieBuildPackages:
   - autoconf
   - build-base
+  - libtool
+  - pkgconf
+
+# PHP versions where PIE cannot run (it needs PHP 8.1+) keep the PECL keys. They have the
+# same entries as `pie:`, with `version:` (the PECL release) instead of `package:`, and
+# `source:` (repository + reference) to build from a git repository:
+#
+# pecl:
+#   - name: mongodb
+#     version: 1.7.5
+# peclBuildPackages:
+#   - autoconf
+#   - build-base
+#
+# A config can have `pecl:`, `pie:`, or neither. PIE and `pie-install` are only installed
+# in an image whose config has `pie:`.
 
 # Permanent packages to be installed in the image (generic; packages needed
-# by a single extension go in `pecl[].packages`)
+# by a single extension go in `pie[].packages` or `pecl[].packages`)
 additionalPackages:
   - libssl1.1
   - libcrypto1.1

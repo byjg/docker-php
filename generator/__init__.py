@@ -1,4 +1,4 @@
-import os, sys
+import os, re, sys
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime, date
@@ -33,8 +33,9 @@ class Generator:
             # Process each line individually
             processed_lines = []
             for line in output.split('\n'):
-                # Remove trailing comments and strip whitespace
-                processed_line = line.split('#')[0].strip()
+                # Remove comments (a '#' at the start of the line or after a blank) and strip whitespace.
+                # A '#' inside a word is kept, e.g. a PIE constraint like "vendor/ext:dev-master#<commit>"
+                processed_line = re.sub(r'(^|\s)#.*$', '', line).strip()
                 # Keep only non-empty lines
                 if processed_line:
                     processed_lines.append(processed_line)
@@ -109,6 +110,9 @@ class Generator:
         self.dockerfile_content["workdir"] += "WORKDIR /srv\n"
         self.dockerfile_content["copy"] += "COPY assets/entrypoint.sh /\n"
         self.dockerfile_content["copy"] += "COPY assets/script/install-sqlsvr.sh /install-sqlsvr.sh\n"
+        self.dockerfile_content["copy"] += "COPY assets/script/php-disable-module.sh /usr/local/bin/php-disable-module\n"
+        if self.build_config.get("pie"):
+            self.dockerfile_content["copy"] += "COPY assets/script/pie-install.sh /usr/local/bin/pie-install\n"
         self.local_base = True
         return self._build()
 

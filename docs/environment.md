@@ -62,16 +62,47 @@ docker run \
 
 ### PHP Module Management
 
-#### `DISABLEMODULE_[name]`
+#### `PHP_DISABLE_MODULES`
 
-Disable specific PHP modules at runtime. All modules are enabled by default.
+Disable PHP modules when the container starts. A comma or space separated list of module names.
+All modules are enabled by default. The modules that require a disabled one are disabled too:
+`dom` also disables `xmlreader` and `xsl`.
 
 ```bash
 docker run \
-  -e DISABLEMODULE_DOM=true \
-  -e DISABLEMODULE_XSL=true \
+  -e PHP_DISABLE_MODULES="dom,xsl" \
   byjg/php:8.3-cli
 ```
+
+#### `PHP_ENABLED_MODULES`
+
+Disable every module except these, when the container starts. A comma or space separated list of
+module names. The modules they require are kept too: `pdo_mysql` also keeps `pdo`, `mysqlnd` and
+`openssl`.
+
+```bash
+docker run \
+  -e PHP_ENABLED_MODULES="pdo_mysql,mbstring" \
+  byjg/php:8.3-cli
+```
+
+For both variables, if a module is not found, or PHP does not start cleanly afterwards, the
+container stops with an error instead of running with the wrong modules. A module already disabled,
+e.g. after `docker restart`, is not an error. `VERBOSE=true` also shows each module disabled.
+
+When both are set, `PHP_ENABLED_MODULES` is applied first and `PHP_DISABLE_MODULES` after it, so
+`PHP_ENABLED_MODULES="pdo_mysql,xdebug"` with `PHP_DISABLE_MODULES="xdebug"` keeps only `pdo_mysql`
+and what it requires.
+
+To see the modules that can be disabled in an image, run
+`docker run --rm byjg/php:8.5-cli php-disable-module --list`. To disable modules once, when
+building your own image, use the `php-disable-module` helper instead (see
+[Disabling modules](dockerfile.md#disabling-modules)).
+
+:::warning Deprecated
+`DISABLEMODULE_<name>=true` still works, but it is deprecated and will be removed in a future
+release. Use `PHP_DISABLE_MODULES` instead.
+:::
 
 :::tip
 Disabling unused modules can slightly improve performance and reduce memory footprint.
