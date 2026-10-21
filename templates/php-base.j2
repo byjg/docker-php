@@ -6,8 +6,10 @@ apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} 
 (ln -s /usr/bin/pecl{{ version.suffix }} /usr/bin/pecl || true)
 mkdir -p /etc/php/conf.d
 
-# Install PECL and additional packages
-apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add {% for pkg in additionalPackages %}{{ pkg }} {% endfor %}{% for ext in pecl %}{% for pkg in ext.packages | default([]) %}{{ pkg }} {% endfor %}{% endfor %}
+# Install the additional packages
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add {% for pkg in additionalPackages %}{{ pkg }} {% endfor %}{% for ext in (pecl | default([])) + (pie | default([])) %}{% for pkg in ext.packages | default([]) %}{{ pkg }} {% endfor %}{% endfor %}
+{% if pecl is defined and pecl %}
+# Install the PECL extensions (PHP versions PIE cannot run on: it needs PHP 8.1+)
 apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add --virtual .build php{{ version.suffix }}-pear php{{ version.suffix }}-dev {% for pkg in peclBuildPackages %}{{ pkg }} {% endfor %}{% for ext in pecl %}{% for pkg in ext.buildPackages | default([]) %}{{ pkg }} {% endfor %}{% endfor %}
 sed -ie "s/ -n / /" /usr/bin/pecl
 {% for ext in pecl -%}
@@ -17,6 +19,26 @@ rm -rf /tmp/pecl-{{ ext.name }}{% else %}yes "" | pecl install {{ ext.name }}{% 
 {% if ext.enable is not defined or ext.enable %}printf "{% if ext.zend %}zend_{% endif %}extension={{ ext.name }}.so{% for config in ext.config %}\n{{ config }}{% endfor %}\n" > /etc/php{{ version.suffix }}/conf.d/{{ ext.name }}.ini{% endif %}
 {% endfor %}
 apk del --no-cache .build
+{% endif %}
+{% if pie is defined and pie %}
+{% set pie_version = "1.5.2" %}
+{% set pie_sha256 = "fe70c59738cf56ec00a818cf9cb9593da171aac86f5f1f859995b8839dfd2cc7" %}
+# Install PIE (https://github.com/php/pie) and build the PIE extensions (the build packages are removed at the end)
+wget -q -O /usr/local/bin/pie https://github.com/php/pie/releases/download/{{ pie_version }}/pie.phar
+echo "{{ pie_sha256 }}  /usr/local/bin/pie" | sha256sum -c -
+chmod +x /usr/local/bin/pie /usr/local/bin/pie-install
+apk --no-cache {% for rep in repositories %}--repository {{ rep }} {% endfor %} add --virtual .build php{{ version.suffix }}-dev {% for pkg in pieBuildPackages %}{{ pkg }} {% endfor %}{% for ext in pie %}{% for pkg in ext.buildPackages | default([]) %}{{ pkg }} {% endfor %}{% endfor %}
+{% for ext in pie -%}
+{% if ext.install is not defined or ext.install -%}
+pie install -n "{{ ext.package }}"{% for opt in ext.options | default([]) %} {{ opt }}{% endfor %}{% if ext.enable is defined and not ext.enable %} --skip-enable-extension{% endif %}
+{% if (ext.enable is not defined or ext.enable) and ext.config is defined %}printf "{% for config in ext.config %}{{ config }}\n{% endfor %}" > /etc/php{{ version.suffix }}/conf.d/{{ ext.name }}.ini{% endif %}
+{% elif ext.enable is not defined or ext.enable -%}
+printf "{% if ext.zend %}zend_{% endif %}extension={{ ext.name }}.so{% for config in ext.config | default([]) %}\n{{ config }}{% endfor %}\n" > /etc/php{{ version.suffix }}/conf.d/{{ ext.name }}.ini
+{% endif %}
+{% endfor %}
+apk del --no-cache .build
+rm -rf /root/.pie /root/.composer/cache /tmp/pie_*
+{% endif %}
 
 # Install Composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -28,6 +50,6 @@ mv composer.phar /usr/local/bin/composer
 addgroup -S app && adduser -S app -G app
 mkdir -p /srv
 chown -R app:app /srv /etc/php /etc/php{{ version.suffix }} /var/log /tmp /run /entrypoint.sh
-chmod +x /entrypoint.sh
+chmod +x /entrypoint.sh /usr/local/bin/php-disable-module
 
 date > /etc/build-date

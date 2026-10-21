@@ -28,22 +28,39 @@ then
   PHPMODULES=`php -i | grep "Scan this dir" |  awk -F" => " '{print $2}'`
   PHPCUSTOM=/etc/php/conf.d
 
-  # Disable modules
-  for VAR in `printenv | grep DISABLEMODULE | grep -E '(true|yes|1)' | cut -d= -f1 | cut -d_ -f2- | awk '{print tolower($0)}'`
-  do
-      if [[ -f "$PHPMODULES/*$VAR.ini" ]]
+  # Keep only these modules (and the ones they require): PHP_ENABLED_MODULES="pdo_mysql,mbstring"
+  ENABLED_MODULES=`echo "$PHP_ENABLED_MODULES" | tr ',' ' '`
+  if [[ -n "${ENABLED_MODULES// /}" ]]
+  then
+      if ${VERBOSE_MODE}
       then
-          ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
-          rm "$PHPMODULES/*$VAR.ini"
-      elif [[ -f "$PHPMODULES/$VAR.ini" ]]
-      then
-          ${VERBOSE_MODE} && echo "Disabling Module $VAR ..."
-          rm "$PHPMODULES/$VAR.ini"
+          /usr/local/bin/php-disable-module --all-except $ENABLED_MODULES
       else
-          ${VERBOSE_MODE} && echo "Module not found $VAR"
+          /usr/local/bin/php-disable-module --all-except $ENABLED_MODULES > /dev/null
       fi
-  done
-  ${VERBOSE_MODE} && echo
+  fi
+
+  # Disable modules: PHP_DISABLE_MODULES="yaml,memcached" (comma or space separated)
+  DISABLE_MODULES=`echo "$PHP_DISABLE_MODULES" | tr ',' ' '`
+
+  # Deprecated: DISABLEMODULE_<module>=true, will be removed in a future release
+  DEPRECATED_MODULES=`printenv | grep -E '^DISABLEMODULE_[^=]+=(true|yes|1)$' | cut -d= -f1 | cut -d_ -f2-`
+  if [[ -n "$DEPRECATED_MODULES" ]]
+  then
+      echo "DISABLEMODULE_<module> is deprecated, use PHP_DISABLE_MODULES=\"`echo $DEPRECATED_MODULES | tr '[:upper:] ' '[:lower:],'`\"" >&2
+      DISABLE_MODULES="$DISABLE_MODULES $DEPRECATED_MODULES"
+  fi
+
+  if [[ -n "${DISABLE_MODULES// /}" ]]
+  then
+      if ${VERBOSE_MODE}
+      then
+          /usr/local/bin/php-disable-module $DISABLE_MODULES
+          echo
+      else
+          /usr/local/bin/php-disable-module $DISABLE_MODULES > /dev/null
+      fi
+  fi
 
   # List available modules
   if [[ "$VERBOSE" == "true" ]]
