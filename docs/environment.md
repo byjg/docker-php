@@ -65,7 +65,8 @@ docker run \
 #### `PHP_DISABLE_MODULES`
 
 Disable PHP modules when the container starts. A comma or space separated list of module names.
-All modules are enabled by default.
+All modules are enabled by default. The modules that require a disabled one are disabled too:
+`dom` also disables `xmlreader` and `xsl`.
 
 ```bash
 docker run \
@@ -84,6 +85,10 @@ docker run \
   -e PHP_ENABLED_MODULES="pdo_mysql,mbstring" \
   byjg/php:8.3-cli
 ```
+
+For both variables, if a module is not found, or PHP does not start cleanly afterwards, the
+container stops with an error instead of running with the wrong modules. A module already disabled,
+e.g. after `docker restart`, is not an error. `VERBOSE=true` also shows each module disabled.
 
 When both are set, `PHP_ENABLED_MODULES` is applied first and `PHP_DISABLE_MODULES` after it, so
 `PHP_ENABLED_MODULES="pdo_mysql,xdebug"` with `PHP_DISABLE_MODULES="xdebug"` keeps only `pdo_mysql`

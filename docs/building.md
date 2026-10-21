@@ -138,7 +138,7 @@ extensions:
 
 # The extensions installed with PIE (https://github.com/php/pie), the PHP Foundation's
 # replacement for PECL. Prefer the Alpine package in `extensions` when there is one.
-# PIE needs PHP 8.1 or later: the configs of PHP 5.6 to 7.3 keep `pecl:` (see below).
+# PIE needs PHP 8.1 or later. The configs of PHP 8.3+ use `pie:`; the older ones keep `pecl:` (see below).
 pie:
   - name: imagick                   # required - the extension name (used for the .ini file)
     package: imagick/imagick        # required unless `install: False` - the PIE (Packagist) package,

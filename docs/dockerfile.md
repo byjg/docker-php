@@ -90,7 +90,7 @@ Always switch back to the `app` user after installing packages. Running your app
 ### Installing a PHP Extension with PIE
 
 If the extension has no Alpine package (`apk search phpXY-pecl-<name>`), install it with
-[PIE](https://github.com/php/pie), the PHP Foundation's replacement for PECL. The images ship
+[PIE](https://github.com/php/pie), the PHP Foundation's replacement for PECL. The PHP 8.3+ images ship
 `pie` and the `pie-install` helper; `pie-install` adds the compiler and the `phpXY-dev` package,
 runs `pie install`, enables the extension and removes the build tools again, so they do not stay
 in your image. It must run as `root`:
@@ -156,9 +156,14 @@ FROM byjg/php:8.5-cli
 RUN php-disable-module xdebug soap ftp
 ```
 
-It finds the ini file whatever its name: `<module>.ini`, or with a priority prefix such as
-`70_yaml.ini` (apk) or `80-yaml.ini` (PIE). It exits with an error if a module is not found, so a
-typo fails the build.
+It finds the module by the extension line of its ini file, whatever the file name: `70_yaml.ini`
+(apk) or `80-yaml.ini` (PIE). It exits with an error if a module is not found, so a typo fails the
+build; a module already disabled (e.g. by the base image) is not an error.
+
+The modules that require a disabled one are disabled too, since they can no longer load:
+`php-disable-module pdo` also disables `pdo_mysql`, `pdo_pgsql`, `pdo_sqlite` and `pdo_dblib`, and
+prints each one with the module it requires. Afterwards it starts PHP once and fails if a module
+does not load.
 
 To keep only some modules and disable all the others, use `--all-except`:
 
@@ -177,11 +182,6 @@ The modules that can be disabled vary a little by PHP version. List them with:
 ```bash
 docker run --rm byjg/php:8.5-cli php-disable-module --list
 ```
-
-:::note
-Some modules depend on others. Disabling `pdo` without the `pdo_*` drivers makes PHP print a
-startup warning for each driver: disable them together.
-:::
 
 To disable modules when the container starts instead, set
 [`PHP_DISABLE_MODULES`](environment.md#php_disable_modules) or
