@@ -205,7 +205,7 @@ ENV PHP_CONTROLLER=/index.php
 
 # Disable unnecessary modules for better performance. Every module that can be disabled in 8.5;
 # the list varies a little by version: run "php-disable-module --list" in the image to see it.
-# ENV PHP_DISABLE_MODULES="bcmath,ctype,curl,dba,dom,exif,fileinfo,ftp,gd,gettext,iconv,igbinary,intl,mbstring,memcached,mongodb,msgpack,mysqli,mysqlnd,openssl,pcntl,pdo,pdo_dblib,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,redis,session,shmop,simplexml,soap,sockets,sqlite3,tokenizer,xdebug,xml,xmlreader,xmlwriter,xsl,yaml,zip"
+# ENV PHP_DISABLE_MODULES="bcmath,ctype,curl,dba,dom,exif,fileinfo,ftp,gd,gettext,iconv,igbinary,intl,mbstring,memcached,mongodb,msgpack,mysqli,mysqlnd,openssl,pcntl,pdo,pdo_dblib,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,redis,session,shmop,simplexml,soap,sockets,sodium,sqlite3,tokenizer,xdebug,xml,xmlreader,xmlwriter,xsl,yaml,zip"
 
 # Copy application with proper ownership
 COPY --chown=app:app . /app
