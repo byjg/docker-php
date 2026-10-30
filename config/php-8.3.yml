@@ -49,6 +49,7 @@ extensions:
   - simplexml
   - soap
   - sockets
+  - sodium
   - sqlite3
   - tokenizer
   - xml
