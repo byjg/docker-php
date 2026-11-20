@@ -1,4 +1,4 @@
-apk add --no-cache nginx nginx-mod-http-headers-more nginx-mod-http-js bash
+apk add --no-cache "nginx>=1.30.7" nginx-mod-http-headers-more nginx-mod-http-js bash
 
 ln -sf /dev/stdout /var/log/nginx/access.log
 ln -sf /dev/stderr /var/log/nginx/error.log
