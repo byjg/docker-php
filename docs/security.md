@@ -4,6 +4,26 @@
 
 The PHP Docker images ByJG are built with security as a priority. This document explains the security features and considerations for these images.
 
+## Security Notices
+
+### 2026.11: PHP and nginx critical fixes
+
+| Component | Fixed in `2026.11`                | Vulnerable                         |
+|-----------|-----------------------------------|------------------------------------|
+| PHP       | 8.3.37, 8.4.28, 8.5.13            | `2026.10` and older; all legacy tags |
+| nginx     | 1.30.7 (`fpm-nginx`, `nginx`)     | `2026.10` and older; all legacy tags |
+
+- **PHP** ([PHP 8 ChangeLog](https://www.php.net/ChangeLog-8.php)): the November 2026 releases fix up to
+  18 vulnerabilities, six of them critical. The images do not enable FastCGI connection reuse (nginx
+  `fastcgi_keep_conn`, Apache `enablereuse`) and load a production `php.ini`, but update anyway.
+- **nginx**: CVE-2026-123633 and CVE-2026-123007 allow remote code execution when HTTP/2 is enabled.
+  The default configuration does not enable HTTP/2; a custom configuration with `http2 on;` does.
+  The `fpm-nginx` and `nginx` images now require `nginx>=1.30.7`.
+
+**What to do:** pull the `2026.11` tag (for example `byjg/php:8.5-fpm-nginx-2026.11`), rebuild the images
+based on it, and redeploy. Check the running version with `php -v` and `nginx -v`. The tags without a date
+(`byjg/php:8.5-fpm-nginx`) already point to the fixed build; pull them again.
+
 ## SBOM (Software Bill of Materials)
 
 ### What is SBOM?
@@ -98,7 +118,7 @@ Our build process follows [SLSA](https://slsa.dev/) (Supply-chain Levels for Sof
 
 |  PHP Version  | Alpine Version | Rationale                                              |
 |:-------------:|:--------------:|--------------------------------------------------------|
-|      8.6      |  edge/testing  | Required for PHP 8.6 (pre-release, only in testing)    |
+|      8.6      |  edge/testing  | PHP 8.6 packages are only in testing so far            |
 |      8.5      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 |      8.4      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
 |      8.3      |      edge      | Avoid CVE-2023-27482 and other vulnerabilities in 3.22 |
@@ -158,28 +178,24 @@ To balance security with stability:
 
 ### Why Edge/Testing for PHP 8.6?
 
-PHP 8.6 has not been released yet — Alpine ships it as `8.6.0_rcX` in the `edge/testing`
-repository, which is the only Alpine repository carrying PHP 8.6 packages.
+PHP 8.6.0 is a stable release. Alpine ships it in the `edge/testing` repository, which is the only
+Alpine repository carrying PHP 8.6 packages so far, so the 8.6 images install from it. `testing`
+packages get less review than `main` and `community`; test your application on 8.6 before moving
+production to it.
 
-**Do not use PHP 8.6 in production** until it reaches a stable release. These images exist for:
-
-- Early adoption and compatibility testing
-- Previewing upcoming PHP features
-
-Because PHP 8.6 is only available in `edge/testing`, Alpine has not published every extension
-for it yet. `imagick`, `memcached` and `yaml` are built with [PIE](https://github.com/php/pie) from a pinned
+`imagick`, `memcached` and `yaml` are built with [PIE](https://github.com/php/pie) from a pinned
 commit of their upstream development branch (see `pie[].package` in `config/php-8.6.yml`), since
-their latest releases do not compile on PHP 8.6. They are replaced by the Alpine packages as soon as those are published.
+their releases did not compile on PHP 8.6 when these images were added.
 `imagick` is compiled but not enabled; see [Imagick on PHP 8.6](dockerfile.md#imagick-on-php-86).
 
 ### Legacy PHP Versions (8.1 and older)
 
 Older PHP versions use specific Alpine versions that were stable when those PHP versions were current:
 
-- These versions no longer receive monthly builds
+- These images are **unmaintained**: they are not rebuilt and receive no PHP, nginx or Alpine security fixes
 - Alpine versions are frozen to last known compatible version
-- Use these only for legacy application support
-- Recommend upgrading to PHP 8.2+ for security updates
+- They remain exposed to every vulnerability fixed after their last build (see [Security Notices](#security-notices))
+- Use them only for legacy application support, and plan the upgrade to a version with monthly builds
 
 ## Security Hardening
 
@@ -281,7 +297,7 @@ If you scan both Alpine 3.22 and edge-based images, you may observe:
 3. **Scan before deployment** using your preferred security tool
 4. **Monitor security advisories** for PHP and Alpine
 5. **Update monthly tags regularly** to get security patches
-6. **Avoid PHP 8.6** (edge is acceptable for 8.2-8.5, but 8.6 itself is still a pre-release)
+6. **Test before moving to PHP 8.6**: its packages come from Alpine `edge/testing`
 
 ### For CI/CD
 

@@ -69,10 +69,10 @@ Five different images for each PHP Version:
 
 |  Version   |  Latest Version  | Monthly Builds |  Alpine Version  |
 |:----------:|:----------------:|:--------------:|:----------------:|
-| **8.6** ⚠ | **8.6.0rc5**   |    **yes**     | **edge/testing** |
-|  **8.5**   |    **8.5.12**    |    **yes**     |     **edge**     |
-|  **8.4**   |    **8.4.27**    |    **yes**     |     **edge**     |
-|  **8.3**   |    **8.3.36**    |    **yes**     |     **edge**     |
+|  **8.6**   |    **8.6.0**     |    **yes**     | **edge/testing** |
+|  **8.5**   |    **8.5.13**    |    **yes**     |     **edge**     |
+|  **8.4**   |    **8.4.28**    |    **yes**     |     **edge**     |
+|  **8.3**   |    **8.3.37**    |    **yes**     |     **edge**     |
 |    8.2     |      8.2.31      |       -        |       3.22       |
 |    8.1     |      8.1.31      |       -        |       3.19       |
 |    8.0     |      8.0.30      |       -        |       3.16       |
@@ -83,13 +83,21 @@ Five different images for each PHP Version:
 |    7.0     |      7.0.33      |       -        |       3.5        |
 |    5.6     |      5.6.40      |       -        |       3.8        |
 
-⚠ PHP 8.6 is a **pre-release** (release candidate). The images are meant for early testing only. Alpine has not
-published `imagick`, `memcached` and `yaml` for PHP 8.6 yet, so these three are built from their
-upstream git repositories until it does. `imagick` is shipped disabled; see
-[Imagick on PHP 8.6](docs/dockerfile.md#imagick-on-php-86).
+PHP 8.6 packages come from Alpine `edge/testing`, the only Alpine repository that carries them so far.
+`imagick`, `memcached` and `yaml` are built from pinned commits of their upstream git repositories.
+`imagick` is shipped disabled; see [Imagick on PHP 8.6](docs/dockerfile.md#imagick-on-php-86).
 
-:::info
-PHP versions with monthly builds receive regular updates. Legacy versions (without monthly builds) are no longer supported.
+:::danger Unmaintained images
+Only the versions with monthly builds receive updates. The images for the other versions (8.2 and older,
+including all `7.4-*` tags) are **unmaintained**: they are not rebuilt and get no PHP, nginx or Alpine
+security fixes. They are exposed to every vulnerability fixed after their last build, including the
+critical PHP and nginx issues fixed in November 2026. Move to a version with monthly builds.
+:::
+
+:::warning Security update 2026.11
+The `2026.11` images ship PHP 8.3.37, 8.4.28 and 8.5.13 and nginx 1.30.7, which fix critical PHP and
+nginx (HTTP/2) vulnerabilities. Images tagged `2026.10` or older are affected: pull the `2026.11` tag.
+See [Security Notices](docs/security.md#security-notices).
 :::
 
 :::warning
