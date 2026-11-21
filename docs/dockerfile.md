@@ -133,16 +133,14 @@ to avoid it.
 
 #### Imagick on PHP 8.6
 
-The PHP 8.6 images already contain a compiled `imagick.so`, but it is not enabled and the
-ImageMagick runtime is not installed. There is nothing to compile; install the runtime and
-enable the extension:
+`imagick` is not bundled, as in the other versions. The PHP 8.6 packages are only in Alpine
+`edge/testing`, which is not in the image's repository list, so pass it to `apk add`:
 
 ```dockerfile title="Dockerfile"
 FROM byjg/php:8.6-cli
 
 USER root
-RUN apk add --no-cache imagemagick && \
-    echo "extension=imagick.so" > /etc/php86/conf.d/imagick.ini
+RUN apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing php86-pecl-imagick
 USER app
 ```
 
