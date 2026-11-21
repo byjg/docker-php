@@ -183,10 +183,8 @@ Alpine repository carrying PHP 8.6 packages so far, so the 8.6 images install fr
 packages get less review than `main` and `community`; test your application on 8.6 before moving
 production to it.
 
-`imagick`, `memcached` and `yaml` are built with [PIE](https://github.com/php/pie) from a pinned
-commit of their upstream development branch (see `pie[].package` in `config/php-8.6.yml`), since
-their releases did not compile on PHP 8.6 when these images were added.
-`imagick` is compiled but not enabled; see [Imagick on PHP 8.6](dockerfile.md#imagick-on-php-86).
+The PHP 8.6 extensions (`php86-*`, `php86-pecl-*`) come from `edge/testing` as well. To add one
+in your own image, pass that repository to `apk add`; see [Imagick on PHP 8.6](dockerfile.md#imagick-on-php-86).
 
 ### Legacy PHP Versions (8.1 and older)
 

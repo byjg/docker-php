@@ -36,11 +36,12 @@ extensions:
   - pdo_pgsql
   - pdo_sqlite
   - pear
-# imagick: see the `pie` section below (compiled but not enabled)
-#  - pecl-memcached
+# imagick: not bundled. Install when needed:
+#   apk add --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing php86-pecl-imagick
+  - pecl-memcached
   - pecl-mongodb
   - pecl-xdebug
-#  - pecl-yaml
+  - pecl-yaml
   - phar
   - posix
   - redis
@@ -65,30 +66,6 @@ pie:
     zend: True
     config:
       - xdebug.remote_port=9001
-  # The extensions below have no Alpine package for PHP 8.6 yet, and their latest releases
-  # do not build on PHP 8.6 (XtOffsetOf / zval_dtor removed); the fix is only in git, so PIE
-  # installs a pinned commit of the development branch.
-  # Temporary: remove each entry and enable the matching `pecl-*` in `extensions` once Alpine
-  # publishes php86-pecl-imagick, php86-pecl-memcached and php86-pecl-yaml.
-  # imagick is only compiled, not enabled: the ImageMagick runtime is too large to ship by default.
-  # To use it: apk add imagemagick && echo "extension=imagick.so" > /etc/php86/conf.d/imagick.ini
-  - name: imagick
-    package: imagick/imagick:dev-master#55ed2e9fda264395636a2e27e51f31673f5566ab
-    enable: False
-    buildPackages:
-      - imagemagick-dev
-  - name: memcached
-    package: php-memcached/php-memcached:dev-master#0b52d3657140750fa0eddd20cdbfc6edc8fbdadd
-    buildPackages:
-      - libmemcached-dev
-    packages:
-      - libmemcached-libs
-  - name: yaml
-    package: pecl/yaml:dev-php7#a7a3b8680b8fbf0895fd63371a0ffc1305b1a5b8
-    buildPackages:
-      - yaml-dev
-    packages:
-      - yaml
 
 composer:
   packages:

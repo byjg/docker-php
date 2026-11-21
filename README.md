@@ -84,8 +84,7 @@ Five different images for each PHP Version:
 |    5.6     |      5.6.40      |       -        |       3.8        |
 
 PHP 8.6 packages come from Alpine `edge/testing`, the only Alpine repository that carries them so far.
-`imagick`, `memcached` and `yaml` are built from pinned commits of their upstream git repositories.
-`imagick` is shipped disabled; see [Imagick on PHP 8.6](docs/dockerfile.md#imagick-on-php-86).
+To add a package such as `imagick`, see [Imagick on PHP 8.6](docs/dockerfile.md#imagick-on-php-86).
 
 :::danger Unmaintained images
 Only the versions with monthly builds receive updates. The images for the other versions (8.2 and older,
